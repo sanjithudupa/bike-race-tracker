@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		D85C032124A1B281005A3B20 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D85C031F24A1B281005A3B20 /* Main.storyboard */; };
 		D85C032324A1B281005A3B20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D85C032224A1B281005A3B20 /* Assets.xcassets */; };
 		D85C032624A1B281005A3B20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D85C032424A1B281005A3B20 /* LaunchScreen.storyboard */; };
+		D85C032F24A1B3A6005A3B20 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = D85C032E24A1B3A6005A3B20 /* SocketIO */; };
+		D85C033124A279D4005A3B20 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033024A279D4005A3B20 /* SocketIOManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,7 @@
 		D85C032224A1B281005A3B20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D85C032524A1B281005A3B20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D85C032724A1B281005A3B20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D85C033024A279D4005A3B20 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D85C032F24A1B3A6005A3B20 /* SocketIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +67,7 @@
 				D85C032224A1B281005A3B20 /* Assets.xcassets */,
 				D85C032424A1B281005A3B20 /* LaunchScreen.storyboard */,
 				D85C032724A1B281005A3B20 /* Info.plist */,
+				D85C033024A279D4005A3B20 /* SocketIOManager.swift */,
 			);
 			path = BikeTracker;
 			sourceTree = "<group>";
@@ -83,6 +88,9 @@
 			dependencies = (
 			);
 			name = BikeTracker;
+			packageProductDependencies = (
+				D85C032E24A1B3A6005A3B20 /* SocketIO */,
+			);
 			productName = BikeTracker;
 			productReference = D85C031624A1B281005A3B20 /* BikeTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +119,9 @@
 				Base,
 			);
 			mainGroup = D85C030D24A1B281005A3B20;
+			packageReferences = (
+				D85C032D24A1B3A6005A3B20 /* XCRemoteSwiftPackageReference "socket" */,
+			);
 			productRefGroup = D85C031724A1B281005A3B20 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D85C033124A279D4005A3B20 /* SocketIOManager.swift in Sources */,
 				D85C031E24A1B281005A3B20 /* ViewController.swift in Sources */,
 				D85C031A24A1B281005A3B20 /* AppDelegate.swift in Sources */,
 				D85C031C24A1B281005A3B20 /* SceneDelegate.swift in Sources */,
@@ -338,6 +350,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D85C032D24A1B3A6005A3B20 /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D85C032E24A1B3A6005A3B20 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D85C032D24A1B3A6005A3B20 /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D85C030E24A1B281005A3B20 /* Project object */;
 }
