@@ -47,5 +47,119 @@
             </objects>
             <point key="canvasLocation" x="132" y="138"/>
         </scene>
+        <!--RaceHost-->
+        <scene sceneID="2AY-z3-K5v">
+            <objects>
+                <viewController storyboardIdentifier="RaceHostViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="QZY-8K-3ts" userLabel="RaceHost" customClass="RaceHostViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EFa-Ve-g9p">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Created Race:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsp-hg-luP">
+                                <rect key="frame" x="105" y="142" width="165" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rpy-ut-6tV">
+                                <rect key="frame" x="33" y="171" width="309" height="45.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbs-fo-fgX">
+                                <rect key="frame" x="105" y="568" width="165" height="47.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="sse-st-AUO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Start Race" backgroundImage="rectangle.fill" catalog="system"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Users:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCc-bG-Un3">
+                                <rect key="frame" x="50" y="323.5" width="275" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Ol6-MZ-hLP" firstAttribute="trailing" secondItem="fsp-hg-luP" secondAttribute="trailing" constant="105" id="2xA-GN-gae"/>
+                            <constraint firstItem="Ol6-MZ-hLP" firstAttribute="trailing" secondItem="BCc-bG-Un3" secondAttribute="trailing" constant="50" id="FL1-yU-uyZ"/>
+                            <constraint firstItem="wbs-fo-fgX" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="105" id="Gxw-vK-OcP"/>
+                            <constraint firstItem="fsp-hg-luP" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="105" id="J7B-7z-Vhj"/>
+                            <constraint firstItem="Ol6-MZ-hLP" firstAttribute="trailing" secondItem="Rpy-ut-6tV" secondAttribute="trailing" constant="33" id="MHt-o8-U3X"/>
+                            <constraint firstItem="BCc-bG-Un3" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="50" id="PJg-a5-r7t"/>
+                            <constraint firstItem="Rpy-ut-6tV" firstAttribute="top" secondItem="fsp-hg-luP" secondAttribute="bottom" constant="8" id="QgN-Ed-8Nr"/>
+                            <constraint firstItem="Rpy-ut-6tV" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="33" id="S0q-oj-6XR"/>
+                            <constraint firstItem="BCc-bG-Un3" firstAttribute="top" secondItem="Rpy-ut-6tV" secondAttribute="bottom" constant="107" id="TTJ-ge-J4l"/>
+                            <constraint firstItem="fsp-hg-luP" firstAttribute="top" secondItem="Ol6-MZ-hLP" secondAttribute="top" constant="142" id="gd5-2D-N5j"/>
+                            <constraint firstItem="Ol6-MZ-hLP" firstAttribute="trailing" secondItem="wbs-fo-fgX" secondAttribute="trailing" constant="105" id="x8H-p3-jyb"/>
+                            <constraint firstItem="Ol6-MZ-hLP" firstAttribute="bottom" secondItem="wbs-fo-fgX" secondAttribute="bottom" constant="50" id="ywE-of-m7h"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ol6-MZ-hLP"/>
+                    </view>
+                    <connections>
+                        <outlet property="RaceID" destination="Rpy-ut-6tV" id="u2r-xH-Dbr"/>
+                        <outlet property="RaceUsers" destination="BCc-bG-Un3" id="TM5-pG-9aK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="syz-wx-xmh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="945" y="511"/>
+        </scene>
+        <!--RaceMember-->
+        <scene sceneID="mxC-6n-nqO">
+            <objects>
+                <viewController storyboardIdentifier="RaceMemberViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="CY0-sD-leX" userLabel="RaceMember" customClass="RaceMemberViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1MU-qV-EEo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Joined Race:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cm-hP-85q">
+                                <rect key="frame" x="105" y="142" width="165" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHN-KO-kO6">
+                                <rect key="frame" x="33" y="171" width="309" height="45.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Users:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ld3-qj-Jz8">
+                                <rect key="frame" x="50" y="323.5" width="275" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="ld3-qj-Jz8" secondAttribute="trailing" constant="50" id="5yg-gM-LLu"/>
+                            <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="4cm-hP-85q" secondAttribute="trailing" constant="105" id="7P5-zP-ObG"/>
+                            <constraint firstItem="ld3-qj-Jz8" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="50" id="NEZ-xT-12r"/>
+                            <constraint firstItem="4cm-hP-85q" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="105" id="WjK-jY-QYl"/>
+                            <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="yHN-KO-kO6" secondAttribute="trailing" constant="33" id="a9E-pA-LQH"/>
+                            <constraint firstItem="yHN-KO-kO6" firstAttribute="top" secondItem="4cm-hP-85q" secondAttribute="bottom" constant="8" id="erL-Y2-jK2"/>
+                            <constraint firstItem="ld3-qj-Jz8" firstAttribute="top" secondItem="yHN-KO-kO6" secondAttribute="bottom" constant="107" id="f8i-nF-naz"/>
+                            <constraint firstItem="yHN-KO-kO6" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="33" id="jcb-Ci-6T4"/>
+                            <constraint firstItem="4cm-hP-85q" firstAttribute="top" secondItem="yNc-jh-BIg" secondAttribute="top" constant="142" id="uWx-We-49z"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yNc-jh-BIg"/>
+                    </view>
+                    <connections>
+                        <outlet property="RaceID" destination="yHN-KO-kO6" id="eKn-kA-hdt"/>
+                        <outlet property="RaceUsers" destination="ld3-qj-Jz8" id="WSd-XZ-Qeo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hjy-KX-je9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="945" y="-238"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="rectangle.fill" catalog="system" width="64" height="46"/>
+    </resources>
 </document>

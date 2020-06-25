@@ -22,17 +22,24 @@ io.on('connection', function(clientSocket){
   clientSocket.on('sendConnect', (data) => {
     users[clientSocket.id] = data
 
-    console.log(clientSocket.id + " joined at " + data)
+    console.log(clientSocket.id + " joined as " + data)
   });
 
   clientSocket.on('joinRace', (data) => {
     clientSocket.join(data)
 
+    let joinState = "join"
+
     if(data in races){
       joinRace(data, clientSocket.id)
     }else{
       createNewRace(data, clientSocket.id)
+      joinState = "create"
     }
+
+    clientSocket.emit("youJoinedRace", joinState, races[data].toString())
+    io.in(data).emit("userListUpdate", races[data].toString())
+    // console.log(races[data])
 
     console.log(clientSocket.id + " joined " + data)
   });

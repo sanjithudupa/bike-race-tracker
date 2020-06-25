@@ -14,7 +14,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        SocketIOManager.getInstance.showHostVC = showHostVC
+        SocketIOManager.getInstance.showMemberVC = showMemberVC
+
     }
     
     @IBAction func JoinRace(_ sender: Any) {
@@ -27,5 +29,23 @@ class ViewController: UIViewController {
             self.present(alert, animated: true)
         }
     }
+    
+    func showHostVC(){
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+
+        let hostVC = storyBoard.instantiateViewController(withIdentifier: "RaceHostViewController") as! RaceHostViewController
+
+        self.present(hostVC, animated:true, completion:nil)
+    }
+    
+    func showMemberVC(){
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+
+        let memberVC = storyBoard.instantiateViewController(withIdentifier: "RaceMemberViewController") as! RaceMemberViewController
+
+        self.present(memberVC, animated:true, completion:nil)
+    }
+    
+    
 }
 

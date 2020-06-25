@@ -15,6 +15,8 @@
 		D85C032624A1B281005A3B20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D85C032424A1B281005A3B20 /* LaunchScreen.storyboard */; };
 		D85C032F24A1B3A6005A3B20 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = D85C032E24A1B3A6005A3B20 /* SocketIO */; };
 		D85C033124A279D4005A3B20 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033024A279D4005A3B20 /* SocketIOManager.swift */; };
+		D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033424A3E716005A3B20 /* RaceHostViewController.swift */; };
+		D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		D85C032524A1B281005A3B20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D85C032724A1B281005A3B20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D85C033024A279D4005A3B20 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		D85C033424A3E716005A3B20 /* RaceHostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceHostViewController.swift; sourceTree = "<group>"; };
+		D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceMemberViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,8 @@
 				D85C032424A1B281005A3B20 /* LaunchScreen.storyboard */,
 				D85C032724A1B281005A3B20 /* Info.plist */,
 				D85C033024A279D4005A3B20 /* SocketIOManager.swift */,
+				D85C033424A3E716005A3B20 /* RaceHostViewController.swift */,
+				D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */,
 			);
 			path = BikeTracker;
 			sourceTree = "<group>";
@@ -152,6 +158,8 @@
 				D85C033124A279D4005A3B20 /* SocketIOManager.swift in Sources */,
 				D85C031E24A1B281005A3B20 /* ViewController.swift in Sources */,
 				D85C031A24A1B281005A3B20 /* AppDelegate.swift in Sources */,
+				D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */,
+				D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */,
 				D85C031C24A1B281005A3B20 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
