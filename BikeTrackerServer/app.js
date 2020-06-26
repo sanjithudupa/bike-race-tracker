@@ -30,30 +30,70 @@ io.on('connection', function(clientSocket){
 
     let joinState = "join"
 
-    if(data in races){
-      joinRace(data, clientSocket.id)
+    if(races[data] != null && races[data].toString().substring(0,4) == "true"){
+      clientSocket.emit("raceAlreadyStarted")
     }else{
-      createNewRace(data, clientSocket.id)
-      joinState = "create"
+      if(data in races && races[data] != [false] && races[data] != [true]){
+        joinRace(data, clientSocket.id)
+      }else{
+        createNewRace(data, clientSocket.id)
+        joinState = "create"
+      }
+
+      clientSocket.emit("youJoinedRace", joinState, races[data].toString())
+      io.in(data).emit("userListUpdate", races[data].toString())
+
+      console.log(races[data])
+      // console.log(races[data])
+
+      console.log(clientSocket.id + " joined " + data)
     }
 
-    clientSocket.emit("youJoinedRace", joinState, races[data].toString())
-    io.in(data).emit("userListUpdate", races[data].toString())
-    // console.log(races[data])
+    
+  });
 
-    console.log(clientSocket.id + " joined " + data)
+  clientSocket.on('startRace', (data) =>{
+    races[data][0] = true;
+    io.in(data).emit("userListUpdate", races[data].toString())
   });
 
   clientSocket.on('disconnect', function(){
     delete users[clientSocket.id]
+    let emitKey = ""
+
+    for (var key in races){
+      console.log('this', key)
+      if(races[key].includes(clientSocket.id)){
+        console.log("someone left in", key)
+        emitKey = key;
+        let arrayStr = races[key].toString()
+        let host = arrayStr.substring(arrayStr.indexOf(",") + 1, arrayStr.indexOf(",", 6));
+        console.log(host, clientSocket.id)
+        console.log(host == clientSocket.id)
+        console.log(races[key].length)
+        if(host == clientSocket.id && races[key].length > 3){
+          console.log('h')
+          console.log(races[key][2].toString())
+          io.to(races[key][2].toString()).emit("newHost");
+        }
+
+      }
+    }
+
     userLeft(clientSocket.id)
+
+    if(emitKey != "" && emitKey in races){
+      io.in(emitKey).emit("userListUpdate", races[emitKey].toString())
+    }
+
     console.log(clientSocket.id +  " left")
+    // io.in(data).emit("userListUpdate", races[data].toString())
   });
 
 });
 
 function createNewRace(id, socketId){
-  races[id] = []
+  races[id] = [false]
   joinRace(id, socketId)
 }
 
@@ -67,8 +107,7 @@ function joinRace(id, socketId){
   races[id].push(socketId) 
 
   for (var key in races){
-    let strKey = races[key].toString()
-    if(strKey == ""){
+    if(races[key].toString() == "false" || races[key].toString() == "true"){
       delete races[key]
     }
   }
@@ -88,9 +127,11 @@ function userLeft(socketId){
     }
   }
 
+
   for (var key in races){
-    let strKey = races[key].toString()
-    if(strKey == ""){
+    console.log(key)
+    if(races[key].toString() == "false" || races[key].toString() == "true"){
+      console.log(key)
       delete races[key]
     }
   }

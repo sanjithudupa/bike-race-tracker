@@ -17,15 +17,36 @@ class RaceMemberViewController: UIViewController {
         super.viewDidLoad()
         SocketIOManager.getInstance.updateUsersLabel = updateUserLabel
         SocketIOManager.getInstance.updateIdLabel = updateIDLabel
+        SocketIOManager.getInstance.showHomeVC = showHomeVC
+        SocketIOManager.getInstance.showHostVC = showHostVC
     }
     
     func updateUserLabel(){
-        RaceUsers.text = "Users: " + SocketIOManager.getInstance.users.joined(separator:"\n")
+        let users = String(SocketIOManager.getInstance.users.joined(separator:"\n"))
+        let boolIndex = users[users.startIndex] == "f" ? users.count - 5 : users.count - 4
+        RaceUsers.text = "Users:" + users.suffix(boolIndex)
     }
     
     func updateIDLabel(){
         RaceID.text = String(SocketIOManager.getInstance.id)
     }
+    
+    func showHomeVC(){
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+
+        let homeVC = storyBoard.instantiateViewController(withIdentifier: "ViewC") as! ViewController
+
+        self.present(homeVC, animated:true, completion:nil)
+    }
+    
+    func showHostVC(){
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+
+        let hostVC = storyBoard.instantiateViewController(withIdentifier: "RaceHostViewController") as! RaceHostViewController
+
+        self.present(hostVC, animated:true, completion:nil)
+    }
+    
     
 
     /*

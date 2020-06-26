@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,6 +74,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Start Race" backgroundImage="rectangle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="StartRacePressed:" destination="QZY-8K-3ts" eventType="touchUpInside" id="Zgw-oX-Aeg"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Users:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCc-bG-Un3">
                                 <rect key="frame" x="50" y="323.5" width="275" height="20.5"/>
@@ -81,10 +84,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ph-DI-JU4">
+                                <rect key="frame" x="16" y="8" width="69" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="Leave Race">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Ol6-MZ-hLP" firstAttribute="trailing" secondItem="fsp-hg-luP" secondAttribute="trailing" constant="105" id="2xA-GN-gae"/>
+                            <constraint firstItem="8Ph-DI-JU4" firstAttribute="top" secondItem="Ol6-MZ-hLP" secondAttribute="top" constant="16" id="63W-be-HBR"/>
                             <constraint firstItem="Ol6-MZ-hLP" firstAttribute="trailing" secondItem="BCc-bG-Un3" secondAttribute="trailing" constant="50" id="FL1-yU-uyZ"/>
                             <constraint firstItem="wbs-fo-fgX" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="105" id="Gxw-vK-OcP"/>
                             <constraint firstItem="fsp-hg-luP" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="105" id="J7B-7z-Vhj"/>
@@ -93,7 +104,9 @@
                             <constraint firstItem="Rpy-ut-6tV" firstAttribute="top" secondItem="fsp-hg-luP" secondAttribute="bottom" constant="8" id="QgN-Ed-8Nr"/>
                             <constraint firstItem="Rpy-ut-6tV" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="33" id="S0q-oj-6XR"/>
                             <constraint firstItem="BCc-bG-Un3" firstAttribute="top" secondItem="Rpy-ut-6tV" secondAttribute="bottom" constant="107" id="TTJ-ge-J4l"/>
+                            <constraint firstItem="8Ph-DI-JU4" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="16" id="d7m-OY-413"/>
                             <constraint firstItem="fsp-hg-luP" firstAttribute="top" secondItem="Ol6-MZ-hLP" secondAttribute="top" constant="142" id="gd5-2D-N5j"/>
+                            <constraint firstItem="8Ph-DI-JU4" firstAttribute="top" secondItem="EFa-Ve-g9p" secondAttribute="top" constant="8" id="iDt-Xx-ZZT"/>
                             <constraint firstItem="Ol6-MZ-hLP" firstAttribute="trailing" secondItem="wbs-fo-fgX" secondAttribute="trailing" constant="105" id="x8H-p3-jyb"/>
                             <constraint firstItem="Ol6-MZ-hLP" firstAttribute="bottom" secondItem="wbs-fo-fgX" secondAttribute="bottom" constant="50" id="ywE-of-m7h"/>
                         </constraints>
@@ -134,11 +147,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfU-Dz-TL6">
+                                <rect key="frame" x="16" y="8" width="69" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="Leave Race">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="ld3-qj-Jz8" secondAttribute="trailing" constant="50" id="5yg-gM-LLu"/>
                             <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="4cm-hP-85q" secondAttribute="trailing" constant="105" id="7P5-zP-ObG"/>
+                            <constraint firstItem="tfU-Dz-TL6" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="16" id="7pD-ZR-jGV"/>
+                            <constraint firstItem="tfU-Dz-TL6" firstAttribute="top" secondItem="1MU-qV-EEo" secondAttribute="top" constant="8" id="J0X-5c-gip"/>
                             <constraint firstItem="ld3-qj-Jz8" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="50" id="NEZ-xT-12r"/>
                             <constraint firstItem="4cm-hP-85q" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="105" id="WjK-jY-QYl"/>
                             <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="yHN-KO-kO6" secondAttribute="trailing" constant="33" id="a9E-pA-LQH"/>

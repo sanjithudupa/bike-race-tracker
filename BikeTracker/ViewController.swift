@@ -16,13 +16,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         SocketIOManager.getInstance.showHostVC = showHostVC
         SocketIOManager.getInstance.showMemberVC = showMemberVC
-
+        SocketIOManager.getInstance.showMemberVC = showMemberVC
+        SocketIOManager.getInstance.raceAlreadyStarted = raceAlreadyStarted
     }
     
     @IBAction func JoinRace(_ sender: Any) {
         let id = (raceID.text ?? "").filter("0123456789.".contains)
         if(id != ""){
-            SocketIOManager.getInstance.JoinRace(id: Int(id) ?? 0)
+            SocketIOManager.getInstance.joinRace(id: Int(id) ?? 0)
         }else{
             let alert = UIAlertController(title: "Fill in inputs", message: "Inputs can't be empty", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
@@ -44,6 +45,12 @@ class ViewController: UIViewController {
         let memberVC = storyBoard.instantiateViewController(withIdentifier: "RaceMemberViewController") as! RaceMemberViewController
 
         self.present(memberVC, animated:true, completion:nil)
+    }
+    
+    func raceAlreadyStarted(){
+        let alert = UIAlertController(title: "Couldn't Join Race", message: "Race already started", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
     }
     
     

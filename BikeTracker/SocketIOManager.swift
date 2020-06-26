@@ -8,6 +8,7 @@
 
 import Foundation
 import SocketIO
+import UIKit
 
 class SocketIOManager: NSObject {
     static let getInstance = SocketIOManager()
@@ -25,12 +26,20 @@ class SocketIOManager: NSObject {
     
     var showHostVC: (() -> Void)?
     var showMemberVC: (() -> Void)?
+    var showHomeVC: (() -> Void)?
+    
+    var raceAlreadyStarted: (() -> Void)?
+    var newHost: (() -> Void)?
     
     override init() {
         socket = manager.defaultSocket
         
         socket.on("youConnected") { dataArray, ack in
 //            SocketIOManager.getInstance.sendConnect(long : 253, lat : 351)
+//            let joined = dataArray[0] as? String ?? "false"
+//            if(joined.contains("false")){
+////                SocketIOManager.getInstance.showHomeVC?()
+//            }
             SocketIOManager.getInstance.sendConnect(name: SocketIOManager.getInstance.name)
 
         }
@@ -51,9 +60,20 @@ class SocketIOManager: NSObject {
         }
         
         socket.on("userListUpdate") { dataArray, ack in
+            print("ulU")
             let usersCSV = dataArray[0] as? String ?? ""
             SocketIOManager.getInstance.users = usersCSV.components(separatedBy: ",")
             SocketIOManager.getInstance.updateUsersLabel?()
+        }
+        
+        socket.on("raceAlreadyStarted") { dataArray, ack in
+            SocketIOManager.getInstance.raceAlreadyStarted?()
+        }
+        
+        socket.on("newHost"){ dataArray, ack in
+            print("newHost")
+            SocketIOManager.getInstance.showHostVC?()
+            SocketIOManager.getInstance.newHost?()
         }
         
         super.init()
@@ -78,12 +98,12 @@ class SocketIOManager: NSObject {
         socket.emit("sendConnect", name)
     }
     
-    func JoinRace(id: Int){
+    func joinRace(id: Int){
         SocketIOManager.getInstance.id = id
         socket.emit("joinRace", id)
     }
     
-    func StartRace(){
+    func startRace(){
         socket.emit("startRace", SocketIOManager.getInstance.id)
     }
     

@@ -17,18 +17,40 @@ class RaceHostViewController: UIViewController {
         super.viewDidLoad()
         SocketIOManager.getInstance.updateUsersLabel = updateUserLabel
         SocketIOManager.getInstance.updateIdLabel = updateIDLabel
+        SocketIOManager.getInstance.showHomeVC = showHomeVC
+        SocketIOManager.getInstance.newHost = newHost
     }
     
     
+    
     func updateUserLabel(){
-        RaceUsers.text = "Users: " + SocketIOManager.getInstance.users.joined(separator:"\n")
+        let users = String(SocketIOManager.getInstance.users.joined(separator:"\n"))
+        let boolIndex = users[users.startIndex] == "f" ? users.count - 5 : users.count - 4
+        RaceUsers.text = "Users:" + users.suffix(boolIndex)
     }
     
     func updateIDLabel(){
         RaceID.text = String(SocketIOManager.getInstance.id)
     }
     
+    func showHomeVC(){
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+
+        let homeVC = storyBoard.instantiateViewController(withIdentifier: "ViewC") as! ViewController
+
+        self.present(homeVC, animated:true, completion:nil)
+    }
     
+    func newHost(){
+        let alert = UIAlertController(title: "Host Left", message: "You are the new race host", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+    
+    @IBAction func StartRacePressed(_ sender: Any) {
+        SocketIOManager.getInstance.startRace()
+    }
     
 
     /*
