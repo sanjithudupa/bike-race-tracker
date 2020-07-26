@@ -14,10 +14,24 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let nc = NotificationCenter.default
+        nc.post(name: Notification.Name("UserLoggedIn"), object: nil)
+        
+        if(!SocketIOManager.getInstance.isConnected){
+            
+            SocketIOManager.getInstance.tryToConnect()
+        }else{
+            hideConnectingView()
+        }
         SocketIOManager.getInstance.showHostVC = showHostVC
         SocketIOManager.getInstance.showMemberVC = showMemberVC
-        SocketIOManager.getInstance.showMemberVC = showMemberVC
+        SocketIOManager.getInstance.showHomeVC = blank
         SocketIOManager.getInstance.raceAlreadyStarted = raceAlreadyStarted
+        SocketIOManager.getInstance.hideConnectingView = hideConnectingView
+        SocketIOManager.getInstance.disconnected = disconnected
+        SocketIOManager.getInstance.showConnectingVC = showConnectingVC
+
     }
     
     @IBAction func JoinRace(_ sender: Any) {
@@ -47,12 +61,31 @@ class ViewController: UIViewController {
         self.present(memberVC, animated:true, completion:nil)
     }
     
+    func blank(){}
+    
     func raceAlreadyStarted(){
         let alert = UIAlertController(title: "Couldn't Join Race", message: "Race already started", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
         self.present(alert, animated: true)
     }
     
+    func disconnected(){
+        let alert = UIAlertController(title: "Disconnected", message: "You were disconnected from the server", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+    }
     
+    
+    func hideConnectingView(){
+        SocketIOManager.getInstance.isConnected = true
+    }
+    
+    func showConnectingVC(){
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+
+        let connectingVC = storyBoard.instantiateViewController(withIdentifier: "ConnectingViewController") as! ConnectingViewController
+        connectingVC.dismiss = false
+        self.present(connectingVC, animated:true, completion:nil)
+    }
 }
 

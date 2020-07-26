@@ -47,8 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @objc func appMovedToBackground() {
-        print("Disconnecting")
-        SocketIOManager.getInstance.disconnect()
+        if(!SocketIOManager.getInstance.inRace){
+            SocketIOManager.getInstance.isConnected = false
+            SocketIOManager.getInstance.showHomeVC?()
+            SocketIOManager.getInstance.disconnect()
+        }
     }
     
 

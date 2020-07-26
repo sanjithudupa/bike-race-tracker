@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D8037A3F24A92534005F24EE /* RaceSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8037A3E24A92534005F24EE /* RaceSummaryViewController.swift */; };
 		D85C031A24A1B281005A3B20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C031924A1B281005A3B20 /* AppDelegate.swift */; };
 		D85C031C24A1B281005A3B20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C031B24A1B281005A3B20 /* SceneDelegate.swift */; };
 		D85C031E24A1B281005A3B20 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C031D24A1B281005A3B20 /* ViewController.swift */; };
@@ -17,9 +18,13 @@
 		D85C033124A279D4005A3B20 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033024A279D4005A3B20 /* SocketIOManager.swift */; };
 		D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033424A3E716005A3B20 /* RaceHostViewController.swift */; };
 		D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */; };
+		D8B8B4D024A7899200AC7072 /* RaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */; };
+		D8C9EC9824AAE19300C7FA6D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8C9EC9724AAE19300C7FA6D /* MapKit.framework */; };
+		D8C9EC9E24ABF74F00C7FA6D /* ConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D8037A3E24A92534005F24EE /* RaceSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceSummaryViewController.swift; sourceTree = "<group>"; };
 		D85C031624A1B281005A3B20 /* BikeTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BikeTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85C031924A1B281005A3B20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D85C031B24A1B281005A3B20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,6 +36,9 @@
 		D85C033024A279D4005A3B20 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		D85C033424A3E716005A3B20 /* RaceHostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceHostViewController.swift; sourceTree = "<group>"; };
 		D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceMemberViewController.swift; sourceTree = "<group>"; };
+		D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceViewController.swift; sourceTree = "<group>"; };
+		D8C9EC9724AAE19300C7FA6D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8C9EC9824AAE19300C7FA6D /* MapKit.framework in Frameworks */,
 				D85C032F24A1B3A6005A3B20 /* SocketIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,6 +59,7 @@
 			children = (
 				D85C031824A1B281005A3B20 /* BikeTracker */,
 				D85C031724A1B281005A3B20 /* Products */,
+				D8C9EC9624AAE19300C7FA6D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,8 +84,19 @@
 				D85C033024A279D4005A3B20 /* SocketIOManager.swift */,
 				D85C033424A3E716005A3B20 /* RaceHostViewController.swift */,
 				D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */,
+				D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */,
+				D8037A3E24A92534005F24EE /* RaceSummaryViewController.swift */,
+				D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */,
 			);
 			path = BikeTracker;
+			sourceTree = "<group>";
+		};
+		D8C9EC9624AAE19300C7FA6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8C9EC9724AAE19300C7FA6D /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +178,9 @@
 			files = (
 				D85C033124A279D4005A3B20 /* SocketIOManager.swift in Sources */,
 				D85C031E24A1B281005A3B20 /* ViewController.swift in Sources */,
+				D8C9EC9E24ABF74F00C7FA6D /* ConnectingViewController.swift in Sources */,
+				D8037A3F24A92534005F24EE /* RaceSummaryViewController.swift in Sources */,
+				D8B8B4D024A7899200AC7072 /* RaceViewController.swift in Sources */,
 				D85C031A24A1B281005A3B20 /* AppDelegate.swift in Sources */,
 				D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */,
 				D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */,

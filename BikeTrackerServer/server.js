@@ -16,6 +16,17 @@ app.get('/rooms', (req, res) => {
   res.send(races)
 });
 
+app.get('/users', (req, res) => {
+  // for (var key in races) {
+  //   // check if the property/key is defined in the object itself, not in parent
+  //   if (races.hasOwnProperty(key)) {           
+  //       console.log(key, races[key]);
+  //   }
+  // }
+  res.send(users)
+});
+
+
 io.on('connection', function(clientSocket){
   clientSocket.emit("youConnected")
 
@@ -29,19 +40,38 @@ io.on('connection', function(clientSocket){
     clientSocket.join(data)
 
     let joinState = "join"
+    // let joinIndex = 0
 
     if(races[data] != null && races[data].toString().substring(0,4) == "true"){
       clientSocket.emit("raceAlreadyStarted")
     }else{
       if(data in races && races[data] != [false] && races[data] != [true]){
+        // joinIndex = races[data].length
         joinRace(data, clientSocket.id)
       }else{
         createNewRace(data, clientSocket.id)
         joinState = "create"
       }
 
-      clientSocket.emit("youJoinedRace", joinState, races[data].toString())
-      io.in(data).emit("userListUpdate", races[data].toString())
+      clientSocket.emit("youJoinedRace", joinState, races[data].toString(), clientSocket.id)
+      let userNames = []
+      // for(var user in races[data]){
+      //   userNames.append(users[user])
+      // }
+      let firstDone = false;
+      
+      for(var user in races[data]){
+        if(firstDone){
+          userNames.push(users[races[data][user]])
+        }else{
+          firstDone = true
+        }
+      }
+        
+      console.log(userNames)
+
+      io.in(data).emit("userListUpdate", races[data].toString(), userNames.toString())
+      // io.in(data).emit("userNamesUpdate", userNames.toString())
 
       console.log(races[data])
       // console.log(races[data])
@@ -54,7 +84,57 @@ io.on('connection', function(clientSocket){
 
   clientSocket.on('startRace', (data) =>{
     races[data][0] = true;
-    io.in(data).emit("userListUpdate", races[data].toString())
+    io.in(data).emit("startRace");
+  });
+
+  clientSocket.on('positionUpdate', (data) => {
+    console.log('posupdate')
+    // let clientIndex = 0
+    // console.log(races[data[1]])
+    if(races[data[1]] != null && races[data[1]].toString().includes(clientSocket.id)){
+    //   clientIndex = races[data[1]].indexOf(clientSocket)
+      clientSocket.to(data[1]).emit("positionUpdate", data[0].toString(), clientSocket.id.toString());
+    }
+  });
+
+  clientSocket.on('stopRace', (data) =>{
+    races[data][0] = false;
+    io.in(data).emit("stopRace");
+  });
+
+  clientSocket.on('setEndpoint', (data) =>{
+    let dstring = data.toString()
+    console.log(dstring)
+    let cindex = dstring.indexOf(",");
+    io.in(dstring.substring(0, cindex)).emit("setEndpoint", dstring.substring(cindex + 1));
+    console.log("sent" + dstring.substring(cindex + 1) + "to" + dstring.substring(0, cindex))
+  });
+
+  clientSocket.on('stopRecording', function(){
+    clientSocket.emit('stopRecording')
+  });
+
+  clientSocket.on('leaveRace', function(){
+    let emitKey = ""
+
+    for (var key in races){
+      if(races[key].includes(clientSocket.id)){
+        emitKey = key;
+        let arrayStr = races[key].toString()
+        let host = arrayStr.substring(arrayStr.indexOf(",") + 1, arrayStr.indexOf(",", 6));
+        if(host == clientSocket.id && races[key].length >= 3){
+          io.to(races[key][2].toString()).emit("newHost");
+        }
+      }
+    }
+
+    userLeft(clientSocket.id)
+
+    if(emitKey != "" && emitKey in races){
+      io.in(emitKey).emit("userListUpdate", races[emitKey].toString())
+    }
+
+    console.log(clientSocket.id +  " left")
   });
 
   clientSocket.on('disconnect', function(){
@@ -62,21 +142,13 @@ io.on('connection', function(clientSocket){
     let emitKey = ""
 
     for (var key in races){
-      console.log('this', key)
       if(races[key].includes(clientSocket.id)){
-        console.log("someone left in", key)
         emitKey = key;
         let arrayStr = races[key].toString()
         let host = arrayStr.substring(arrayStr.indexOf(",") + 1, arrayStr.indexOf(",", 6));
-        console.log(host, clientSocket.id)
-        console.log(host == clientSocket.id)
-        console.log(races[key].length)
-        if(host == clientSocket.id && races[key].length > 3){
-          console.log('h')
-          console.log(races[key][2].toString())
+        if(host == clientSocket.id && races[key].length >= 3){
           io.to(races[key][2].toString()).emit("newHost");
         }
-
       }
     }
 

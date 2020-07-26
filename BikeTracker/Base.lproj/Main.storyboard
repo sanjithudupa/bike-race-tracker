@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dsL-Sd-Wbp">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
@@ -7,10 +7,46 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Connecting View-->
+        <scene sceneID="kTN-MW-Ynb">
+            <objects>
+                <viewController storyboardIdentifier="ConnectingViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="dsL-Sd-Wbp" userLabel="Connecting View" customClass="ConnectingViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ozd-K0-AHb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="vdK-pG-ksw">
+                                <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trying to connect..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3f-Pl-sWb">
+                                <rect key="frame" x="113.5" y="294.5" width="148" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="i3f-Pl-sWb" firstAttribute="centerX" secondItem="ozd-K0-AHb" secondAttribute="centerX" id="Zjs-M9-FHn"/>
+                            <constraint firstItem="vdK-pG-ksw" firstAttribute="top" secondItem="i3f-Pl-sWb" secondAttribute="bottom" constant="8" id="d8N-bI-mt7"/>
+                            <constraint firstItem="vdK-pG-ksw" firstAttribute="centerX" secondItem="ozd-K0-AHb" secondAttribute="centerX" id="qcL-l5-JGR"/>
+                            <constraint firstItem="vdK-pG-ksw" firstAttribute="centerY" secondItem="ozd-K0-AHb" secondAttribute="centerY" id="zPa-kF-zHJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vXc-pm-EBj"/>
+                    </view>
+                    <connections>
+                        <outlet property="Loading" destination="vdK-pG-ksw" id="BBE-V0-asz"/>
+                        <outlet property="Trying" destination="i3f-Pl-sWb" id="VgH-a5-9hd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xAe-cF-lpV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-721" y="137"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="ViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,18 +75,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="GNo-1D-TGv"/>
                     <connections>
+                        <outlet property="LoadingView" destination="vdK-pG-ksw" id="Pzw-oj-nhN"/>
+                        <outlet property="TryingToConnect" destination="i3f-Pl-sWb" id="n1W-Te-SAN"/>
                         <outlet property="raceID" destination="SOz-rT-qXT" id="OBz-W1-pSY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="138"/>
+            <point key="canvasLocation" x="132" y="137.18140929535232"/>
         </scene>
-        <!--RaceHost-->
+        <!--Race Host-->
         <scene sceneID="2AY-z3-K5v">
             <objects>
-                <viewController storyboardIdentifier="RaceHostViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="QZY-8K-3ts" userLabel="RaceHost" customClass="RaceHostViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RaceHostViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="QZY-8K-3ts" userLabel="Race Host" customClass="RaceHostViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EFa-Ve-g9p">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -84,12 +123,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ph-DI-JU4">
-                                <rect key="frame" x="16" y="8" width="69" height="28"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ph-DI-JU4">
+                                <rect key="frame" x="16" y="16" width="69" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Leave Race">
                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="LeaveRacePressed:" destination="QZY-8K-3ts" eventType="touchUpInside" id="Te0-Rx-djt"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -104,22 +146,181 @@
                             <constraint firstItem="Rpy-ut-6tV" firstAttribute="top" secondItem="fsp-hg-luP" secondAttribute="bottom" constant="8" id="QgN-Ed-8Nr"/>
                             <constraint firstItem="Rpy-ut-6tV" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="33" id="S0q-oj-6XR"/>
                             <constraint firstItem="BCc-bG-Un3" firstAttribute="top" secondItem="Rpy-ut-6tV" secondAttribute="bottom" constant="107" id="TTJ-ge-J4l"/>
+                            <constraint firstItem="8Ph-DI-JU4" firstAttribute="top" secondItem="Ol6-MZ-hLP" secondAttribute="top" constant="16" id="VNS-Ji-0HW"/>
                             <constraint firstItem="8Ph-DI-JU4" firstAttribute="leading" secondItem="Ol6-MZ-hLP" secondAttribute="leading" constant="16" id="d7m-OY-413"/>
                             <constraint firstItem="fsp-hg-luP" firstAttribute="top" secondItem="Ol6-MZ-hLP" secondAttribute="top" constant="142" id="gd5-2D-N5j"/>
-                            <constraint firstItem="8Ph-DI-JU4" firstAttribute="top" secondItem="EFa-Ve-g9p" secondAttribute="top" constant="8" id="iDt-Xx-ZZT"/>
                             <constraint firstItem="Ol6-MZ-hLP" firstAttribute="trailing" secondItem="wbs-fo-fgX" secondAttribute="trailing" constant="105" id="x8H-p3-jyb"/>
                             <constraint firstItem="Ol6-MZ-hLP" firstAttribute="bottom" secondItem="wbs-fo-fgX" secondAttribute="bottom" constant="50" id="ywE-of-m7h"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ol6-MZ-hLP"/>
                     </view>
                     <connections>
+                        <outlet property="Created" destination="fsp-hg-luP" id="dO2-3P-ANF"/>
                         <outlet property="RaceID" destination="Rpy-ut-6tV" id="u2r-xH-Dbr"/>
                         <outlet property="RaceUsers" destination="BCc-bG-Un3" id="TM5-pG-9aK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="syz-wx-xmh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="945" y="511"/>
+            <point key="canvasLocation" x="935" y="525"/>
+        </scene>
+        <!--Race View-->
+        <scene sceneID="kmb-Sj-zfc">
+            <objects>
+                <viewController storyboardIdentifier="RaceViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="LRJ-Dp-cCK" userLabel="Race View" customClass="RaceViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="apJ-45-Hs5" userLabel="View" customClass="RaceView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmq-lB-302">
+                                <rect key="frame" x="50" y="559" width="275" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="End Race For All"/>
+                                <connections>
+                                    <action selector="EndRacePressed:" destination="LRJ-Dp-cCK" eventType="touchUpInside" id="UrT-mw-mdn"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are the race host" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q93-tK-WaD">
+                                <rect key="frame" x="85" y="530" width="205" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVF-rY-G3b">
+                                <rect key="frame" x="16" y="20" width="79" height="30"/>
+                                <state key="normal" title="Leave Race"/>
+                                <connections>
+                                    <action selector="LeaveRacePressed:" destination="LRJ-Dp-cCK" eventType="touchUpInside" id="TzG-If-yRJ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recording Stopped" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRS-zm-O4H">
+                                <rect key="frame" x="50" y="60" width="275" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No endpoint set" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bGq-cX-inS">
+                                <rect key="frame" x="100" y="313.5" width="175" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KlD-IW-FlB">
+                                <rect key="frame" x="90" y="342" width="195" height="116"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="116" id="VJe-0M-McH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're in first place!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JqR-gr-EeZ">
+                                <rect key="frame" x="60" y="104" width="255" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="KlD-IW-FlB" firstAttribute="leading" secondItem="CHr-TD-abK" secondAttribute="leading" constant="90" id="2fV-Ia-ULN"/>
+                            <constraint firstItem="bGq-cX-inS" firstAttribute="leading" secondItem="CHr-TD-abK" secondAttribute="leading" constant="100" id="40b-az-82z"/>
+                            <constraint firstItem="KlD-IW-FlB" firstAttribute="top" secondItem="bGq-cX-inS" secondAttribute="bottom" constant="8" id="574-H2-7Em"/>
+                            <constraint firstItem="NRS-zm-O4H" firstAttribute="leading" secondItem="CHr-TD-abK" secondAttribute="leading" constant="50" id="6Xl-SU-Myc"/>
+                            <constraint firstItem="MVF-rY-G3b" firstAttribute="top" secondItem="CHr-TD-abK" secondAttribute="top" constant="20" id="FGX-NR-pz1"/>
+                            <constraint firstItem="CHr-TD-abK" firstAttribute="bottom" secondItem="tmq-lB-302" secondAttribute="bottom" constant="60" id="O0w-0u-MEX"/>
+                            <constraint firstItem="CHr-TD-abK" firstAttribute="trailing" secondItem="NRS-zm-O4H" secondAttribute="trailing" constant="50" id="PGU-4P-nT1"/>
+                            <constraint firstItem="CHr-TD-abK" firstAttribute="trailing" secondItem="JqR-gr-EeZ" secondAttribute="trailing" constant="60" id="S2s-Te-78e"/>
+                            <constraint firstItem="JqR-gr-EeZ" firstAttribute="top" secondItem="NRS-zm-O4H" secondAttribute="bottom" constant="8" id="SmO-4o-HXH"/>
+                            <constraint firstItem="q93-tK-WaD" firstAttribute="leading" secondItem="CHr-TD-abK" secondAttribute="leading" constant="85" id="Ssa-Sf-bIe"/>
+                            <constraint firstItem="CHr-TD-abK" firstAttribute="trailing" secondItem="bGq-cX-inS" secondAttribute="trailing" constant="100" id="YgD-PR-Jzl"/>
+                            <constraint firstItem="q93-tK-WaD" firstAttribute="top" secondItem="KlD-IW-FlB" secondAttribute="bottom" constant="72" id="cEz-kH-idt"/>
+                            <constraint firstItem="CHr-TD-abK" firstAttribute="trailing" secondItem="KlD-IW-FlB" secondAttribute="trailing" constant="90" id="cLA-83-MXY"/>
+                            <constraint firstItem="tmq-lB-302" firstAttribute="leading" secondItem="CHr-TD-abK" secondAttribute="leading" constant="50" id="ec4-kk-0QW"/>
+                            <constraint firstItem="CHr-TD-abK" firstAttribute="trailing" secondItem="tmq-lB-302" secondAttribute="trailing" constant="50" id="fjb-ml-pG8"/>
+                            <constraint firstItem="CHr-TD-abK" firstAttribute="trailing" secondItem="q93-tK-WaD" secondAttribute="trailing" constant="85" id="g0D-8D-gtI"/>
+                            <constraint firstItem="MVF-rY-G3b" firstAttribute="leading" secondItem="CHr-TD-abK" secondAttribute="leading" constant="16" id="qIb-gE-bV2"/>
+                            <constraint firstItem="tmq-lB-302" firstAttribute="top" secondItem="q93-tK-WaD" secondAttribute="bottom" constant="8" id="vXD-uU-PcY"/>
+                            <constraint firstItem="NRS-zm-O4H" firstAttribute="top" secondItem="CHr-TD-abK" secondAttribute="top" constant="60" id="wRZ-x4-haz"/>
+                            <constraint firstItem="JqR-gr-EeZ" firstAttribute="leading" secondItem="CHr-TD-abK" secondAttribute="leading" constant="60" id="zeu-z9-EWP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="CHr-TD-abK"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="TQS-NR-LOn"/>
+                    <connections>
+                        <outlet property="EndRaceButton" destination="tmq-lB-302" id="DLF-Xl-3VK"/>
+                        <outlet property="Endpoint" destination="bGq-cX-inS" id="Nw4-r1-Bg7"/>
+                        <outlet property="FirstPlaceLabel" destination="JqR-gr-EeZ" id="kXv-2Q-MKS"/>
+                        <outlet property="Log" destination="KlD-IW-FlB" id="NEc-BF-5Mb"/>
+                        <outlet property="RaceLeaderLabel" destination="q93-tK-WaD" id="o4e-43-VDW"/>
+                        <outlet property="RecordingStopped" destination="NRS-zm-O4H" id="Vps-PG-GV7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xz6-z4-VaE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1736.8" y="136.28185907046478"/>
+        </scene>
+        <!--Race Summary-->
+        <scene sceneID="Ado-SO-fdL">
+            <objects>
+                <viewController storyboardIdentifier="RaceSummaryViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="Pzc-Na-2Ui" userLabel="Race Summary" customClass="RaceSummaryViewController" customModule="BikeTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wuC-or-Nl4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Race Over" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6se-q3-6Eg">
+                                <rect key="frame" x="116.5" y="70" width="142" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Results:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKh-2L-0HR">
+                                <rect key="frame" x="139" y="193.5" width="97" height="33.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EsJ-Ql-Cf0">
+                                <rect key="frame" x="101" y="553" width="173" height="54"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="DoneButtonPressed:" destination="Pzc-Na-2Ui" eventType="touchUpInside" id="F0O-9z-IaF"/>
+                                    <action selector="EndRacePressed:" destination="LRJ-Dp-cCK" eventType="touchUpInside" id="jU6-CQ-ICC"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RhQ-1B-egy">
+                                <rect key="frame" x="60" y="235" width="255" height="116"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="116" id="nBH-N2-Qi6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="RhQ-1B-egy" firstAttribute="top" secondItem="gKh-2L-0HR" secondAttribute="bottom" constant="8" id="19p-WQ-nWb"/>
+                            <constraint firstItem="qtB-8V-HUM" firstAttribute="trailing" secondItem="RhQ-1B-egy" secondAttribute="trailing" constant="60" id="EXh-av-i37"/>
+                            <constraint firstItem="EsJ-Ql-Cf0" firstAttribute="leading" secondItem="qtB-8V-HUM" secondAttribute="leading" constant="101" id="G75-NX-6Df"/>
+                            <constraint firstItem="6se-q3-6Eg" firstAttribute="centerX" secondItem="wuC-or-Nl4" secondAttribute="centerX" id="Kz2-22-C6l"/>
+                            <constraint firstItem="gKh-2L-0HR" firstAttribute="top" secondItem="6se-q3-6Eg" secondAttribute="bottom" constant="85" id="WFb-ed-Luq"/>
+                            <constraint firstItem="gKh-2L-0HR" firstAttribute="centerX" secondItem="wuC-or-Nl4" secondAttribute="centerX" id="YYv-F9-eHv"/>
+                            <constraint firstItem="6se-q3-6Eg" firstAttribute="top" secondItem="qtB-8V-HUM" secondAttribute="top" constant="70" id="aVO-ZX-pbV"/>
+                            <constraint firstItem="RhQ-1B-egy" firstAttribute="leading" secondItem="qtB-8V-HUM" secondAttribute="leading" constant="60" id="dWm-jx-Y5e"/>
+                            <constraint firstItem="qtB-8V-HUM" firstAttribute="trailing" secondItem="EsJ-Ql-Cf0" secondAttribute="trailing" constant="101" id="deL-L3-Mb3"/>
+                            <constraint firstItem="qtB-8V-HUM" firstAttribute="bottom" secondItem="EsJ-Ql-Cf0" secondAttribute="bottom" constant="60" id="kfy-oe-3Z1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qtB-8V-HUM"/>
+                    </view>
+                    <connections>
+                        <outlet property="RaceResults" destination="RhQ-1B-egy" id="dyo-5F-cUF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Zm-jc-GEZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2584.8000000000002" y="136.28185907046478"/>
         </scene>
         <!--RaceMember-->
         <scene sceneID="mxC-6n-nqO">
@@ -148,11 +349,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfU-Dz-TL6">
-                                <rect key="frame" x="16" y="8" width="69" height="28"/>
+                                <rect key="frame" x="16" y="16" width="69" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Leave Race">
                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="LeaveRacePressed:" destination="CY0-sD-leX" eventType="touchUpInside" id="eMr-1g-qcq"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -160,13 +364,13 @@
                             <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="ld3-qj-Jz8" secondAttribute="trailing" constant="50" id="5yg-gM-LLu"/>
                             <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="4cm-hP-85q" secondAttribute="trailing" constant="105" id="7P5-zP-ObG"/>
                             <constraint firstItem="tfU-Dz-TL6" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="16" id="7pD-ZR-jGV"/>
-                            <constraint firstItem="tfU-Dz-TL6" firstAttribute="top" secondItem="1MU-qV-EEo" secondAttribute="top" constant="8" id="J0X-5c-gip"/>
                             <constraint firstItem="ld3-qj-Jz8" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="50" id="NEZ-xT-12r"/>
                             <constraint firstItem="4cm-hP-85q" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="105" id="WjK-jY-QYl"/>
                             <constraint firstItem="yNc-jh-BIg" firstAttribute="trailing" secondItem="yHN-KO-kO6" secondAttribute="trailing" constant="33" id="a9E-pA-LQH"/>
                             <constraint firstItem="yHN-KO-kO6" firstAttribute="top" secondItem="4cm-hP-85q" secondAttribute="bottom" constant="8" id="erL-Y2-jK2"/>
                             <constraint firstItem="ld3-qj-Jz8" firstAttribute="top" secondItem="yHN-KO-kO6" secondAttribute="bottom" constant="107" id="f8i-nF-naz"/>
                             <constraint firstItem="yHN-KO-kO6" firstAttribute="leading" secondItem="yNc-jh-BIg" secondAttribute="leading" constant="33" id="jcb-Ci-6T4"/>
+                            <constraint firstItem="tfU-Dz-TL6" firstAttribute="top" secondItem="yNc-jh-BIg" secondAttribute="top" constant="16" id="mEL-Mu-EQc"/>
                             <constraint firstItem="4cm-hP-85q" firstAttribute="top" secondItem="yNc-jh-BIg" secondAttribute="top" constant="142" id="uWx-We-49z"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yNc-jh-BIg"/>
@@ -178,7 +382,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hjy-KX-je9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="945" y="-238"/>
+            <point key="canvasLocation" x="935" y="-211"/>
         </scene>
     </scenes>
     <resources>
