@@ -40,22 +40,22 @@ class RaceViewController: UIViewController {
     }
     
     func updatePositionsLabel(){
-        Log.text = ""
-        print(SocketIOManager.getInstance.positions)
-        for (user, pos) in SocketIOManager.getInstance.positions{
-            guard(SocketIOManager.getInstance.userNames[user] != nil || user == "you") else{continue}
-            if(user == "you"){
-                Log.text! += "you are at " + String(pos) + "\n"
-            }else{
-                Log.text! += SocketIOManager.getInstance.userNames[user]! + " is at " + String(pos) + "\n"
-            }
-            
-        }
-        if((SocketIOManager.getInstance.positions.max { a, b in a.value < b.value })?.key ?? "you" == "you"){
-            FirstPlaceLabel.isHidden = false
-        }else{
-            FirstPlaceLabel.isHidden = true
-        }
+//        Log.text = ""
+//        print(SocketIOManager.getInstance.positions)
+//        for (user, pos) in SocketIOManager.getInstance.positions{
+//            guard(SocketIOManager.getInstance.userNames[user] != nil || user == "you") else{continue}
+//            if(user == "you"){
+//                Log.text! += "you are at " + String(pos) + "\n"
+//            }else{
+//                Log.text! += SocketIOManager.getInstance.userNames[user]! + " is at " + String(pos) + "\n"
+//            }
+//            
+//        }
+//        if((SocketIOManager.getInstance.positions.max { a, b in a.value < b.value })?.key ?? "you" == "you"){
+//            FirstPlaceLabel.isHidden = false
+//        }else{
+//            FirstPlaceLabel.isHidden = true
+//        }
     }
     
     func showStopButton(){
@@ -76,22 +76,22 @@ class RaceViewController: UIViewController {
     @IBAction func LeaveRacePressed(_ sender: Any) {
         let alert = UIAlertController(title: "Do you want to stop?", message: "Choose an option", preferredStyle: .alert)
         
-        if(((SocketIOManager.getInstance.positions.max { a, b in a.value < b.value })?.key ?? "you" == "you") && SocketIOManager.getInstance.endpoint == nil){
-            alert.addAction(UIAlertAction(title: "Set as Endpoint and Stop", style: .default) { (action:UIAlertAction!) in
-                if(((SocketIOManager.getInstance.positions.max { a, b in a.value < b.value })?.key ?? "you" == "you") && SocketIOManager.getInstance.endpoint == nil){
-                SocketIOManager.getInstance.endpoint = SocketIOManager.getInstance.positions["you"] ?? 0
-                SocketIOManager.getInstance.setEndpoint()
-                SocketIOManager.getInstance.stopRecording()
-                    self.alreadyPassed = true
-                    
-                }
-                
-            })
-        }else{
-            alert.addAction(UIAlertAction(title: "Stop Recording", style: .default) { (action:UIAlertAction!) in
-                SocketIOManager.getInstance.stopRecording()
-            })
-        }
+//        if(((SocketIOManager.getInstance.positions.max { a, b in a.value < b.value })?.key ?? "you" == "you") && SocketIOManager.getInstance.endpoint == nil){
+//            alert.addAction(UIAlertAction(title: "Set as Endpoint and Stop", style: .default) { (action:UIAlertAction!) in
+//                if(((SocketIOManager.getInstance.positions.max { a, b in a.value < b.value })?.key ?? "you" == "you") && SocketIOManager.getInstance.endpoint == nil){
+//                SocketIOManager.getInstance.endpoint = SocketIOManager.getInstance.positions["you"] ?? 0
+//                SocketIOManager.getInstance.setEndpoint()
+//                SocketIOManager.getInstance.stopRecording()
+//                    self.alreadyPassed = true
+//                    
+//                }
+//                
+//            })
+//        }else{
+//            alert.addAction(UIAlertAction(title: "Stop Recording", style: .default) { (action:UIAlertAction!) in
+//                SocketIOManager.getInstance.stopRecording()
+//            })
+//        }
 
         
         

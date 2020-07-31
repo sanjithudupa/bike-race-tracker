@@ -9,6 +9,7 @@
 import Foundation
 import SocketIO
 import UIKit
+import CoreLocation
 
 class SocketIOManager: NSObject {
     @objc static let getInstance = SocketIOManager()
@@ -29,7 +30,8 @@ class SocketIOManager: NSObject {
     var userNames = [String: String]()
     var joinIndex:Int!
     var userId:String!
-    var positions = [String: Int]()
+    var positions = [String: [CLLocationCoordinate2D]]()
+    var distances = [String: Int]()
     var endpoint:Int!
 
     //host/member vc ui functions
@@ -97,6 +99,7 @@ class SocketIOManager: NSObject {
                 SocketIOManager.getInstance.showMemberVC?()
             }else{
                 SocketIOManager.getInstance.showHostVC?()
+                print("showHost")
             }
             
             SocketIOManager.getInstance.userId = dataArray[2] as? String ?? ""
@@ -147,6 +150,7 @@ class SocketIOManager: NSObject {
         }
         
         socket.on("newHost"){ dataArray, ack in
+            print("y\ny\ny\ny\ny\ny\ny\ny\ny\ny\ny\n")
             SocketIOManager.getInstance.showHostVC?()
             SocketIOManager.getInstance.updateIdLabel?()
             SocketIOManager.getInstance.newHost?()
@@ -206,18 +210,23 @@ class SocketIOManager: NSObject {
         socket.on("positionUpdate"){ dataArray, ack in
             print("positionUpdate")
 //            print(SocketIOManager.getInstance.userId)
-            let position = dataArray[0] as? String ?? "0"
+            let position = dataArray[0] as? String ?? "0,0"
+            let locationCSV = position.components(separatedBy: ",")
+            let location = CLLocationCoordinate2D(latitude: Double(locationCSV[0]) ?? 0.0, longitude: Double(locationCSV[1]) ?? 0.0)
             let user = dataArray[1] as? String ?? ""
-            let curPos = SocketIOManager.getInstance.positions[user] ?? 0
-            let totalPos = curPos + (Int(position) ?? 0)
+            
+//            let curPos = SocketIOManager.getInstance.positions[user] ?? 0
+//            let totalPos = curPos + (Int(position) ?? 0)
             
             if(SocketIOManager.getInstance.users.contains(user)){
-                SocketIOManager.getInstance.positions[user] = totalPos
+                SocketIOManager.getInstance.positions[user]?.append(location)
             }
             
-            if(SocketIOManager.getInstance.endpoint != nil && totalPos > SocketIOManager.getInstance.endpoint){
-                SocketIOManager.getInstance.passedEndpoint?()
-            }
+            //TODO: get endpoint working
+            
+//            if(SocketIOManager.getInstance.endpoint != nil && totalPos > SocketIOManager.getInstance.endpoint){
+//                SocketIOManager.getInstance.passedEndpoint?()
+//            }
             
 //            let commaIndex = dataCSV.distance(from: dataCSV.startIndex, to:dataCSV.firstIndex(of: ",") ?? dataCSV.index(after: dataCSV.startIndex))
 //            let position = dataCSV.prefix(upTo: dataCSV.index(dataCSV.startIndex, offsetBy: commaIndex))
@@ -226,9 +235,10 @@ class SocketIOManager: NSObject {
             
 //
 //            let user = dataCSV.suffix(dataCSV.count - commaIndex + 1)
-            if(position != "0" && user != "" && user != SocketIOManager.getInstance.userId){
-                SocketIOManager.getInstance.updatePositionsLabel?(/*"\n" + user + " is now at " + position*/)
-            }
+            
+//            if(position != "0" && user != "" && user != SocketIOManager.getInstance.userId){
+//                SocketIOManager.getInstance.updatePositionsLabel?(/*"\n" + user + " is now at " + position*/)
+//            }
             
             SocketIOManager.getInstance.showStopButton?()
         }
@@ -288,22 +298,26 @@ class SocketIOManager: NSObject {
         SocketIOManager.getInstance.userNames = [String: String]()
         SocketIOManager.getInstance.joinIndex = nil
         SocketIOManager.getInstance.userId = nil
-        SocketIOManager.getInstance.positions = [String: Int]()
+        SocketIOManager.getInstance.positions = [String: [CLLocationCoordinate2D]]()
         SocketIOManager.getInstance.endpoint = nil
     }
     
     @objc func raceLoop(){
         print("raceLoop")
-        let position = Int.random(in: 1...20)
-        let sendData = [(position), SocketIOManager.getInstance.id as Any] as [Any]
-        SocketIOManager.getInstance.socket.emit("positionUpdate", sendData)
+        let location = LocationManager.getInstance.getLocation()
+        if(location != nil){
+            let position = String(location!.coordinate.latitude) + "," +  String(location!.coordinate.longitude)//Int.random(in: 1...20)
+            let sendData = [(position), SocketIOManager.getInstance.id as Any] as [Any]
         
-        let curPos = SocketIOManager.getInstance.positions["you"] ?? 0
-        let totalPos = curPos + Int(position)
-        
-        SocketIOManager.getInstance.positions["you"] = totalPos
-        SocketIOManager.getInstance.updatePositionsLabel?()
-        SocketIOManager.getInstance.updateEndpoint?()
+            SocketIOManager.getInstance.socket.emit("positionUpdate", sendData)
+            
+//            let curPos = SocketIOManager.getInstance.positions["you"] ?? 0
+//            let totalPos = curPos + Int(position)
+            
+//            SocketIOManager.getInstance.positions["you"] = totalPos
+            SocketIOManager.getInstance.updatePositionsLabel?()
+            SocketIOManager.getInstance.updateEndpoint?()
+        }
     }
     
     func stopRace(){
@@ -334,5 +348,9 @@ class SocketIOManager: NSObject {
     func couldntConnect(){
         SocketIOManager.getInstance.isConnected = false
         SocketIOManager.getInstance.showConnectingVC?()
+    }
+    
+    func testU(){
+        SocketIOManager.getInstance.updateUsersLabel?()
     }
 }

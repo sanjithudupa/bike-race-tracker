@@ -22,15 +22,15 @@ class RaceSummaryViewController: UIViewController {
         var count = 1
         RaceResults.text = ""
         print(SocketIOManager.getInstance.positions)
-        for (user, _) in SocketIOManager.getInstance.positions.sorted(by: {$0.value > $1.value}){
-            if(user == "you"){
-                RaceResults.text! += String(count) + ". you\n"
-            }else{
-                guard(SocketIOManager.getInstance.userNames[user] != nil) else{continue}
-                RaceResults.text! += String(count) + ". " + SocketIOManager.getInstance.userNames[user]! + "\n"
-            }
-            count += 1
-        }
+//        for (user, _) in SocketIOManager.getInstance.positions.sorted(by: {$0.value > $1.value}){
+//            if(user == "you"){
+//                RaceResults.text! += String(count) + ". you\n"
+//            }else{
+//                guard(SocketIOManager.getInstance.userNames[user] != nil) else{continue}
+//                RaceResults.text! += String(count) + ". " + SocketIOManager.getInstance.userNames[user]! + "\n"
+//            }
+//            count += 1
+//        }
 //        print(RaceResults.text)
         
 //        print("summ " + RaceResults.text + " should be " + raceSummary)

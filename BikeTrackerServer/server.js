@@ -88,7 +88,7 @@ io.on('connection', function(clientSocket){
   });
 
   clientSocket.on('positionUpdate', (data) => {
-    console.log('posupdate')
+    console.log('posupdate with ' + data)
     // let clientIndex = 0
     // console.log(races[data[1]])
     if(races[data[1]] != null && races[data[1]].toString().includes(clientSocket.id)){
@@ -124,6 +124,7 @@ io.on('connection', function(clientSocket){
         let host = arrayStr.substring(arrayStr.indexOf(",") + 1, arrayStr.indexOf(",", 6));
         if(host == clientSocket.id && races[key].length >= 3){
           io.to(races[key][2].toString()).emit("newHost");
+          console.log("new host")
         }
       }
     }
