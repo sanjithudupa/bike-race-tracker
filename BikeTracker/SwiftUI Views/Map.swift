@@ -224,9 +224,10 @@ struct Map: View {
     
     @State var allPoints = [[CLLocationCoordinate2D(latitude: 21.1433668, longitude: 79.1047889)], [CLLocationCoordinate2D(latitude: 21.1233668, longitude: 79.1027889)]]
     
-    @State var youNewHost = false
-    
     @State var addCount = 0
+    
+    @State var youNewHost = false
+    @State var amHost = false
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -234,6 +235,16 @@ struct Map: View {
         presentationMode.wrappedValue.dismiss()
         currentView = .home
     }
+    
+    func newHost(){
+        self.youNewHost = true
+        showHostText()
+    }
+    
+    func showHostText(){
+        self.amHost = SocketIOManager.getInstance.amHost
+    }
+    
     var body: some View {
         ZStack{
             MapView(points: $allPoints)
@@ -260,13 +271,21 @@ struct Map: View {
                     
                 }
             
-            if(self.$youNewHost.wrappedValue){
-                AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
+            if(self.$amHost.wrappedValue){
+                Text("You are the Host")
+                    .offset(y: UIScreen.main.bounds.height/4 + 70)
             }
+            
+            AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
+            
+            
             
 //            Text("Position " +  + "  : " + String(self.addCount))
         }.onAppear{
             SocketIOManager.getInstance.resetToHome = self.resetToHome
+            SocketIOManager.getInstance.newHost = self.newHost
+            
+            self.showHostText()
         }
     }
 }

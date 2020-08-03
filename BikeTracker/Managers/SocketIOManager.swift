@@ -21,6 +21,7 @@ class SocketIOManager: NSObject {
     
     var inRace = false
     var raceOn = false
+    var amHost = false
     
     var name:String!
     
@@ -107,6 +108,7 @@ class SocketIOManager: NSObject {
                 SocketIOManager.getInstance.showMemberVC?()
             }else{
                 SocketIOManager.getInstance.showHostVC?()
+                SocketIOManager.getInstance.amHost = true
                 print("showHost")
             }
             
@@ -158,11 +160,12 @@ class SocketIOManager: NSObject {
         }
         
         socket.on("newHost"){ dataArray, ack in
+            SocketIOManager.getInstance.amHost = true
             if(!SocketIOManager.getInstance.raceOn){
                 SocketIOManager.getInstance.showHostVC?()
                 SocketIOManager.getInstance.updateIdLabel?()
-                SocketIOManager.getInstance.newHost?()
             }
+            SocketIOManager.getInstance.newHost?()
         }
         
         
@@ -308,6 +311,7 @@ class SocketIOManager: NSObject {
     func resetRaceSpecificVaraibles(){
         LocationManager.getInstance.stop()
         SocketIOManager.getInstance.inRace = false
+        SocketIOManager.getInstance.amHost = false
         SocketIOManager.getInstance.id = nil
         SocketIOManager.getInstance.users = [String]()
         SocketIOManager.getInstance.userNames = [String: String]()
