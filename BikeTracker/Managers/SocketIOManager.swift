@@ -32,11 +32,16 @@ class SocketIOManager: NSObject {
     var userId:String!
     var positions = [String: [CLLocationCoordinate2D]]()
     var distances = [String: Int]()
-    var endpoint:Int!
+    var endpoint:CLLocationCoordinate2D!
+    var endpointDistance = 0.0
+
 
     //host/member vc ui functions
     var updateIdLabel: (() -> Void)?
     var updateUsersLabel: (() -> Void)?
+    var updateEndpointDistanceLabel: (() -> Void)?
+    var endpointHasBeenSet: (() -> Void)?
+
     
     //show vc functions
     var showHostVC: (() -> Void)?
@@ -191,8 +196,11 @@ class SocketIOManager: NSObject {
         }
         
         socket.on("setEndpoint"){ dataArray, ack in
-            let strEnd =  (dataArray[0] as! String)
-            SocketIOManager.getInstance.endpoint = Int(strEnd)
+            let position = dataArray[0] as? String ?? "0,0"
+            let locationCSV = position.components(separatedBy: ",")
+            let location = CLLocationCoordinate2D(latitude: Double(locationCSV[0]) ?? 0.0, longitude: Double(locationCSV[1]) ?? 0.0)
+            
+            SocketIOManager.getInstance.endpoint = location
             SocketIOManager.getInstance.updateEndpoint?()
         }
         
@@ -306,7 +314,7 @@ class SocketIOManager: NSObject {
         SocketIOManager.getInstance.userId = nil
         SocketIOManager.getInstance.positions = [String: [CLLocationCoordinate2D]]()
         SocketIOManager.getInstance.endpoint = nil
-        print("he\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\n")
+        SocketIOManager.getInstance.endpointDistance = 0.0
     }
     
     @objc func raceLoop(){
@@ -338,7 +346,8 @@ class SocketIOManager: NSObject {
     }
     
     func setEndpoint(){
-        socket.emit("setEndpoint", String(SocketIOManager.getInstance.id) + "," + String(SocketIOManager.getInstance.endpoint))
+        let endpointCSV: String = String(SocketIOManager.getInstance.endpoint.latitude) + "," + String(SocketIOManager.getInstance.endpoint.longitude)
+        socket.emit("setEndpoint", String(SocketIOManager.getInstance.id) + "," + endpointCSV)
     }
     
     func stopRecording(){

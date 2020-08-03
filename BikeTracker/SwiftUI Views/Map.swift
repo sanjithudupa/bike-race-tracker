@@ -88,40 +88,6 @@ struct MapView: UIViewRepresentable{
     }
 }
 
-struct EndpointSelectionMap: UIViewRepresentable{
-    let mapViewDelegate = MapViewDelegate()
-    
-    func makeUIView(context: Context) -> MKMapView{
-        MKMapView(frame: .zero)
-    }
-    
-    func updateUIView(_ view: MKMapView, context: Context){
-        view.delegate = mapViewDelegate
-        view.mapType = .mutedStandard
-        
-        
-////        guard points.count > 0 else { return }
-////
-////        let coordinate = points[0].last
-////        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-////        let region = MKCoordinateRegion(center: coordinate!, span: span)
-//
-//        view.setRegion(region, animated: true)
-        
-        //clear map
-        if !view.overlays.isEmpty {
-            view.removeOverlays(view.overlays)
-        }
-        
-        if !view.annotations.isEmpty { view.removeAnnotations(view.annotations)
-        }
-        
-
-        
-    }
-}
-
-
 class MapViewDelegate: NSObject, MKMapViewDelegate {
     var routes = [[CLLocationCoordinate2D]]()
     //try storing images to reduce load time and computation
@@ -276,6 +242,7 @@ struct Map: View {
                 .frame(width: 70, height: 50)
                 .offset(y:250)
                 .onTapGesture {
+                    print(SocketIOManager.getInstance.endpoint)
 //                    for _ in self.additions[0]{
                     if(self.additions.count > 0 && self.addCount < self.additions[0].count){
                         for i in 0..<self.additions.count{

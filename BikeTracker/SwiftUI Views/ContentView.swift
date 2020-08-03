@@ -163,6 +163,7 @@ struct HostView: View{
     @State var users = "Users:"
     @State var youNewHost = false
     @State var raceStarted = false
+    @State var selectingEndpoint = false
     @Binding var currentView: CurrentView
     @Binding var justDisconnected: Bool
     
@@ -240,9 +241,7 @@ struct HostView: View{
                     
                     
                     Button(action: {
-                        self.raceStarted = true
-                        print("Start Race")
-                        SocketIOManager.getInstance.startRace()
+                        self.selectingEndpoint = true
                     }) {
                         ZStack{
                             Rectangle()
@@ -253,6 +252,12 @@ struct HostView: View{
                                 .foregroundColor(Color.white)
                         }
                     }.offset(y: geometry.size.height/3)
+                    
+                    EndpointSelectorAlert(onOk: {
+                        self.raceStarted = true
+                        print("Start Race")
+                    SocketIOManager.getInstance.startRace()
+                    }, trigger: self.$selectingEndpoint)
                     
     //                if(self.youNewHost){
     //                    AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)

@@ -17,6 +17,7 @@
 		D85C032F24A1B3A6005A3B20 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = D85C032E24A1B3A6005A3B20 /* SocketIO */; };
 		D85C033124A279D4005A3B20 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033024A279D4005A3B20 /* SocketIOManager.swift */; };
 		D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033424A3E716005A3B20 /* RaceHostViewController.swift */; };
+		D86115DB24D7B421004187F9 /* EndpointSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86115DA24D7B421004187F9 /* EndpointSelector.swift */; };
 		D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */; };
 		D8B8B4D024A7899200AC7072 /* RaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */; };
 		D8C9EC9824AAE19300C7FA6D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8C9EC9724AAE19300C7FA6D /* MapKit.framework */; };
@@ -41,6 +42,7 @@
 		D85C032724A1B281005A3B20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D85C033024A279D4005A3B20 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		D85C033424A3E716005A3B20 /* RaceHostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceHostViewController.swift; sourceTree = "<group>"; };
+		D86115DA24D7B421004187F9 /* EndpointSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointSelector.swift; sourceTree = "<group>"; };
 		D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceMemberViewController.swift; sourceTree = "<group>"; };
 		D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceViewController.swift; sourceTree = "<group>"; };
 		D8C9EC9724AAE19300C7FA6D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -138,6 +140,7 @@
 				D8F2D8EC24D25E4000C7207A /* Map.swift */,
 				D8F2D8F424D4F9FF00C7207A /* ConnectingView.swift */,
 				D8F2D8F624D726C700C7207A /* AlertView.swift */,
+				D86115DA24D7B421004187F9 /* EndpointSelector.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				D8037A3F24A92534005F24EE /* RaceSummaryViewController.swift in Sources */,
 				D8B8B4D024A7899200AC7072 /* RaceViewController.swift in Sources */,
 				D85C031A24A1B281005A3B20 /* AppDelegate.swift in Sources */,
+				D86115DB24D7B421004187F9 /* EndpointSelector.swift in Sources */,
 				D8F2D8E824CE4C1100C7207A /* ContentView.swift in Sources */,
 				D8F2D8ED24D25E4000C7207A /* Map.swift in Sources */,
 				D8F2D8F724D726C700C7207A /* AlertView.swift in Sources */,

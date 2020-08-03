@@ -42,16 +42,16 @@ class RaceHostViewController: UIViewController {
             textField.placeholder = "Enter Endpoint"
             endpointField = textField
         }
-        alert.addAction(UIAlertAction(title: "Done", style: .cancel){ (action:UIAlertAction!) in
-            let endpoint = Int(endpointField.text ?? "")
-            if(endpoint != nil){
-                SocketIOManager.getInstance.endpoint = endpoint
-                SocketIOManager.getInstance.setEndpoint()
-            }else{
-                SocketIOManager.getInstance.endpoint = nil
-            }
-            SocketIOManager.getInstance.startRace()
-        })
+//        alert.addAction(UIAlertAction(title: "Done", style: .cancel){ (action:UIAlertAction!) in
+//            let endpoint = Int(endpointField.text ?? "")
+//            if(endpoint != nil){
+//                SocketIOManager.getInstance.endpoint = endpoint
+//                SocketIOManager.getInstance.setEndpoint()
+//            }else{
+//                SocketIOManager.getInstance.endpoint = nil
+//            }
+//            SocketIOManager.getInstance.startRace()
+//        })
 
         self.present(alert, animated: true)
         

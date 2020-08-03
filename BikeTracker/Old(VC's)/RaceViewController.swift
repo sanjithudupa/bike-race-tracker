@@ -134,8 +134,8 @@ class RaceViewController: UIViewController {
     
     func updateEndpoint(){
         guard SocketIOManager.getInstance.endpoint != nil else{ return }
-        print("updating enpoint to " + String(SocketIOManager.getInstance.endpoint))
-        Endpoint.text = "Endpoint set to: " + String(SocketIOManager.getInstance.endpoint)
+        print("updating enpoint to " + SocketIOManager.getInstance.endpoint.debugDescription)
+        Endpoint.text = "Endpoint set to: " + SocketIOManager.getInstance.endpoint.debugDescription
         print(alreadyPassed)
     }
     
