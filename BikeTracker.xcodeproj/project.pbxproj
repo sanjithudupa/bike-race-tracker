@@ -87,24 +87,14 @@
 		D85C031824A1B281005A3B20 /* BikeTracker */ = {
 			isa = PBXGroup;
 			children = (
-				D85C031924A1B281005A3B20 /* AppDelegate.swift */,
-				D85C031B24A1B281005A3B20 /* SceneDelegate.swift */,
-				D85C031D24A1B281005A3B20 /* ViewController.swift */,
-				D85C031F24A1B281005A3B20 /* Main.storyboard */,
+				D85C032724A1B281005A3B20 /* Info.plist */,
 				D85C032224A1B281005A3B20 /* Assets.xcassets */,
 				D85C032424A1B281005A3B20 /* LaunchScreen.storyboard */,
-				D85C032724A1B281005A3B20 /* Info.plist */,
-				D85C033024A279D4005A3B20 /* SocketIOManager.swift */,
-				D85C033424A3E716005A3B20 /* RaceHostViewController.swift */,
-				D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */,
-				D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */,
-				D8037A3E24A92534005F24EE /* RaceSummaryViewController.swift */,
-				D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */,
-				D8F2D8E724CE4C1100C7207A /* ContentView.swift */,
-				D8F2D8EC24D25E4000C7207A /* Map.swift */,
-				D8F2D8EE24D26A9C00C7207A /* LocationManager.swift */,
-				D8F2D8F424D4F9FF00C7207A /* ConnectingView.swift */,
-				D8F2D8F624D726C700C7207A /* AlertView.swift */,
+				D8F2D8F824D78DBC00C7207A /* Old(VC's) */,
+				D8F2D8F924D78E0C00C7207A /* Managers */,
+				D8F2D8FA24D78E4E00C7207A /* SwiftUI Views */,
+				D85C031924A1B281005A3B20 /* AppDelegate.swift */,
+				D85C031B24A1B281005A3B20 /* SceneDelegate.swift */,
 			);
 			path = BikeTracker;
 			sourceTree = "<group>";
@@ -116,6 +106,40 @@
 				D8C9EC9724AAE19300C7FA6D /* MapKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8F2D8F824D78DBC00C7207A /* Old(VC's) */ = {
+			isa = PBXGroup;
+			children = (
+				D85C031D24A1B281005A3B20 /* ViewController.swift */,
+				D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */,
+				D8037A3E24A92534005F24EE /* RaceSummaryViewController.swift */,
+				D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */,
+				D85C033424A3E716005A3B20 /* RaceHostViewController.swift */,
+				D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */,
+				D85C031F24A1B281005A3B20 /* Main.storyboard */,
+			);
+			path = "Old(VC's)";
+			sourceTree = "<group>";
+		};
+		D8F2D8F924D78E0C00C7207A /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D85C033024A279D4005A3B20 /* SocketIOManager.swift */,
+				D8F2D8EE24D26A9C00C7207A /* LocationManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		D8F2D8FA24D78E4E00C7207A /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				D8F2D8E724CE4C1100C7207A /* ContentView.swift */,
+				D8F2D8EC24D25E4000C7207A /* Map.swift */,
+				D8F2D8F424D4F9FF00C7207A /* ConnectingView.swift */,
+				D8F2D8F624D726C700C7207A /* AlertView.swift */,
+			);
+			path = "SwiftUI Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
