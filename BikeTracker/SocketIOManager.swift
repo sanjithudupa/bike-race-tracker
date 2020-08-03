@@ -45,6 +45,7 @@ class SocketIOManager: NSObject {
     var showRaceVC: (() -> Void)?
     var showSummaryVC: (() -> Void)?
     var showConnectingVC: (() -> Void)?
+    var resetToHome: (() -> Void)?
     
     //race vc ui functions
     var updatePositionsLabel: ((/*_ addition:String*/) -> Void)?
@@ -62,6 +63,7 @@ class SocketIOManager: NSObject {
     var passedEndpoint: (() -> Void)?
     
     var timer : Timer?
+    var reconnectTimer : Timer?
     
     override init() {
         socket = manager.defaultSocket
@@ -70,6 +72,7 @@ class SocketIOManager: NSObject {
         socket.on("error"){ dataArray, ack in
             if((dataArray[0] as? String ?? "") == "Could not connect to the server." && SocketIOManager.getInstance.isConnected){
                 SocketIOManager.getInstance.couldntConnect()
+                SocketIOManager.getInstance.tryToConnect()
             }
         }
         
@@ -205,6 +208,8 @@ class SocketIOManager: NSObject {
 //            SocketIOManager.getInstance.leaveRace()
             SocketIOManager.getInstance.showSummaryVC?()
             SocketIOManager.getInstance.fillRaceSummary?()
+            
+            LocationManager.getInstance.stop()
         }
         
         socket.on("positionUpdate"){ dataArray, ack in
@@ -292,6 +297,7 @@ class SocketIOManager: NSObject {
     }
     
     func resetRaceSpecificVaraibles(){
+        LocationManager.getInstance.stop()
         SocketIOManager.getInstance.inRace = false
         SocketIOManager.getInstance.id = nil
         SocketIOManager.getInstance.users = [String]()
@@ -300,10 +306,12 @@ class SocketIOManager: NSObject {
         SocketIOManager.getInstance.userId = nil
         SocketIOManager.getInstance.positions = [String: [CLLocationCoordinate2D]]()
         SocketIOManager.getInstance.endpoint = nil
+        print("he\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\nhe\n")
     }
     
     @objc func raceLoop(){
         print("raceLoop")
+        print(SocketIOManager.getInstance.userId)
         let location = LocationManager.getInstance.getLocation()
         if(location != nil){
             let position = String(location!.coordinate.latitude) + "," +  String(location!.coordinate.longitude)//Int.random(in: 1...20)
@@ -317,6 +325,8 @@ class SocketIOManager: NSObject {
 //            SocketIOManager.getInstance.positions["you"] = totalPos
             SocketIOManager.getInstance.updatePositionsLabel?()
             SocketIOManager.getInstance.updateEndpoint?()
+        }else{
+            print("location nil")
         }
     }
     
@@ -336,10 +346,11 @@ class SocketIOManager: NSObject {
     }
     
     func tryToConnect(){
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             SocketIOManager.getInstance.connect()
             print("trying")
             SocketIOManager.getInstance.socket.on("youConnected") { dataArray, ack in
+                    SocketIOManager.getInstance.resetToHome?()
                     timer.invalidate()
                 }
             }

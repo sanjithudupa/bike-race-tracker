@@ -38,15 +38,18 @@ class LocationManager: NSObject{
     @objc static let getInstance = LocationManager()
 
     var locationManager = CLLocationManager()
+    var active = false
     
     func getLocation() -> CLLocation?{
+        if(!active){
+            start()
+        }
+        
         var currentLoc: CLLocation? = nil
-        if(CLLocationManager.authorizationStatus() == .authorizedWhenInUse) {
+        if(CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways) {
             currentLoc = self.locationManager.location
-//            print(currentLoc!.coordinate.latitude)
-//            print(currentLoc!.coordinate.longitude)
         }else{
-            print("couldn't get location")
+            print("not allowed to get location")
         }
         
         return currentLoc
@@ -55,9 +58,15 @@ class LocationManager: NSObject{
     func start(){
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
+        self.active = true
     }
     
     func stop(){
         self.locationManager.stopUpdatingLocation()
+        self.active = false
+    }
+    
+    func hasPermission() -> Bool{
+        return CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways
     }
 }

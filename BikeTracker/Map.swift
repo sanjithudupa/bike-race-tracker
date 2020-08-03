@@ -250,13 +250,24 @@ class LandmarkAnnotation: NSObject, MKAnnotation {
 
 struct Map: View {
 //    @Binding var showing : CurrentView
+    
+    @Binding var currentView : CurrentView
 
 //    var points =
     @State var additions = [[CLLocationCoordinate2D(latitude: 21.124083, longitude: 79.1145274), CLLocationCoordinate2D(latitude: 21.1245418, longitude: 79.1160327), CLLocationCoordinate2D(latitude: 21.1394636, longitude: 79.1199755), CLLocationCoordinate2D(latitude: 21.1243668, longitude: 79.1037889)], [CLLocationCoordinate2D(latitude: 21.122083, longitude: 79.1135274), CLLocationCoordinate2D(latitude: 21.1235418, longitude: 79.1150327), CLLocationCoordinate2D(latitude: 21.1384636, longitude: 79.1189755), CLLocationCoordinate2D(latitude: 21.1233668, longitude: 79.1027889)]]
     
     @State var allPoints = [[CLLocationCoordinate2D(latitude: 21.1433668, longitude: 79.1047889)], [CLLocationCoordinate2D(latitude: 21.1233668, longitude: 79.1027889)]]
     
+    @State var youNewHost = false
+    
     @State var addCount = 0
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    func resetToHome(){
+        presentationMode.wrappedValue.dismiss()
+        currentView = .home
+    }
     var body: some View {
         ZStack{
             MapView(points: $allPoints)
@@ -282,10 +293,14 @@ struct Map: View {
                     
                 }
             
+            if(self.$youNewHost.wrappedValue){
+                AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
+            }
+            
 //            Text("Position " +  + "  : " + String(self.addCount))
-        }/*.onAppear{
-            self.allPoints = [self.points, self.points2]
-        }*/
+        }.onAppear{
+            SocketIOManager.getInstance.resetToHome = self.resetToHome
+        }
     }
 }
 

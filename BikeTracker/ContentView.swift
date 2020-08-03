@@ -15,16 +15,58 @@ enum CurrentView{
     case member
 }
 
-struct ContentView: View {
+struct AppView: View {
+    @State var connectionIssue = true
+    @State var connectionStatus = "Trying to connect"
+    
+    func showConnectingView(){
+        self.connectionStatus = "Trying to connect"
+        self.connectionIssue = true
+    }
+    
+    func hideConnectingView(){
+        self.connectionStatus = "Connected!"
+        Thread.sleep(forTimeInterval: 1)
+        self.connectionIssue = false
+    }
+    
+    var body: some View {
+        GeometryReader{geometry in
+            Home()
+                .blur(radius: self.$connectionIssue.wrappedValue ? 5 : 0)
+
+//            if(self.$connectionIssue.wrappedValue){
+            Color.black
+                .edgesIgnoringSafeArea(.all)
+                .opacity(self.$connectionIssue.wrappedValue ? 0.5 : 0)
+            ConnectingView(status: self.$connectionStatus)
+                .frame(width: geometry.size.width/2, height: geometry.size.height/6)
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(radius: 3)
+                .position()
+                .offset(x: geometry.size.width/2, y: geometry.size.height/2)
+                .opacity(self.$connectionIssue.wrappedValue ? 1 : 0)
+//            }
+        
+        }.onAppear(){
+            SocketIOManager.getInstance.showConnectingVC = self.showConnectingView
+            SocketIOManager.getInstance.hideConnectingView = self.hideConnectingView
+        }
+        .animation(.easeInOut)
+    }
+}
+
+struct Home: View {
     @State private var raceID: String = ""
     @State private var currentView: CurrentView = .home
     @State private var inputsEmpty = false
     @State private var youNewHost = false
+    @State private var disconnectedNow = false
     @State private var raceAlreadyStarted = false
-
     
     var body: some View {
-        GeometryReader{geometry in
+        return GeometryReader{geometry in
             ZStack{
                 VStack {
                     TextField("Race ID", text: self.$raceID).textFieldStyle(RoundedBorderTextFieldStyle())
@@ -56,28 +98,35 @@ struct ContentView: View {
                 if(self.$currentView.wrappedValue == .host){
                         
                     
-                    HostView(currentView: self.$currentView)
+                    HostView(currentView: self.$currentView, justDisconnected: self.$disconnectedNow)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .background(Color.white)
                     
 
                 }else if(self.$currentView.wrappedValue == .member){
-                    MemberView(currentView: self.$currentView, youNewHost: self.$youNewHost)
+                    MemberView(currentView: self.$currentView, youNewHost: self.$youNewHost, justDisconnected: self.$disconnectedNow)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .background(Color.white)
 
                 }
                 
                 //host left alert
-                if(self.$youNewHost.wrappedValue){
-                    AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
-                }
+                
+                AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
                 
                 //race started alert
-                if(self.$raceAlreadyStarted.wrappedValue){
-                    AlertView(title: "Race Already Started", text: "Couldn't join the race because it has already started", trigger: self.$raceAlreadyStarted)
+                AlertView(title: "Race Already Started", text: "Couldn't join the race because it has already started", trigger: self.$raceAlreadyStarted)
+                
+                //disconnected
+                if(SocketIOManager.getInstance.inRace){
+                    AlertView(title: "Disconnected from Server", text: "If you were in a race, you were disconnected. If you were not in a race, this shouldn't matter.", onOk: {
+                            SocketIOManager.getInstance.resetRaceSpecificVaraibles()
+                        SocketIOManager.getInstance.inRace = false
+                            print("yeye")
+                        }, trigger: self.$disconnectedNow)
                 }
-                            
+                
+                
     //            NavigationLink(destination: HostView(), isActive: (self.currentView == .host)) {
     //                EmptyView()
     //            }
@@ -109,38 +158,13 @@ struct ContentView: View {
     
 }
 
-struct AlertView: View{
-    @State var title = "Alert Title"
-    @State var text = "Alert Body"
-    @Binding var trigger: Bool
-    var body: some View{
-        ZStack {
-            Color.white
-            VStack {
-                Text(self.title)
-                Spacer()
-                Text(self.text)
-                    .multilineTextAlignment(.center)
-                Spacer()
-                Button(action: {
-                    self.trigger = false
-                }, label: {
-                    Text("Okay")
-                })
-            }.padding()
-        }
-        .frame(width: 300, height: 200)
-        .cornerRadius(20).shadow(radius: 20)
-    }
-}
-
-
 struct HostView: View{
     @State var raceID = "0"
     @State var users = "Users:"
     @State var youNewHost = false
     @State var raceStarted = false
     @Binding var currentView: CurrentView
+    @Binding var justDisconnected: Bool
     
     func updateIdLabel(){
         self.raceID = String(SocketIOManager.getInstance.id)
@@ -168,12 +192,17 @@ struct HostView: View{
         print("Users:\nS\nD\nS\nS\nS\nS\nS\nS")
     }
     
+    func resetToHome(){
+        self.currentView = .home
+        self.justDisconnected = true
+    }
+    
     var body: some View{
         NavigationView{
             GeometryReader{geometry in
                 ZStack{
                     
-                    NavigationLink(destination: Map().navigationBarBackButtonHidden(true)
+                    NavigationLink(destination: Map(currentView: self.$currentView).navigationBarBackButtonHidden(true)
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .edgesIgnoringSafeArea(.all), isActive: self.$raceStarted) {
@@ -233,9 +262,12 @@ struct HostView: View{
             }.onAppear(){
                 SocketIOManager.getInstance.updateIdLabel = self.updateIdLabel
                 SocketIOManager.getInstance.updateUsersLabel = self.updateUserLabel
+                self.justDisconnected = false
+                SocketIOManager.getInstance.resetToHome = self.resetToHome
                 
                 SocketIOManager.getInstance.updateIdLabel?()
                 SocketIOManager.getInstance.updateUsersLabel?()
+                LocationManager.getInstance.start()
     //            SocketIOManager.getInstance.testU()
             }
             .navigationBarTitle("")
@@ -251,6 +283,7 @@ struct MemberView: View {
     @State var raceStarted = false
     @Binding var currentView: CurrentView
     @Binding var youNewHost: Bool
+    @Binding var justDisconnected: Bool
     
     func updateIdLabel(){
         self.raceID = String(SocketIOManager.getInstance.id)
@@ -269,56 +302,66 @@ struct MemberView: View {
         self.raceStarted = true
     }
     
+    func resetToHome(){
+        self.currentView = .home
+        self.justDisconnected = true
+    }
+    
     var body: some View{
         NavigationView{
-        GeometryReader{geometry in
-            ZStack{
-                
-                NavigationLink(destination: Map().navigationBarBackButtonHidden(true)
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true)
-                    .edgesIgnoringSafeArea(.all), isActive: self.$raceStarted) {
-                    EmptyView()
-                }
-                
-                VStack{
-                    HStack{
-                        Button(action: {
-                            print("Leave Race")
-                            SocketIOManager.getInstance.leaveRace()
-                            SocketIOManager.getInstance.inRace = false
-                            self.currentView = .home
-                        }) {
-                            Text("Leave Race")
-                               
-                        }.padding()
+            GeometryReader{geometry in
+                ZStack{
+                    
+                    NavigationLink(destination: Map(currentView: self.$currentView).navigationBarBackButtonHidden(true)
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true)
+                        .edgesIgnoringSafeArea(.all), isActive: self.$raceStarted) {
+                        EmptyView()
+                    }
+                    
+                    VStack{
+                        HStack{
+                            Button(action: {
+                                print("Leave Race")
+                                SocketIOManager.getInstance.leaveRace()
+                                SocketIOManager.getInstance.inRace = false
+                                self.currentView = .home
+                            }) {
+                                Text("Leave Race")
+                                   
+                            }.padding()
+                            Spacer()
+                        }
                         Spacer()
                     }
-                    Spacer()
+                    VStack{
+                        Spacer()
+                        Group{
+                            Text("You Joined Race:")
+                            Text(String(self.raceID))
+                                .font(.largeTitle)
+                        }.offset(y: -geometry.size.height/3.5)
+                        Spacer()
+                    }
+                    
+                    Text(self.users)
+                        .multilineTextAlignment(.center)
+                    
                 }
-                VStack{
-                    Spacer()
-                    Group{
-                        Text("You Joined Race:")
-                        Text(String(self.raceID))
-                            .font(.largeTitle)
-                    }.offset(y: -geometry.size.height/3.5)
-                    Spacer()
-                }
+            }.onAppear(){
+                SocketIOManager.getInstance.updateIdLabel = self.updateIdLabel
+                SocketIOManager.getInstance.updateUsersLabel = self.updateUserLabel
+                SocketIOManager.getInstance.newHost = self.newHost
+                SocketIOManager.getInstance.showRaceVC = self.showRaceView
+                self.justDisconnected = false
+                SocketIOManager.getInstance.resetToHome = self.resetToHome
                 
-                Text(self.users)
-                    .multilineTextAlignment(.center)
-                
+                SocketIOManager.getInstance.updateIdLabel?()
+                SocketIOManager.getInstance.updateUsersLabel?()
+                LocationManager.getInstance.start()
             }
-        }.onAppear(){
-            SocketIOManager.getInstance.updateIdLabel = self.updateIdLabel
-            SocketIOManager.getInstance.updateUsersLabel = self.updateUserLabel
-            SocketIOManager.getInstance.newHost = self.newHost
-            SocketIOManager.getInstance.showRaceVC = self.showRaceView
-            
-            SocketIOManager.getInstance.updateIdLabel?()
-            SocketIOManager.getInstance.updateUsersLabel?()
-        }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
         }
     }
 }

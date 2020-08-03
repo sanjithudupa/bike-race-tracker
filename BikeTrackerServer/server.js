@@ -88,7 +88,7 @@ io.on('connection', function(clientSocket){
   });
 
   clientSocket.on('positionUpdate', (data) => {
-    console.log('posupdate with ' + data)
+    console.log('posupdate with ' + data + ' from ' + clientSocket.id)
     // let clientIndex = 0
     // console.log(races[data[1]])
     if(races[data[1]] != null && races[data[1]].toString().includes(clientSocket.id)){
