@@ -10,24 +10,22 @@ import SwiftUI
 import MapKit
 
 struct MapView: UIViewRepresentable{
-    let mapViewDelegate = MapViewDelegate()
     
-//    @ObservedObject private var locationManager = LocationManager()
+    func makeCoordinator() -> MapView.Coordinator {
+        return MapView.Coordinator(parent1: self)
+    }
     
     @Binding var points : [[CLLocationCoordinate2D]]
 
     func makeUIView(context: Context) -> MKMapView{
-        MKMapView(frame: .zero)
+        let map = MKMapView(frame: .zero)
+        map.delegate = context.coordinator
+        map.mapType = .mutedStandard
         
+        return map
     }
     
     func updateUIView(_ view: MKMapView, context: Context){
-        view.delegate = mapViewDelegate
-        view.mapType = .mutedStandard
-        
-//        let c = self.locationManager.location != nil ? self.locationManager.location!.coordinate : CLLocationCoordinate2D()
-        
-//        print(c)
         
         guard points.count > 0 else { return }
         
@@ -38,12 +36,14 @@ struct MapView: UIViewRepresentable{
         view.setRegion(region, animated: true)
         
         //clear map
-        if !view.overlays.isEmpty {
-            view.removeOverlays(view.overlays)
-        }
+//        if !view.overlays.isEmpty {
+//            view.removeOverlays(view.overlays)
+//        }
         
-        if !view.annotations.isEmpty { view.removeAnnotations(view.annotations)
-        }
+        let curOverlays = view.overlays
+        
+//        if !view.annotations.isEmpty { view.removeAnnotations(view.annotations)
+//        }
         
         
         //draw polylines
@@ -51,7 +51,7 @@ struct MapView: UIViewRepresentable{
         var landmark:LandmarkAnnotation
         var count = 0
         
-        mapViewDelegate.routes = []
+//        mapViewDelegate.routes = []
         
         for point in self.points{
             polyLine = MKPolyline(coordinates: point, count: self.points[count].count);
@@ -59,7 +59,7 @@ struct MapView: UIViewRepresentable{
             view.addOverlay(polyLine);
             count += 1
             
-            mapViewDelegate.routes.append(point)
+//            mapViewDelegate.routes.append(point)
             
             //draw markers
             landmark = LandmarkAnnotation(title: String(count), subtitle: "landmark", coordinate: point.last!)
@@ -67,138 +67,66 @@ struct MapView: UIViewRepresentable{
             view.addAnnotation(landmark)
         }
         
-
-//        polyLine = MKPolyline(coordinates: &self.points[1], count: self.points[1].count);
-//        polyLine.title = "1";
-//        view.addOverlay(polyLine);
-
-        
-//        mapViewDelegate.routes.append(MKPolyline(coordinates: self.points[0], count: self.points[0].count))
-//        mapViewDelegate.routes.append(MKPolyline(coordinates: self.points[1], count: self.points[1].count))
-//
-//        mapViewDelegate.routes[0]?.title = "0"
-//
-//        view.addOverlay(mapViewDelegate.routes[0]!)
-//
-//        mapViewDelegate.routes[1]?.title = "1"
-//
-//        view.addOverlay(mapViewDelegate.routes[1]!)
-
+        view.removeOverlays(curOverlays)
         
     }
-}
-
-class MapViewDelegate: NSObject, MKMapViewDelegate {
-    var routes = [[CLLocationCoordinate2D]]()
-    //try storing images to reduce load time and computation
-//    var markerImages = [UIImage]()
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+    class Coordinator: NSObject, MKMapViewDelegate{
+        var routes = [[CLLocationCoordinate2D]]()
+        //try storing images to reduce load time and computation
+        //    var markerImages = [UIImage]()
         
-        let route: MKPolyline = overlay as! MKPolyline
-        let renderer = MKPolylineRenderer(polyline: route)
-        var index : Int
         
-        if let strIndex = overlay.title {
-            index = Int(strIndex ?? "0") ?? 0
+        var parent : MapView
+        
+        init(parent1: MapView){
+            parent = parent1
         }
-        else{
-           index = 0
+        
+        
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            
+            let route: MKPolyline = overlay as! MKPolyline
+            let renderer = MKPolylineRenderer(polyline: route)
+            var index : Int
+            
+            if let strIndex = overlay.title {
+                index = Int(strIndex ?? "0") ?? 0
+            }
+            else{
+               index = 0
+            }
+            
+            let pathColor = UIColor.randomColorFromSeed(input: index)
+            
+            renderer.fillColor = pathColor.withAlphaComponent(0.5)
+            renderer.strokeColor = pathColor.withAlphaComponent(0.8)
+            
+            return renderer
         }
         
-        let pathColor = UIColor.randomColorFromSeed(input: index)
-        
-        renderer.fillColor = pathColor.withAlphaComponent(0.5)
-        renderer.strokeColor = pathColor.withAlphaComponent(0.8)
-        
-        return renderer
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            
+            var index : Int
+            
+            if let strIndex = annotation.title {
+                index = Int(strIndex ?? "0") ?? 0
+            }
+            else{
+               index = 0
+            }
+            
+            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotation.title ?? "0")
+            
+            let mapMarker = MapMarkerUI(frame: CGRect(x: 0, y: 0, width: 60, height: 60), color: UIColor.randomColorFromSeed(input: index-1))
+            
+            let markerImage = mapMarker.asImage()
+            
+            annotationView.image = markerImage
+            
+            return annotationView
+        }
     }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        var index : Int
-        
-        if let strIndex = annotation.title {
-            index = Int(strIndex ?? "0") ?? 0
-        }
-        else{
-           index = 0
-        }
-        
-        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotation.title ?? "0")
-        
-//        let mapMarker = MapMarker(markerColor: Color(UIColor.randomColorFromSeed(input: index)))
-//        var markerImage: UIImage!
-        let mapMarker = MapMarkerUI(frame: CGRect(x: 0, y: 0, width: 60, height: 60), color: UIColor.randomColorFromSeed(input: index-1))
-        
-        let markerImage = mapMarker.asImage()
-        
-//        if(markerImages.count - 1 > index){
-//            markerImage = markerImages[index]
-//        }else{
-//
-//            markerImages.append(markerImage)
-//
-//        }
-//
-       
-        
-        
-//        if(routes.count > 0 && routes.count - 1 >= index){
-//            let path = routes[index]
-//            print(path)
-//            if(path.count > 1){
-//                let last = path.last
-//                let secondToLast = path[path.count - 2]
-//                let deltaY = last!.longitude - secondToLast.longitude
-//                let deltaX = last!.latitude - secondToLast.latitude
-//                let angle = tan((deltaY/deltaX))
-////                print(angle)
-//            }
-//        }
-//        print("new")
-        
-        
-        annotationView.image = markerImage
-        
-        //need to somehow convert mapMarker view to image
-//
-//        let newView = UIView()
-//        newView.addSubview(mapMarker as! View)
-//
-//        let marker = MapMarker(markerColor: Color(UIColor.randomColorFromSeed(input: index)))
-//        annotationView.image = image
-        
-        return annotationView
-    }
-    
-//    func mapView(_ mapView: MKMapView, viewFor
-//        annotation: MKAnnotation) -> MKAnnotationView?{
-//
-//        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotation.title ?? "0")
-////        annotationView.canShowCallout = true
-//        //Your custom image icon
-////        annotationView.backgroundColor
-//        return annotationView
-////        let route: MKPolyline = overlay as! MKPolyline
-////        let renderer = MKPolylineRenderer(polyline: route)
-////        var index : Int
-////
-////        if let strIndex = overlay.title {
-////            index = Int(strIndex ?? "0") ?? 0
-////        }
-////        else{
-////           index = 0
-////        }
-////
-////        let pathColor = UIColor.randomColorFromSeed(input: index)
-////
-////        renderer.fillColor = pathColor.withAlphaComponent(0.5)
-////        renderer.strokeColor = pathColor.withAlphaComponent(0.8)
-////
-////        return renderer
-//
-//    }
 }
 
 class LandmarkAnnotation: NSObject, MKAnnotation {
