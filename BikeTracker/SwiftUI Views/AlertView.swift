@@ -39,6 +39,7 @@ struct AlertView: View{
             }
             .frame(width: 300, height: 200)
             .cornerRadius(20).shadow(radius: 20)
+            .shadow(radius: 3)
             .offset(y: self.trigger ? 0 : UIScreen.main.bounds.height)
             .animation(.spring())
         }

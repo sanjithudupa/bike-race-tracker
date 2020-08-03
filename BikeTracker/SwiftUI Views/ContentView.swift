@@ -253,11 +253,13 @@ struct HostView: View{
                         }
                     }.offset(y: geometry.size.height/3)
                     
-                    EndpointSelectorAlert(onOk: {
-                        self.raceStarted = true
-                        print("Start Race")
-                    SocketIOManager.getInstance.startRace()
-                    }, trigger: self.$selectingEndpoint)
+                    if(self.$selectingEndpoint.wrappedValue){
+                        EndpointSelectorAlert(onOk: {
+                            self.raceStarted = true
+                            print("Start Race")
+                            SocketIOManager.getInstance.startRace()
+                        }, trigger: self.$selectingEndpoint)
+                    }
                     
     //                if(self.youNewHost){
     //                    AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)

@@ -167,7 +167,7 @@ struct EndpointSelectorAlert: View{
                         Spacer()
                         Button(action: {
                             self.trigger = false
-                        SocketIOManager.getInstance.endpoint = nil
+                            SocketIOManager.getInstance.endpoint = nil
                             self.onOk()
                         }, label: {
                             Text("Don't Set")
@@ -187,7 +187,8 @@ struct EndpointSelectorAlert: View{
             }
             .frame(width: 350, height: 500)
             .cornerRadius(20).shadow(radius: 20)
-            .offset(y: self.trigger ? 0 : UIScreen.main.bounds.height)
+//            .offset(y: self.trigger ? 0 : UIScreen.main.bounds.height)
+            .shadow(radius: 3)
             .animation(.spring())
         }.onAppear(){
             SocketIOManager.getInstance.endpointHasBeenSet = self.endpointHasBeenSet

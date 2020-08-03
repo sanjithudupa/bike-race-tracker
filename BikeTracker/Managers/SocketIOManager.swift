@@ -158,10 +158,11 @@ class SocketIOManager: NSObject {
         }
         
         socket.on("newHost"){ dataArray, ack in
-            print("y\ny\ny\ny\ny\ny\ny\ny\ny\ny\ny\n")
-            SocketIOManager.getInstance.showHostVC?()
-            SocketIOManager.getInstance.updateIdLabel?()
-            SocketIOManager.getInstance.newHost?()
+            if(!SocketIOManager.getInstance.raceOn){
+                SocketIOManager.getInstance.showHostVC?()
+                SocketIOManager.getInstance.updateIdLabel?()
+                SocketIOManager.getInstance.newHost?()
+            }
         }
         
         
