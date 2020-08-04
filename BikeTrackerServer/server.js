@@ -5,6 +5,11 @@ const io = require('socket.io')(server);
 
 let users = {}
 let races = {}
+let gotPositions = {}
+
+app.get('/', (req, res) => {
+  res.redirect('/rooms')
+});
 
 app.get('/rooms', (req, res) => {
   // for (var key in races) {
@@ -93,12 +98,25 @@ io.on('connection', function(clientSocket){
     // console.log(races[data[1]])
     if(races[data[1]] != null && races[data[1]].toString().includes(clientSocket.id)){
     //   clientIndex = races[data[1]].indexOf(clientSocket)
+      if(gotPositions[data[1]]){
+        gotPositions[data[1]] += 1
+      }else{
+        gotPositions[data[1]] = 1
+      }
+
       clientSocket.to(data[1]).emit("positionUpdate", data[0].toString(), clientSocket.id.toString());
+
+      console.log(gotPositions[data[1]])
+      if(gotPositions[data[1]] >= (races[data[1]].length-1)){
+        io.in(data[1]).emit("updatePositionLabels")
+        gotPositions[data[1]] = 0
+      }
     }
   });
 
   clientSocket.on('stopRace', (data) =>{
     races[data][0] = false;
+    gotPositions[data[1]] = null
     io.in(data).emit("stopRace");
   });
 

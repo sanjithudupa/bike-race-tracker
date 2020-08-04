@@ -167,11 +167,12 @@ class SocketIOManager: NSObject {
             }
             SocketIOManager.getInstance.newHost?()
         }
-        
+         
         
         socket.on("startRace"){ dataArray, ack in
             SocketIOManager.getInstance.showRaceVC?()
             SocketIOManager.getInstance.raceOn = true
+            LocationManager.getInstance.start()
             SocketIOManager.getInstance.raceLoop()
             if  SocketIOManager.getInstance.timer == nil {
                 SocketIOManager.getInstance.timer = Timer.scheduledTimer(timeInterval: 5, target: SocketIOManager.getInstance, selector: #selector(SocketIOManager.getInstance.raceLoop), userInfo: nil, repeats: true)
@@ -235,9 +236,11 @@ class SocketIOManager: NSObject {
 //            let curPos = SocketIOManager.getInstance.positions[user] ?? 0
 //            let totalPos = curPos + (Int(position) ?? 0)
             
-            if(SocketIOManager.getInstance.users.contains(user)){
-                SocketIOManager.getInstance.positions[user]?.append(location)
-            }
+            var curpos = SocketIOManager.getInstance.positions[user] ?? [CLLocationCoordinate2D]()
+            curpos.append(location)
+            
+            SocketIOManager.getInstance.positions[user] = curpos
+            
             
             //TODO: get endpoint working
             
@@ -259,6 +262,12 @@ class SocketIOManager: NSObject {
             
             SocketIOManager.getInstance.showStopButton?()
         }
+        
+        socket.on("updatePositionLabels"){ dataArray, ack in
+            SocketIOManager.getInstance.updatePositionsLabel?()
+            
+        }
+
 
         
         super.init()
@@ -310,6 +319,7 @@ class SocketIOManager: NSObject {
     
     func resetRaceSpecificVaraibles(){
         LocationManager.getInstance.stop()
+        SocketIOManager.getInstance.stopTimer()
         SocketIOManager.getInstance.inRace = false
         SocketIOManager.getInstance.amHost = false
         SocketIOManager.getInstance.id = nil
@@ -324,11 +334,16 @@ class SocketIOManager: NSObject {
     
     @objc func raceLoop(){
         print("raceLoop")
-        print(SocketIOManager.getInstance.userId)
         let location = LocationManager.getInstance.getLocation()
         if(location != nil){
             let position = String(location!.coordinate.latitude) + "," +  String(location!.coordinate.longitude)//Int.random(in: 1...20)
             let sendData = [(position), SocketIOManager.getInstance.id as Any] as [Any]
+            
+            var curpos = SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId] ?? [CLLocationCoordinate2D]()
+            curpos.append(location!.coordinate)
+            
+            SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId] = curpos
+            
         
             SocketIOManager.getInstance.socket.emit("positionUpdate", sendData)
             
@@ -336,10 +351,13 @@ class SocketIOManager: NSObject {
 //            let totalPos = curPos + Int(position)
             
 //            SocketIOManager.getInstance.positions["you"] = totalPos
-            SocketIOManager.getInstance.updatePositionsLabel?()
             SocketIOManager.getInstance.updateEndpoint?()
         }else{
             print("location nil")
+        }
+        
+        if(!SocketIOManager.getInstance.raceOn){
+            SocketIOManager.getInstance.stopTimer()
         }
     }
     
@@ -372,6 +390,7 @@ class SocketIOManager: NSObject {
     
     func couldntConnect(){
         SocketIOManager.getInstance.isConnected = false
+        SocketIOManager.getInstance.stopTimer()
         SocketIOManager.getInstance.showConnectingVC?()
     }
     

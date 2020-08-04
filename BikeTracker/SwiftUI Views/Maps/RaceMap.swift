@@ -22,14 +22,33 @@ struct RaceMapView: UIViewRepresentable{
         map.delegate = context.coordinator
         map.mapType = .mutedStandard
         
+        LocationManager.getInstance.start()
+        
+        let coordinate = LocationManager.getInstance.getLocation()?.coordinate
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let region = MKCoordinateRegion(center: coordinate!, span: span)
+        
+        map.setRegion(region, animated: true)
+        
         return map
     }
     
     func updateUIView(_ view: MKMapView, context: Context){
         
-        guard points.count > 0 else { return }
+        guard (points.count > 0)  else { return }
         
-        let coordinate = points[0].last
+        var userIndex = 0
+        
+        for (usr, _) in SocketIOManager.getInstance.positions {
+            if(usr == SocketIOManager.getInstance.userId){
+                break
+            }else{
+                userIndex += 1
+            }
+        }
+
+        
+        let coordinate = points[userIndex].last
         let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let region = MKCoordinateRegion(center: coordinate!, span: span)
         
@@ -163,11 +182,8 @@ struct RaceMap: View {
 //    @Binding var showing : CurrentView
     
     @Binding var currentView : CurrentView
-
-//    var points =
-    @State var additions = [[CLLocationCoordinate2D(latitude: 21.124083, longitude: 79.1145274), CLLocationCoordinate2D(latitude: 21.1245418, longitude: 79.1160327), CLLocationCoordinate2D(latitude: 21.1394636, longitude: 79.1199755), CLLocationCoordinate2D(latitude: 21.1243668, longitude: 79.1037889)], [CLLocationCoordinate2D(latitude: 21.122083, longitude: 79.1135274), CLLocationCoordinate2D(latitude: 21.1235418, longitude: 79.1150327), CLLocationCoordinate2D(latitude: 21.1384636, longitude: 79.1189755), CLLocationCoordinate2D(latitude: 21.1233668, longitude: 79.1027889)]]
     
-    @State var allPoints = [[CLLocationCoordinate2D(latitude: 21.1433668, longitude: 79.1047889)], [CLLocationCoordinate2D(latitude: 21.1233668, longitude: 79.1027889)]]
+    @State var allPoints = [[CLLocationCoordinate2D]]()
     
     @State var addCount = 0
     
@@ -190,31 +206,20 @@ struct RaceMap: View {
         self.amHost = SocketIOManager.getInstance.amHost
     }
     
+    func addToMap(){
+        var allNewPoints = [[CLLocationCoordinate2D]]()
+        for (_, pos) in SocketIOManager.getInstance.positions {
+            allNewPoints.append(pos)
+        }
+        
+        self.allPoints = allNewPoints
+        
+        print(self.allPoints)
+    }
+    
     var body: some View {
         ZStack{
             RaceMapView(points: $allPoints)
-            Image(systemName: "plus.rectangle.fill")
-                .resizable()
-                .frame(width: 70, height: 50)
-                .offset(y:250)
-                .onTapGesture {
-                    print(SocketIOManager.getInstance.endpoint)
-//                    for _ in self.additions[0]{
-                    if(self.additions.count > 0 && self.addCount < self.additions[0].count){
-                        for i in 0..<self.additions.count{
-                            self.allPoints[i].append(self.additions[i][self.addCount])
-                        }
-                                                
-                                                
-                    //                            self.allPoints[1].append(self.additions[1][self.addCount])
-                                            
-                        self.addCount += 1
-                        
-                    }
-//                    }
-                    
-                    
-                }
             
             if(self.$amHost.wrappedValue){
                 Text("You are the Host")
@@ -223,12 +228,10 @@ struct RaceMap: View {
             
             AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
             
-            
-            
-//            Text("Position " +  + "  : " + String(self.addCount))
         }.onAppear{
             SocketIOManager.getInstance.resetToHome = self.resetToHome
             SocketIOManager.getInstance.newHost = self.newHost
+            SocketIOManager.getInstance.updatePositionsLabel = self.addToMap
             
             self.showHostText()
         }
