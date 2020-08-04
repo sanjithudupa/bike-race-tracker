@@ -203,7 +203,7 @@ struct HostView: View{
             GeometryReader{geometry in
                 ZStack{
                     
-                    NavigationLink(destination: Map(currentView: self.$currentView).navigationBarBackButtonHidden(true)
+                    NavigationLink(destination: RaceMap(currentView: self.$currentView).navigationBarBackButtonHidden(true)
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .edgesIgnoringSafeArea(.all), isActive: self.$raceStarted) {
@@ -319,7 +319,7 @@ struct MemberView: View {
             GeometryReader{geometry in
                 ZStack{
                     
-                    NavigationLink(destination: Map(currentView: self.$currentView).navigationBarBackButtonHidden(true)
+                    NavigationLink(destination: RaceMap(currentView: self.$currentView).navigationBarBackButtonHidden(true)
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .edgesIgnoringSafeArea(.all), isActive: self.$raceStarted) {
@@ -369,31 +369,6 @@ struct MemberView: View {
             }
             .navigationBarTitle("")
             .navigationBarHidden(true)
-        }
-    }
-}
-
-struct LocationTest: View{
-//    var locationManager = CLLocationManager()
-
-    var body: some View{
-        Button(action: {
-//            var currentLoc: CLLocation!
-//            if(CLLocationManager.authorizationStatus() == .authorizedWhenInUse) {
-//                currentLoc = self.locationManager.location
-//               print(currentLoc.coordinate.latitude)
-//               print(currentLoc.coordinate.longitude)
-//            }else{
-//                print("couldn't get location")
-//            }
-            
-            print(LocationManager.getInstance.getLocation())
-            
-            
-        }) {
-            Text("Get Location")
-        }.onAppear(){
-            LocationManager.getInstance.start()
         }
     }
 }
