@@ -96,6 +96,41 @@ struct RaceMapView: UIViewRepresentable{
             view.addAnnotation(landmark)
         }
         
+        //TEST FOR PROPER LINE STACKING
+//        let usersK = SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }
+//        var usersKeys = [String]()
+//
+//        for(newU, _) in usersK{
+//            usersKeys.append(newU)
+//        }
+//
+//        usersKeys = usersKeys.reversed()
+//
+//
+////        let arraySource = usersKey.count < 1 ? SocketIOManager.getInstance.users : usersKey
+//
+//        for u in usersKeys{
+//            let count = Array(SocketIOManager.getInstance.distances.keys).firstIndex(of: u)!
+//            let point = self.points[count]
+//            polyLine = MKPolyline(coordinates: point, count: self.points[count].count);
+//            polyLine.title = String(count);
+//            view.addOverlay(polyLine);
+////            count += 1
+//
+//            //draw markers
+//            let landmark = MKPointAnnotation()
+//
+//            landmark.title = String(count + 1)
+//
+////            if(offlineUsers.contains(count)){
+////                landmark.subtitle = "offline"
+////            }
+//
+//            landmark.coordinate = point.last!
+//
+//            view.addAnnotation(landmark)
+//        }
+        //END TEST FOR PROPER LINE STACKING
         
 //        for point in self.points{
 //            polyLine = MKPolyline(coordinates: point, count: self.points[count].count);
@@ -245,7 +280,8 @@ struct RaceMap: View {
 }
 
 struct RankingView: View{
-    @State var distances = "Rankings not set yet"
+    @State var distances = ["Rankings not set yet"]
+    @State var colors = [Color.black]
     
     var body: some View{
 //        VStack{
@@ -253,35 +289,45 @@ struct RankingView: View{
 //                Text(SocketIOManager.getInstance.userNames[user]! + ": " + String(self.distances[user]!))
 //            }
 //        }
-        Text(self.$distances.wrappedValue)
-            .multilineTextAlignment(.center)
-            .onAppear(){
-                SocketIOManager.getInstance.updateRanking = self.updateRanking
+        VStack{
+            ForEach(0..<distances.count, id: \.self){ index in
+                Text(self.$distances.wrappedValue[index])
+                    .foregroundColor(self.colors[index])
             }
+        }.onAppear(){
+            SocketIOManager.getInstance.updateRanking = self.updateRanking
+        }
     }
     
     func updateRanking(){
-//        self.distances = SocketIOManager.getInstance.distances
+        
         guard SocketIOManager.getInstance.distances.values.max() != nil && SocketIOManager.getInstance.distances.values.max()! > 0.0 else{
             return
         }
         
-        var updatedDistances = ""
         var count = 1
         
+        self.distances = []
+        self.colors = []
 
         for(user, distance) in ((SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }).reversed()){
             if(SocketIOManager.getInstance.userNames.keys.contains(user)){
-                let distanceStr = (distance <= 1609) ? String(format: "%.f", distance) + "meters\n" : String(format: "%.2f", distance / 1609.34) + " miles\n"
+                
+                //get distance
+                let distanceStr = (distance <= 1609) ? String(format: "%.f", distance) + "meters" : String(format: "%.2f", distance / 1609.34) + " miles"
                 let userName = ": " + SocketIOManager.getInstance.userNames[user]! + " - "
                 let newDistLine = String(count) + userName + distanceStr
-                updatedDistances += newDistLine
+                self.distances.append(newDistLine)
+                
+                //get color
+                let index = Array(SocketIOManager.getInstance.positions.keys).firstIndex(of: user) ?? 0
+                let color = UIColor.randomColorFromSeed(input: index)
+                self.colors.append(Color(color))
+                
                 count += 1
             }
-           
         }
         
-        self.distances = updatedDistances
     }
     
     
