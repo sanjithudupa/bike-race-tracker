@@ -80,12 +80,13 @@ struct RaceMapView: UIViewRepresentable{
             polyLine = MKPolyline(coordinates: point, count: self.points[count].count);
             polyLine.title = String(count);
             view.addOverlay(polyLine);
-            count += 1
                         
             //draw markers
             let landmark = MKPointAnnotation()
 
             landmark.title = String(count)
+            
+            count += 1
             
 //            if(offlineUsers.contains(count)){
 //                landmark.subtitle = "offline"
@@ -204,7 +205,7 @@ struct RaceMapView: UIViewRepresentable{
             
             let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotation.title ?? "0")
             
-            let markerColor = annotation.subtitle == "offline" ? UIColor.systemGray : UIColor.randomColorFromSeed(input: index-1)
+            let markerColor = isUserDisconnected(index: index) ? UIColor.randomColorFromSeed(input: index) : UIColor.systemGray
             
             let mapMarker = MapMarkerUI(frame: CGRect(x: 0, y: 0, width: 60, height: 60), color: markerColor)
             
@@ -213,6 +214,11 @@ struct RaceMapView: UIViewRepresentable{
             annotationView.image = markerImage
             
             return annotationView
+        }
+        
+        func isUserDisconnected(index: Int) -> Bool{
+            guard SocketIOManager.getInstance.distances.count > 0 else{return true}
+            return SocketIOManager.getInstance.users.contains(Array(SocketIOManager.getInstance.distances.keys)[index])
         }
     }
 }
@@ -316,7 +322,7 @@ struct RankingView: View{
                 //get distance
                 let distanceStr = (distance <= 1609) ? String(format: "%.f", distance) + "meters" : String(format: "%.2f", distance / 1609.34) + " miles"
                 let userName = ": " + SocketIOManager.getInstance.userNames[user]! + " - "
-                let newDistLine = String(count) + userName + distanceStr
+                let newDistLine = String(count) + userName + distanceStr + (SocketIOManager.getInstance.users.contains(user) ? "" : " - disconnected")
                 self.distances.append(newDistLine)
                 
                 //get color
