@@ -6,6 +6,7 @@ const io = require('socket.io')(server);
 let users = {}
 let races = {}
 let gotPositions = {}
+let distances = {}
 
 app.get('/', (req, res) => {
   res.redirect('/rooms')
@@ -106,7 +107,7 @@ io.on('connection', function(clientSocket){
 
       clientSocket.to(data[1]).emit("positionUpdate", data[0].toString(), clientSocket.id.toString());
 
-      console.log(gotPositions[data[1]])
+      // console.log(gotPositions[data[1]])
       if(gotPositions[data[1]] >= (races[data[1]].length-1)){
         io.in(data[1]).emit("updatePositionLabels")
         gotPositions[data[1]] = 0

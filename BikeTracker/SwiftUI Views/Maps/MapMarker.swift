@@ -78,7 +78,7 @@ final class MapMarkerUI: UIView {
 
 extension UIColor {
     //
-    static let seedColors:[Int: UIColor] = [0:UIColor.systemGreen, 1:UIColor.systemRed, 2:UIColor.systemBlue, 3:UIColor.systemOrange, 4:UIColor.systemPink, 5:UIColor.systemPurple, 6:UIColor.systemYellow, 7:UIColor.systemTeal, 8:UIColor.black, 9:UIColor.systemGray]
+    static let seedColors:[Int: UIColor] = [0:UIColor.systemGreen, 1:UIColor.systemRed, 2:UIColor.systemBlue, 3:UIColor.systemOrange, 4:UIColor.systemPink, 5:UIColor.systemPurple, 6:UIColor.systemYellow, 7:UIColor.systemTeal, 8:UIColor.black, 9:UIColor.systemIndigo]
 
     public static func randomColorFromSeed(input: Int) -> UIColor {
         

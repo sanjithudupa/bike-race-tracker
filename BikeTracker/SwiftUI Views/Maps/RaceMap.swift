@@ -221,12 +221,15 @@ struct RaceMap: View {
         ZStack{
             RaceMapView(points: $allPoints)
             
+            RankingView()
+            
             if(self.$amHost.wrappedValue){
                 Text("You are the Host")
                     .offset(y: UIScreen.main.bounds.height/4 + 70)
             }
             
             AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
+            
             
         }.onAppear{
             SocketIOManager.getInstance.resetToHome = self.resetToHome
@@ -236,4 +239,40 @@ struct RaceMap: View {
             self.showHostText()
         }
     }
+}
+
+struct RankingView: View{
+    @State var distances = "Rankings not set yet"
+    
+    var body: some View{
+//        VStack{
+//            ForEach(self.$distances.wrappedValue.keys.sorted(), id: \.self){ user in
+//                Text(SocketIOManager.getInstance.userNames[user]! + ": " + String(self.distances[user]!))
+//            }
+//        }
+        Text(self.$distances.wrappedValue)
+            .multilineTextAlignment(.trailing)
+            .onAppear(){
+                SocketIOManager.getInstance.updateRanking = self.updateRanking
+            }
+    }
+    
+    func updateRanking(){
+//        self.distances = SocketIOManager.getInstance.distances
+        guard SocketIOManager.getInstance.distances.values.max() != nil && SocketIOManager.getInstance.distances.values.max()! > 0.0 else{
+            return
+        }
+        
+        var updatedDistances = ""
+        var count = 1
+
+        for(user, distance) in (SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }){
+            updatedDistances += String(count) + ": " + user + " - " + String(format: "%.f", distance) + "m\n"
+            count += 1
+        }
+        
+        self.distances = updatedDistances
+    }
+    
+    
 }
