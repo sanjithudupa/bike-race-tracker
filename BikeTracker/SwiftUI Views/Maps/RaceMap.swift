@@ -46,6 +46,16 @@ struct RaceMapView: UIViewRepresentable{
                 userIndex += 1
             }
         }
+        
+        var ct = 0
+        var offlineUsers = [Int]()
+        for (usr, _) in SocketIOManager.getInstance.positions {
+            if(!SocketIOManager.getInstance.users.contains(usr)){
+                offlineUsers.append(ct)
+            }
+            
+            ct += 1
+        }
 
         
         let coordinate = points[userIndex].last
@@ -76,6 +86,11 @@ struct RaceMapView: UIViewRepresentable{
             let landmark = MKPointAnnotation()
 
             landmark.title = String(count)
+            
+//            if(offlineUsers.contains(count)){
+//                landmark.subtitle = "offline"
+//            }
+            
             landmark.coordinate = point.last!
 
             view.addAnnotation(landmark)
@@ -154,7 +169,9 @@ struct RaceMapView: UIViewRepresentable{
             
             let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotation.title ?? "0")
             
-            let mapMarker = MapMarkerUI(frame: CGRect(x: 0, y: 0, width: 60, height: 60), color: UIColor.randomColorFromSeed(input: index-1))
+            let markerColor = annotation.subtitle == "offline" ? UIColor.systemGray : UIColor.randomColorFromSeed(input: index-1)
+            
+            let mapMarker = MapMarkerUI(frame: CGRect(x: 0, y: 0, width: 60, height: 60), color: markerColor)
             
             let markerImage = mapMarker.asImage()
             
@@ -165,21 +182,7 @@ struct RaceMapView: UIViewRepresentable{
     }
 }
 
-class LandmarkAnnotation: NSObject, MKAnnotation {
-    let title: String?
-    let subtitle: String?
-    let coordinate: CLLocationCoordinate2D
-    init(title: String?,
-     subtitle: String?,
-     coordinate: CLLocationCoordinate2D) {
-        self.title = title
-        self.subtitle = subtitle
-        self.coordinate = coordinate
-    }
-}
-
 struct RaceMap: View {
-//    @Binding var showing : CurrentView
     
     @Binding var currentView : CurrentView
     
@@ -251,7 +254,7 @@ struct RankingView: View{
 //            }
 //        }
         Text(self.$distances.wrappedValue)
-            .multilineTextAlignment(.trailing)
+            .multilineTextAlignment(.center)
             .onAppear(){
                 SocketIOManager.getInstance.updateRanking = self.updateRanking
             }
@@ -267,7 +270,7 @@ struct RankingView: View{
         var count = 1
         
 
-        for(user, distance) in (SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }){
+        for(user, distance) in ((SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }).reversed()){
             if(SocketIOManager.getInstance.userNames.keys.contains(user)){
                 let distanceStr = (distance <= 1609) ? String(format: "%.f", distance) + "meters\n" : String(format: "%.2f", distance / 1609.34) + " miles\n"
                 let userName = ": " + SocketIOManager.getInstance.userNames[user]! + " - "

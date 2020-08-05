@@ -269,6 +269,7 @@ function userLeft(socketId){
       delete gotPositions[key]
       delete distances[key]
       delete races[key]
+      console.log("ended race " + key)
     }
   }
 }
