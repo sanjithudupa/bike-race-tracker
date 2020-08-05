@@ -265,10 +265,17 @@ struct RankingView: View{
         
         var updatedDistances = ""
         var count = 1
+        
 
         for(user, distance) in (SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }){
-            updatedDistances += String(count) + ": " + user + " - " + String(format: "%.f", distance) + "m\n"
-            count += 1
+            if(SocketIOManager.getInstance.userNames.keys.contains(user)){
+                let distanceStr = (distance <= 1609) ? String(format: "%.f", distance) + "meters\n" : String(format: "%.2f", distance / 1609.34) + " miles\n"
+                let userName = ": " + SocketIOManager.getInstance.userNames[user]! + " - "
+                let newDistLine = String(count) + userName + distanceStr
+                updatedDistances += newDistLine
+                count += 1
+            }
+           
         }
         
         self.distances = updatedDistances

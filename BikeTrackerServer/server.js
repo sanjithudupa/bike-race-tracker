@@ -109,15 +109,57 @@ io.on('connection', function(clientSocket){
 
       // console.log(gotPositions[data[1]])
       if(gotPositions[data[1]] >= (races[data[1]].length-1)){
-        io.in(data[1]).emit("updatePositionLabels")
+        let raceDistances = distances[data[1]]
+        let users = []
+        let distancesA = []
+
+        for(var u in raceDistances){
+          users.push(u)
+          distancesA.push(raceDistances[u])
+        }
+
+        if(raceDistances){
+          io.in(data[1]).emit("updatePositionLabels", users.toString(), distancesA.toString())
+        }else{
+          io.in(data[1]).emit("updatePositionLabels", null, null)
+        }
+        
+        console.log(distances[data[1]])
         gotPositions[data[1]] = 0
       }
     }
   });
 
+  clientSocket.on('distanceUpdate', (data) => {
+    console.log('distUpdate with ' + data + ' from ' + clientSocket.id)
+
+    if(races[data[1]] != null && races[data[1]].toString().includes(clientSocket.id)){
+    //   clientIndex = races[data[1]].indexOf(clientSocket)
+
+      if(!distances[data[1]]){
+        distances[data[1]] = {}
+      }
+
+      let raceDict = distances[data[1]]
+
+      if(raceDict[clientSocket.id]){
+        raceDict[clientSocket.id.toString()] += parseFloat(data[0].toString())
+      }else{
+        raceDict[clientSocket.id.toString()] = parseFloat(data[0].toString())
+      }
+
+      distances[data[1]] = raceDict
+
+      console.log(distances[data[1][clientSocket.id]])
+
+    }
+
+  });
+
   clientSocket.on('stopRace', (data) =>{
     races[data][0] = false;
     gotPositions[data[1]] = null
+    distances[data[1]] = null
     io.in(data).emit("stopRace");
   });
 
@@ -224,6 +266,8 @@ function userLeft(socketId){
     console.log(key)
     if(races[key].toString() == "false" || races[key].toString() == "true"){
       console.log(key)
+      delete gotPositions[key]
+      delete distances[key]
       delete races[key]
     }
   }

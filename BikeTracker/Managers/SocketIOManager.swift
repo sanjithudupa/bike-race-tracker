@@ -241,14 +241,14 @@ class SocketIOManager: NSObject {
                 SocketIOManager.getInstance.positions[user] = [CLLocationCoordinate2D]()
             }
             
-            if(SocketIOManager.getInstance.positions[user]!.count > 1){
-                let lastLocation = CLLocation(latitude: SocketIOManager.getInstance.positions[user]!.last!.latitude, longitude: SocketIOManager.getInstance.positions[user]!.last!.longitude)
-                var totalDist = SocketIOManager.getInstance.distances[user] ?? 0
-                totalDist += ((LocationManager.getInstance.getLocation()?.distance(from: lastLocation))!)
-                SocketIOManager.getInstance.distances[user] = totalDist
-            }else{
-                SocketIOManager.getInstance.distances[user] = 0
-            }
+//            if(SocketIOManager.getInstance.positions[user]!.count > 1){
+//                let lastLocation = CLLocation(latitude: SocketIOManager.getInstance.positions[user]!.last!.latitude, longitude: SocketIOManager.getInstance.positions[user]!.last!.longitude)
+//                var totalDist = SocketIOManager.getInstance.distances[user] ?? 0
+//                totalDist += ((LocationManager.getInstance.getLocation()?.distance(from: lastLocation))!)
+//                SocketIOManager.getInstance.distances[user] = totalDist
+//            }else{
+//                SocketIOManager.getInstance.distances[user] = 0
+//            }
             
             var curpos = SocketIOManager.getInstance.positions[user] ?? [CLLocationCoordinate2D]()
             curpos.append(location)
@@ -281,6 +281,18 @@ class SocketIOManager: NSObject {
         
         socket.on("updatePositionLabels"){ dataArray, ack in
             SocketIOManager.getInstance.updatePositionsLabel?()
+            let usersCSV = (dataArray[0] as? String ?? "")
+            let distancesCSV = (dataArray[1] as? String ?? "")
+            
+            let usersArr = usersCSV.components(separatedBy: ",")
+            let distancesArr = distancesCSV.components(separatedBy: ",")
+            
+            var countA = 0
+            for userA in usersArr{
+                SocketIOManager.getInstance.distances[userA] = Double(distancesArr[countA])
+                countA += 1
+            }
+            
             SocketIOManager.getInstance.updateRanking?()
         }
 
@@ -344,6 +356,7 @@ class SocketIOManager: NSObject {
         SocketIOManager.getInstance.joinIndex = nil
         SocketIOManager.getInstance.userId = nil
         SocketIOManager.getInstance.positions = [String: [CLLocationCoordinate2D]]()
+        SocketIOManager.getInstance.distances = [String: Double]()
         SocketIOManager.getInstance.endpoint = nil
         SocketIOManager.getInstance.endpointDistance = 0.0
     }
@@ -361,18 +374,27 @@ class SocketIOManager: NSObject {
             if(SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId] == nil){
                 SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId] = [CLLocationCoordinate2D]()
             }
-
+            
             if(SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.count > 1){
                 let lastLocation = CLLocation(latitude:
-                    SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last!.latitude, longitude: SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last!.longitude)
-                var totalDist = SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] ?? 0
-                totalDist += ((LocationManager.getInstance.getLocation()?.distance(from: lastLocation))!)
-                SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] = totalDist
-                
-            }else{
-                SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] = 0
-                
+                SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last!.latitude, longitude: SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last!.longitude)
+                var recentDist = SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] ?? 0
+                recentDist = ((LocationManager.getInstance.getLocation()?.distance(from: lastLocation))!)
+                let distSendData = [(recentDist), SocketIOManager.getInstance.id as Any] as [Any]
+                SocketIOManager.getInstance.socket.emit("distanceUpdate", distSendData)
             }
+
+//            if(SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.count > 1){
+//                let lastLocation = CLLocation(latitude:
+//                    SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last!.latitude, longitude: SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last!.longitude)
+//                var totalDist = SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] ?? 0
+//                totalDist += ((LocationManager.getInstance.getLocation()?.distance(from: lastLocation))!)
+//                SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] = totalDist
+//
+//            }else{
+//                SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] = 0
+//
+//            }
             
             SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId] = curpos
 
