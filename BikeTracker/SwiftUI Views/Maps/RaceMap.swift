@@ -205,7 +205,7 @@ struct RaceMapView: UIViewRepresentable{
             
             let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotation.title ?? "0")
             
-            let markerColor = isUserDisconnected(index: index) ? UIColor.randomColorFromSeed(input: index) : UIColor.systemGray
+            let markerColor = /*isUserDisconnected(index: index) ? */UIColor.randomColorFromSeed(input: index)/* : UIColor.systemGray*/
             
             let mapMarker = MapMarkerUI(frame: CGRect(x: 0, y: 0, width: 60, height: 60), color: markerColor)
             
@@ -285,56 +285,3 @@ struct RaceMap: View {
     }
 }
 
-struct RankingView: View{
-    @State var distances = ["Rankings not set yet"]
-    @State var colors = [Color.black]
-    
-    var body: some View{
-//        VStack{
-//            ForEach(self.$distances.wrappedValue.keys.sorted(), id: \.self){ user in
-//                Text(SocketIOManager.getInstance.userNames[user]! + ": " + String(self.distances[user]!))
-//            }
-//        }
-        VStack{
-            ForEach(0..<distances.count, id: \.self){ index in
-                Text(self.$distances.wrappedValue[index])
-                    .foregroundColor(self.colors[index])
-            }
-        }.onAppear(){
-            SocketIOManager.getInstance.updateRanking = self.updateRanking
-        }
-    }
-    
-    func updateRanking(){
-        
-        guard SocketIOManager.getInstance.distances.values.max() != nil && SocketIOManager.getInstance.distances.values.max()! > 0.0 else{
-            return
-        }
-        
-        var count = 1
-        
-        self.distances = []
-        self.colors = []
-
-        for(user, distance) in ((SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }).reversed()){
-            if(SocketIOManager.getInstance.userNames.keys.contains(user)){
-                
-                //get distance
-                let distanceStr = (distance <= 1609) ? String(format: "%.f", distance) + "meters" : String(format: "%.2f", distance / 1609.34) + " miles"
-                let userName = ": " + SocketIOManager.getInstance.userNames[user]! + " - "
-                let newDistLine = String(count) + userName + distanceStr + (SocketIOManager.getInstance.users.contains(user) ? "" : " - disconnected")
-                self.distances.append(newDistLine)
-                
-                //get color
-                let index = Array(SocketIOManager.getInstance.positions.keys).firstIndex(of: user) ?? 0
-                let color = UIColor.randomColorFromSeed(input: index)
-                self.colors.append(Color(color))
-                
-                count += 1
-            }
-        }
-        
-    }
-    
-    
-}

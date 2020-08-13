@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D8037A3F24A92534005F24EE /* RaceSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8037A3E24A92534005F24EE /* RaceSummaryViewController.swift */; };
+		D833E32524E30D570056AD31 /* RaceStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D833E32424E30D570056AD31 /* RaceStats.swift */; };
 		D85C031A24A1B281005A3B20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C031924A1B281005A3B20 /* AppDelegate.swift */; };
 		D85C031C24A1B281005A3B20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C031B24A1B281005A3B20 /* SceneDelegate.swift */; };
 		D85C031E24A1B281005A3B20 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C031D24A1B281005A3B20 /* ViewController.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		D8037A3E24A92534005F24EE /* RaceSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceSummaryViewController.swift; sourceTree = "<group>"; };
+		D833E32424E30D570056AD31 /* RaceStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceStats.swift; sourceTree = "<group>"; };
 		D85C031624A1B281005A3B20 /* BikeTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BikeTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85C031924A1B281005A3B20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D85C031B24A1B281005A3B20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				D86115DA24D7B421004187F9 /* EndpointSelector.swift */,
 				D8F2D8EC24D25E4000C7207A /* RaceMap.swift */,
 				D86115DD24D8B508004187F9 /* MapMarker.swift */,
+				D833E32424E30D570056AD31 /* RaceStats.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				D8F2D8E824CE4C1100C7207A /* ContentView.swift in Sources */,
 				D8F2D8ED24D25E4000C7207A /* RaceMap.swift in Sources */,
 				D86115DE24D8B508004187F9 /* MapMarker.swift in Sources */,
+				D833E32524E30D570056AD31 /* RaceStats.swift in Sources */,
 				D8F2D8F724D726C700C7207A /* AlertView.swift in Sources */,
 				D8F2D8EF24D26A9C00C7207A /* LocationManager.swift in Sources */,
 				D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */,
