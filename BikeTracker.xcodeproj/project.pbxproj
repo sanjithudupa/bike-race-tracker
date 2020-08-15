@@ -20,11 +20,12 @@
 		D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033424A3E716005A3B20 /* RaceHostViewController.swift */; };
 		D86115DB24D7B421004187F9 /* EndpointSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86115DA24D7B421004187F9 /* EndpointSelector.swift */; };
 		D86115DE24D8B508004187F9 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86115DD24D8B508004187F9 /* MapMarker.swift */; };
+		D870526324E6E7A000C488A3 /* HostMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D870526224E6E7A000C488A3 /* HostMemberView.swift */; };
 		D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */; };
 		D8B8B4D024A7899200AC7072 /* RaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */; };
 		D8C9EC9824AAE19300C7FA6D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8C9EC9724AAE19300C7FA6D /* MapKit.framework */; };
 		D8C9EC9E24ABF74F00C7FA6D /* ConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */; };
-		D8F2D8E824CE4C1100C7207A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2D8E724CE4C1100C7207A /* ContentView.swift */; };
+		D8F2D8E824CE4C1100C7207A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2D8E724CE4C1100C7207A /* Home.swift */; };
 		D8F2D8ED24D25E4000C7207A /* RaceMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2D8EC24D25E4000C7207A /* RaceMap.swift */; };
 		D8F2D8EF24D26A9C00C7207A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2D8EE24D26A9C00C7207A /* LocationManager.swift */; };
 		D8F2D8F324D37D5E00C7207A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F2D8F224D37D5E00C7207A /* CoreLocation.framework */; };
@@ -47,11 +48,12 @@
 		D85C033424A3E716005A3B20 /* RaceHostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceHostViewController.swift; sourceTree = "<group>"; };
 		D86115DA24D7B421004187F9 /* EndpointSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointSelector.swift; sourceTree = "<group>"; };
 		D86115DD24D8B508004187F9 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
+		D870526224E6E7A000C488A3 /* HostMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostMemberView.swift; sourceTree = "<group>"; };
 		D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceMemberViewController.swift; sourceTree = "<group>"; };
 		D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceViewController.swift; sourceTree = "<group>"; };
 		D8C9EC9724AAE19300C7FA6D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingViewController.swift; sourceTree = "<group>"; };
-		D8F2D8E724CE4C1100C7207A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D8F2D8E724CE4C1100C7207A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		D8F2D8EC24D25E4000C7207A /* RaceMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceMap.swift; sourceTree = "<group>"; };
 		D8F2D8EE24D26A9C00C7207A /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D8F2D8F224D37D5E00C7207A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -111,9 +113,17 @@
 				D86115DA24D7B421004187F9 /* EndpointSelector.swift */,
 				D8F2D8EC24D25E4000C7207A /* RaceMap.swift */,
 				D86115DD24D8B508004187F9 /* MapMarker.swift */,
-				D833E32424E30D570056AD31 /* RaceStats.swift */,
 			);
 			path = Maps;
+			sourceTree = "<group>";
+		};
+		D870526424E7415800C488A3 /* Overlay Views */ = {
+			isa = PBXGroup;
+			children = (
+				D8F2D8F424D4F9FF00C7207A /* ConnectingView.swift */,
+				D8F2D8F624D726C700C7207A /* AlertView.swift */,
+			);
+			path = "Overlay Views";
 			sourceTree = "<group>";
 		};
 		D8C9EC9624AAE19300C7FA6D /* Frameworks */ = {
@@ -151,10 +161,11 @@
 		D8F2D8FA24D78E4E00C7207A /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
+				D870526424E7415800C488A3 /* Overlay Views */,
 				D86115DC24D8B4F1004187F9 /* Maps */,
-				D8F2D8E724CE4C1100C7207A /* ContentView.swift */,
-				D8F2D8F424D4F9FF00C7207A /* ConnectingView.swift */,
-				D8F2D8F624D726C700C7207A /* AlertView.swift */,
+				D8F2D8E724CE4C1100C7207A /* Home.swift */,
+				D870526224E6E7A000C488A3 /* HostMemberView.swift */,
+				D833E32424E30D570056AD31 /* RaceStats.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -244,12 +255,13 @@
 				D8B8B4D024A7899200AC7072 /* RaceViewController.swift in Sources */,
 				D85C031A24A1B281005A3B20 /* AppDelegate.swift in Sources */,
 				D86115DB24D7B421004187F9 /* EndpointSelector.swift in Sources */,
-				D8F2D8E824CE4C1100C7207A /* ContentView.swift in Sources */,
+				D8F2D8E824CE4C1100C7207A /* Home.swift in Sources */,
 				D8F2D8ED24D25E4000C7207A /* RaceMap.swift in Sources */,
 				D86115DE24D8B508004187F9 /* MapMarker.swift in Sources */,
 				D833E32524E30D570056AD31 /* RaceStats.swift in Sources */,
 				D8F2D8F724D726C700C7207A /* AlertView.swift in Sources */,
 				D8F2D8EF24D26A9C00C7207A /* LocationManager.swift in Sources */,
+				D870526324E6E7A000C488A3 /* HostMemberView.swift in Sources */,
 				D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */,
 				D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */,
 				D85C031C24A1B281005A3B20 /* SceneDelegate.swift in Sources */,

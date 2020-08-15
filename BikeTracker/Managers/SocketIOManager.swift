@@ -33,6 +33,9 @@ class SocketIOManager: NSObject {
     var userId:String!
     var positions = [String: [CLLocationCoordinate2D]]()
     var distances = [String: Double]()
+    var speed:Double = 0.0
+    var time:Int = 0
+    var rank:Int = 0
     var endpoint:CLLocationCoordinate2D!
     var endpointDistance = 0.0
 
@@ -59,7 +62,10 @@ class SocketIOManager: NSObject {
     var updateEndpoint: (() -> Void)?
     var showStoppedRecording: (() -> Void)?
     var updateRanking: ((/*_ addition:String*/) -> Void)?
-    
+    var updateSpeedLabel: ((/*_ addition:String*/) -> Void)?
+    var updateRankingLabel: ((/*_ addition:String*/) -> Void)?
+
+
     var fillRaceSummary: (() -> Void)?
     var hideConnectingView: ((/*_ above:Bool*/) -> Void)?
 
@@ -293,7 +299,18 @@ class SocketIOManager: NSObject {
                 countA += 1
             }
             
+            var countD = 0
+            for(user, _) in ((SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }).reversed()){
+                if(user == String(SocketIOManager.getInstance.id)){
+                    break;
+                }
+                countD += 1
+            }
+            
+            SocketIOManager.getInstance.rank = countD
+            
             SocketIOManager.getInstance.updateRanking?()
+            SocketIOManager.getInstance.updateRankingLabel?()
         }
 
 
@@ -324,7 +341,7 @@ class SocketIOManager: NSObject {
 //        let coord = [long, lat]
 //        socket.emit("sendConnect", coord)
 //    }
-    
+     
     func sendConnect(name: String) {
 //        let coord = [long, lat]
         socket.emit("sendConnect", name)
@@ -359,6 +376,9 @@ class SocketIOManager: NSObject {
         SocketIOManager.getInstance.distances = [String: Double]()
         SocketIOManager.getInstance.endpoint = nil
         SocketIOManager.getInstance.endpointDistance = 0.0
+        SocketIOManager.getInstance.time = 0
+        SocketIOManager.getInstance.speed = 0.0
+        SocketIOManager.getInstance.rank = 0
     }
     
     @objc func raceLoop(){
@@ -380,6 +400,14 @@ class SocketIOManager: NSObject {
                 SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last!.latitude, longitude: SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last!.longitude)
                 var recentDist = SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] ?? 0
                 recentDist = ((LocationManager.getInstance.getLocation()?.distance(from: lastLocation))!)
+                
+                let mps = recentDist/5
+                let mph = mps * 2.237
+                
+                SocketIOManager.getInstance.speed = mph.truncate(places: 2)
+                
+                SocketIOManager.getInstance.updateSpeedLabel?()
+                
                 let distSendData = [(recentDist), SocketIOManager.getInstance.id as Any] as [Any]
                 SocketIOManager.getInstance.socket.emit("distanceUpdate", distSendData)
             }
@@ -449,5 +477,13 @@ class SocketIOManager: NSObject {
     
     func testU(){
         SocketIOManager.getInstance.updateUsersLabel?()
+    }
+}
+
+extension Double
+{
+    func truncate(places : Int)-> Double
+    {
+        return Double(floor(pow(10.0, Double(places)) * self)/pow(10.0, Double(places)))
     }
 }

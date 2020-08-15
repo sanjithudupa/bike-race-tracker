@@ -234,6 +234,8 @@ struct RaceMap: View {
     @State var youNewHost = false
     @State var amHost = false
     
+    @State var raceStatsShown = false
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     func resetToHome(){
@@ -265,12 +267,20 @@ struct RaceMap: View {
         ZStack{
             RaceMapView(points: $allPoints)
             
-            RankingView()
+            RaceStats(shown: $raceStatsShown)
             
-            if(self.$amHost.wrappedValue){
-                Text("You are the Host")
-                    .offset(y: UIScreen.main.bounds.height/4 + 70)
-            }
+            Button(action:{
+                withAnimation{
+                    self.raceStatsShown.toggle()
+                }
+            }) {
+                Text("Show Stats")
+            }.offset(y: 50)
+            
+//            if(self.$amHost.wrappedValue){
+//                Text("You are the Host")
+//                    .offset(y: UIScreen.main.bounds.height/4 + 70)
+//            }
             
             AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
             
