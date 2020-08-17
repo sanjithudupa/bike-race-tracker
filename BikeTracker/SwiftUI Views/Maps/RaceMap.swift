@@ -266,16 +266,22 @@ struct RaceMap: View {
     var body: some View {
         ZStack{
             RaceMapView(points: $allPoints)
+                
+            RepositionButton()
+                .frame(width: 50, height: 50)
+                .offset(x: (UIScreen.main.bounds.width/2 - 50), y: (UIScreen.main.bounds.height/2 - 50))
             
             RaceStats(shown: $raceStatsShown)
             
-            Button(action:{
-                withAnimation{
-                    self.raceStatsShown.toggle()
-                }
-            }) {
-                Text("Show Stats")
-            }.offset(y: 50)
+            RaceStatsButton(raceStatsShown: $raceStatsShown)
+                .frame(width: self.raceStatsShown ? 55 : 50, height: self.raceStatsShown ? 55 : 50)
+                .rotationEffect(.degrees(self.raceStatsShown ? 180 : 0))
+                .offset(x: self.raceStatsShown ? 0 : -(UIScreen.main.bounds.width/2 - 50), y: (UIScreen.main.bounds.height/2 - (self.raceStatsShown ? 30 : 50)))
+            
+            LeaveRaceButton()
+                .frame(width: 50, height: 50)
+                .offset(x: -(UIScreen.main.bounds.width/2 - 50), y: -(UIScreen.main.bounds.height/2 - 50))
+            
             
 //            if(self.$amHost.wrappedValue){
 //                Text("You are the Host")
