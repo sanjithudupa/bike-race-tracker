@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import MapKit
 
 struct RaceStatsButton: View{
     @Binding var raceStatsShown: Bool;
@@ -38,6 +39,8 @@ struct RaceStatsButton: View{
 }
 
 struct RepositionButton: View{
+    @Binding var map:MKMapView
+    
     var body: some View{
         GeometryReader{ geometry in
             ZStack{
@@ -46,7 +49,11 @@ struct RepositionButton: View{
                    .shadow(radius: 10)
                 
                 Button(action: {
-
+                    let coordinate = SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!.last
+                    let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                    let region = MKCoordinateRegion(center: coordinate!, span: span)
+                    
+                    self.map.setRegion(region, animated: true)
                 }){
                     Image(systemName: "location.circle")
                         .resizable()

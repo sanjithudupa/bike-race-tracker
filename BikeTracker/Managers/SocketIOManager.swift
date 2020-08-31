@@ -14,7 +14,7 @@ import CoreLocation
 class SocketIOManager: NSObject {
     @objc static let getInstance = SocketIOManager()
 
-    let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
+    let manager = SocketManager(socketURL: URL(string: "http://255bd0e08974.ngrok.io")!, config: [.log(true), .compress])
     var socket:SocketIOClient!
     
     var isConnected = false
@@ -24,6 +24,8 @@ class SocketIOManager: NSObject {
     var amHost = false
     
     var name:String!
+    
+    var raceTimeInterval = 2.5
     
     //race-specific variables
     var id:Int!
@@ -182,7 +184,7 @@ class SocketIOManager: NSObject {
             LocationManager.getInstance.start()
             SocketIOManager.getInstance.raceLoop()
             if  SocketIOManager.getInstance.timer == nil {
-                SocketIOManager.getInstance.timer = Timer.scheduledTimer(timeInterval: 5, target: SocketIOManager.getInstance, selector: #selector(SocketIOManager.getInstance.raceLoop), userInfo: nil, repeats: true)
+                SocketIOManager.getInstance.timer = Timer.scheduledTimer(timeInterval: SocketIOManager.getInstance.raceTimeInterval, target: SocketIOManager.getInstance, selector: #selector(SocketIOManager.getInstance.raceLoop), userInfo: nil, repeats: true)
             }
 //            Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
 //                SocketIOManager.getInstance.raceLoop()
@@ -379,6 +381,7 @@ class SocketIOManager: NSObject {
         SocketIOManager.getInstance.time = 0
         SocketIOManager.getInstance.speed = 0.0
         SocketIOManager.getInstance.rank = 0
+        SocketIOManager.getInstance.raceTimeInterval = 2.5
     }
     
     @objc func raceLoop(){
@@ -401,7 +404,7 @@ class SocketIOManager: NSObject {
                 var recentDist = SocketIOManager.getInstance.distances[SocketIOManager.getInstance.userId] ?? 0
                 recentDist = ((LocationManager.getInstance.getLocation()?.distance(from: lastLocation))!)
                 
-                let mps = recentDist/5
+                let mps = recentDist/SocketIOManager.getInstance.raceTimeInterval
                 let mph = mps * 2.237
                 
                 SocketIOManager.getInstance.speed = mph.truncate(places: 2)

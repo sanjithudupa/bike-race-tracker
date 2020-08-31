@@ -18,6 +18,7 @@ struct EndpointSelector: View{
             ZStack{
                 EndpointSelectionMap()
                     .edgesIgnoringSafeArea(.all)
+                    .frame(height: geometry.size.height * 3)
                 ZStack{
                     Color.white
                     VStack{
@@ -29,7 +30,7 @@ struct EndpointSelector: View{
                 .frame(width: geometry.size.width/2 + 20, height: 60)
                 .cornerRadius(10)
                 .shadow(radius:10.0)
-                .offset(y: geometry.size.height/2 - 40)
+                .offset(y: geometry.size.height/2 + 80)
                 
             }
         }.onAppear(){
@@ -64,6 +65,8 @@ struct EndpointSelectionMap: UIViewRepresentable{
         let c =  LocationManager.getInstance.getLocation()?.coordinate ?? defaultC
         let s = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         map.setRegion(MKCoordinateRegion(center: c, span: s), animated: false)
+        
+        map.isUserInteractionEnabled = true;
         
         let endpoint = MKPointAnnotation()
         endpoint.coordinate = c

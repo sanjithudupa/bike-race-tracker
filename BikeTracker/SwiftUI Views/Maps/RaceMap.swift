@@ -15,10 +15,15 @@ struct RaceMapView: UIViewRepresentable{
         return RaceMapView.Coordinator(parent1: self)
     }
     
-    @Binding var points : [[CLLocationCoordinate2D]]
+    @Binding var points: [[CLLocationCoordinate2D]]
+    
+    @Binding var map: MKMapView
+    @State var alignView: (() -> Void)?
+    
+    @State var lastCoordinate:CLLocationCoordinate2D?
+
 
     func makeUIView(context: Context) -> MKMapView{
-        let map = MKMapView(frame: .zero)
         map.delegate = context.coordinator
         map.mapType = .mutedStandard
         
@@ -29,14 +34,14 @@ struct RaceMapView: UIViewRepresentable{
         let region = MKCoordinateRegion(center: coordinate!, span: span)
         
         map.setRegion(region, animated: true)
-        
+
         return map
     }
     
     func updateUIView(_ view: MKMapView, context: Context){
         
         guard (points.count > 0)  else { return }
-        
+                
         var userIndex = 0
         
         for (usr, _) in SocketIOManager.getInstance.positions {
@@ -56,15 +61,7 @@ struct RaceMapView: UIViewRepresentable{
             
             ct += 1
         }
-
         
-        let coordinate = points[userIndex].last
-        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-        let region = MKCoordinateRegion(center: coordinate!, span: span)
-        
-        view.setRegion(region, animated: true)
-        
-
         //remove old lines
         if !view.overlays.isEmpty {
             view.removeOverlays(view.overlays)
@@ -96,74 +93,18 @@ struct RaceMapView: UIViewRepresentable{
 
             view.addAnnotation(landmark)
         }
-        
-        //TEST FOR PROPER LINE STACKING
-//        let usersK = SocketIOManager.getInstance.distances.sorted { $0.1 < $1.1 }
-//        var usersKeys = [String]()
-//
-//        for(newU, _) in usersK{
-//            usersKeys.append(newU)
-//        }
-//
-//        usersKeys = usersKeys.reversed()
-//
-//
-////        let arraySource = usersKey.count < 1 ? SocketIOManager.getInstance.users : usersKey
-//
-//        for u in usersKeys{
-//            let count = Array(SocketIOManager.getInstance.distances.keys).firstIndex(of: u)!
-//            let point = self.points[count]
-//            polyLine = MKPolyline(coordinates: point, count: self.points[count].count);
-//            polyLine.title = String(count);
-//            view.addOverlay(polyLine);
-////            count += 1
-//
-//            //draw markers
-//            let landmark = MKPointAnnotation()
-//
-//            landmark.title = String(count + 1)
-//
-////            if(offlineUsers.contains(count)){
-////                landmark.subtitle = "offline"
-////            }
-//
-//            landmark.coordinate = point.last!
-//
-//            view.addAnnotation(landmark)
-//        }
-        //END TEST FOR PROPER LINE STACKING
-        
-//        for point in self.points{
-//            polyLine = MKPolyline(coordinates: point, count: self.points[count].count);
-//            polyLine.title = String(count);
-//            view.addOverlay(polyLine);
-//
-//            count += 1
-//
-//            //draw markers
-//            if(view.annotations.count < self.points.count){
-//                var landmark = MKPointAnnotation()
-//
-//                landmark.title = String(count)
-//                landmark.coordinate = point.last!
-//
-//                view.addAnnotation(landmark)
-//            }else{
-//                var landmark: MKPointAnnotation = view.annotations[count - 1] as! MKPointAnnotation
-//                landmark.coordinate = point.last!
-//            }
-//
-//        }
-        
     }
     
-    class Coordinator: NSObject, MKMapViewDelegate{
+    class Coordinator: NSObject, MKMapViewDelegate/*, UIGestureRecognizerDelegate*/{
         var routes = [[CLLocationCoordinate2D]]()
         //try storing images to reduce load time and computation
         //    var markerImages = [UIImage]()
         
         
         var parent : RaceMapView
+        var set = false
+        var moveCount = 0
+        
         
         init(parent1: RaceMapView){
             parent = parent1
@@ -188,6 +129,8 @@ struct RaceMapView: UIViewRepresentable{
             renderer.fillColor = pathColor.withAlphaComponent(0.5)
             renderer.strokeColor = pathColor.withAlphaComponent(0.8)
             renderer.lineWidth = 15
+            
+            parent.alignView?()
             
             return renderer
         }
@@ -228,6 +171,7 @@ struct RaceMap: View {
     @Binding var currentView : CurrentView
     
     @State var allPoints = [[CLLocationCoordinate2D]]()
+    @State var map = MKMapView(frame: .zero)
     
     @State var addCount = 0
     
@@ -265,28 +209,22 @@ struct RaceMap: View {
     
     var body: some View {
         ZStack{
-            RaceMapView(points: $allPoints)
+            RaceMapView(points: $allPoints, map: $map, alignView: self.alignView)
                 
-            RepositionButton()
+            RepositionButton(map: $map)
                 .frame(width: 50, height: 50)
                 .offset(x: (UIScreen.main.bounds.width/2 - 50), y: (UIScreen.main.bounds.height/2 - 50))
             
             RaceStats(shown: $raceStatsShown)
             
             RaceStatsButton(raceStatsShown: $raceStatsShown)
-                .frame(width: self.raceStatsShown ? 55 : 50, height: self.raceStatsShown ? 55 : 50)
+                .frame(width: self.raceStatsShown ? UIScreen.main.bounds.height/12 : 50, height: self.raceStatsShown ? UIScreen.main.bounds.height/12 : 50)
                 .rotationEffect(.degrees(self.raceStatsShown ? 180 : 0))
                 .offset(x: self.raceStatsShown ? 0 : -(UIScreen.main.bounds.width/2 - 50), y: (UIScreen.main.bounds.height/2 - (self.raceStatsShown ? 30 : 50)))
             
             LeaveRaceButton()
                 .frame(width: 50, height: 50)
                 .offset(x: -(UIScreen.main.bounds.width/2 - 50), y: -(UIScreen.main.bounds.height/2 - 50))
-            
-            
-//            if(self.$amHost.wrappedValue){
-//                Text("You are the Host")
-//                    .offset(y: UIScreen.main.bounds.height/4 + 70)
-//            }
             
             AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
             
@@ -297,6 +235,27 @@ struct RaceMap: View {
             SocketIOManager.getInstance.updatePositionsLabel = self.addToMap
             
             self.showHostText()
+        }
+    }
+    
+    func alignView(){
+        let me = SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!
+        
+        let coordinate = me.last
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let region = MKCoordinateRegion(center: coordinate!, span: span)
+        
+        if(me.count > 1){
+            let curPos = String(me[me.count-2].latitude)
+            let centerPos = String(map.region.center.latitude)
+            
+            let decimalCount = min(curPos.count, centerPos.count) - 1
+            
+            if(curPos.prefix(decimalCount) == centerPos.prefix(decimalCount)){
+                map.setRegion(region, animated: true)
+            }
+        }else{
+            map.setRegion(region, animated: true)
         }
     }
 }

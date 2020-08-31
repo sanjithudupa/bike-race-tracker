@@ -73,6 +73,7 @@ struct Home: View {
                         .keyboardType(.numberPad)
 
                     Button(action: {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         let id = (self.raceID).filter("0123456789.".contains)
                         if(id != ""){
                             SocketIOManager.getInstance.joinRace(id: Int(id) ?? 0)
