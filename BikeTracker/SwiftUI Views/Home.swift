@@ -84,9 +84,6 @@ struct Home: View {
                         Text("Join Race")
                     }
                     
-    //                    .alert(isPresented: $inputsEmpty) {
-    //                        Alert(title: Text("Fill in race ID"), message: Text("ID can't be empty"), dismissButton: .default(Text("Okay")))
-    //                    }
 
                 }.padding(82.5)
                 
@@ -95,10 +92,23 @@ struct Home: View {
                     AlertView(title: "Race ID Empty", text: "Please fill it in", trigger: self.$inputsEmpty)
                 }
                 
+//                NavigationLink(destination: Text("SearchResultList"),
+//                               isActive:
+//                            Binding<Bool>(
+//                                get: { currentView == .home },
+//                                set: { currentView = $0 }
+//                            )) {
+//                    EmptyView()
+//                }
+                
+                
+//Binding<Bool>(
+//    get: { !yourBindingBool },
+//    set: { yourBindingBool = !$0 }
+//)
                 
                 if(self.$currentView.wrappedValue == .host){
                         
-                    
                     HostView(currentView: self.$currentView, justDisconnected: self.$disconnectedNow)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .background(Color.white)
