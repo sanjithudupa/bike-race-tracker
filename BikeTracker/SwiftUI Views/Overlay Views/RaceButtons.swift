@@ -70,6 +70,8 @@ struct RepositionButton: View{
 }
 
 struct LeaveRaceButton: View{
+    @Binding var leaveRacePressed:Bool
+    
     var body: some View{
         GeometryReader{ geometry in
             ZStack{
@@ -78,7 +80,7 @@ struct LeaveRaceButton: View{
                    .shadow(radius: 10)
                 
                 Button(action: {
-
+                    self.leaveRacePressed = true;
                 }){
                     Image(systemName: "chevron.left.circle")
                         .resizable()

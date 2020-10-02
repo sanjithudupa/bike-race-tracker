@@ -169,6 +169,7 @@ struct RaceMapView: UIViewRepresentable{
 struct RaceMap: View {
     
     @Binding var currentView : CurrentView
+    @Binding var comingBack : Bool
     
     @State var allPoints = [[CLLocationCoordinate2D]]()
     @State var map = MKMapView(frame: .zero)
@@ -180,11 +181,14 @@ struct RaceMap: View {
     
     @State var raceStatsShown = false
     
+    @State var leaveRacePressed = false
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     func resetToHome(){
         presentationMode.wrappedValue.dismiss()
         currentView = .home
+        comingBack = true
     }
     
     func newHost(){
@@ -222,11 +226,13 @@ struct RaceMap: View {
                 .rotationEffect(.degrees(self.raceStatsShown ? 180 : 0))
                 .offset(x: self.raceStatsShown ? 0 : -(UIScreen.main.bounds.width/2 - 50), y: (UIScreen.main.bounds.height/2 - (self.raceStatsShown ? 30 : 50)))
             
-            LeaveRaceButton()
+            LeaveRaceButton(leaveRacePressed: $leaveRacePressed)
                 .frame(width: 50, height: 50)
                 .offset(x: -(UIScreen.main.bounds.width/2 - 50), y: -(UIScreen.main.bounds.height/2 - 50))
             
             AlertView(title: "Host Left", text: "You are now the Race Host", trigger: self.$youNewHost)
+            
+            AlertView(title: "Leave Race", text: "Are you sure you want to leave the Race?", onOk: leaveRace, trigger: self.$leaveRacePressed)
             
             
         }.onAppear{
@@ -238,24 +244,37 @@ struct RaceMap: View {
         }
     }
     
+    func leaveRace(){
+        self.leaveRacePressed = false
+        
+        self.resetToHome()
+        
+        SocketIOManager.getInstance.leaveRace()
+        SocketIOManager.getInstance.inRace = false
+        
+        self.resetToHome()
+    }
+    
     func alignView(){
-        let me = SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!
-        
-        let coordinate = me.last
-        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-        let region = MKCoordinateRegion(center: coordinate!, span: span)
-        
-        if(me.count > 1){
-            let curPos = String(me[me.count-2].latitude)
-            let centerPos = String(map.region.center.latitude)
+        if(SocketIOManager.getInstance.inRace){
+            let me = SocketIOManager.getInstance.positions[SocketIOManager.getInstance.userId]!
             
-            let decimalCount = min(curPos.count, centerPos.count) - 1
+            let coordinate = me.last
+            let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let region = MKCoordinateRegion(center: coordinate!, span: span)
             
-            if(curPos.prefix(decimalCount) == centerPos.prefix(decimalCount)){
+            if(me.count > 1){
+                let curPos = String(me[me.count-2].latitude)
+                let centerPos = String(map.region.center.latitude)
+                
+                let decimalCount = min(curPos.count, centerPos.count) - 1
+                
+                if(curPos.prefix(decimalCount) == centerPos.prefix(decimalCount)){
+                    map.setRegion(region, animated: true)
+                }
+            }else{
                 map.setRegion(region, animated: true)
             }
-        }else{
-            map.setRegion(region, animated: true)
         }
     }
 }

@@ -14,7 +14,7 @@ import CoreLocation
 class SocketIOManager: NSObject {
     @objc static let getInstance = SocketIOManager()
 
-    let manager = SocketManager(socketURL: URL(string: "http://255bd0e08974.ngrok.io")!, config: [.log(true), .compress])
+    let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
     var socket:SocketIOClient!
     
     var isConnected = false

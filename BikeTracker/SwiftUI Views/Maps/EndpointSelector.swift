@@ -27,7 +27,7 @@ struct EndpointSelector: View{
                             .fontWeight(.bold)
                     }
                 }
-                .frame(width: geometry.size.width/2 + 20, height: 60)
+                .frame(width: geometry.size.width/2 + 20, height: 40)
                 .cornerRadius(10)
                 .shadow(radius:10.0)
                 .offset(y: geometry.size.height/2 + 80)

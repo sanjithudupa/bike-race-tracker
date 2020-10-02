@@ -14,11 +14,16 @@ struct HostView: View{
     @State var youNewHost = false
     @State var raceStarted = false
     @State var selectingEndpoint = false
+    @State var comingBack = false
     @Binding var currentView: CurrentView
     @Binding var justDisconnected: Bool
     
     func updateIdLabel(){
-        self.raceID = String(SocketIOManager.getInstance.id)
+        if(!comingBack){
+            self.raceID = String(SocketIOManager.getInstance.id)
+        }else{
+            currentView = .home
+        }
     }
     
     func updateUserLabel(){
@@ -53,7 +58,7 @@ struct HostView: View{
             GeometryReader{geometry in
                 ZStack{
                     
-                    NavigationLink(destination: RaceMap(currentView: self.$currentView).navigationBarBackButtonHidden(true)
+                    NavigationLink(destination: RaceMap(currentView: self.$currentView, comingBack: self.$comingBack).navigationBarBackButtonHidden(true)
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .edgesIgnoringSafeArea(.all), isActive: self.$raceStarted) {
@@ -140,10 +145,15 @@ struct MemberView: View {
     @State var raceStarted = false
     @Binding var currentView: CurrentView
     @Binding var youNewHost: Bool
+    @State var comingBack = false
     @Binding var justDisconnected: Bool
     
     func updateIdLabel(){
-        self.raceID = String(SocketIOManager.getInstance.id)
+        if(!comingBack){
+            self.raceID = String(SocketIOManager.getInstance.id)
+        }else{
+            currentView = .home
+        }
     }
     
     func updateUserLabel(){
@@ -177,7 +187,7 @@ struct MemberView: View {
             GeometryReader{geometry in
                 ZStack{
                     
-                    NavigationLink(destination: RaceMap(currentView: self.$currentView).navigationBarBackButtonHidden(true)
+                    NavigationLink(destination: RaceMap(currentView: self.$currentView, comingBack: self.$comingBack).navigationBarBackButtonHidden(true)
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .edgesIgnoringSafeArea(.all), isActive: self.$raceStarted) {
