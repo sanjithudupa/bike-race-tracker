@@ -57,6 +57,7 @@ class SocketIOManager: NSObject {
     var showSummaryVC: (() -> Void)?
     var showConnectingVC: (() -> Void)?
     var resetToHome: (() -> Void)?
+    var joinRaceShow: ((_ id:Int) -> Void)?
     
     //race vc ui functions
     var updatePositionsLabel: ((/*_ addition:String*/) -> Void)?
@@ -106,6 +107,12 @@ class SocketIOManager: NSObject {
 //            }
             SocketIOManager.getInstance.sendConnect(name: SocketIOManager.getInstance.name)
 
+        }
+        
+        socket.on("randomKey") { dataArray, ack in
+            let randomKey = dataArray[0] as? Int ?? 0
+            print("JOINING WITH RANDOM KEY " + String(randomKey))
+            SocketIOManager.getInstance.joinRaceShow?(randomKey)
         }
         
         socket.on("youJoinedRace") { dataArray, ack in
@@ -352,6 +359,10 @@ class SocketIOManager: NSObject {
     func joinRace(id: Int){
         SocketIOManager.getInstance.id = id
         socket.emit("joinRace", id)
+    }
+    
+    func joinRandomRace(){
+        socket.emit("joinRandomRace")
     }
     
     func startRace(){

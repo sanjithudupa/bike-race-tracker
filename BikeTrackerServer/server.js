@@ -88,6 +88,12 @@ io.on('connection', function(clientSocket){
     
   });
 
+  clientSocket.on('joinRandomRace', () =>{
+    let randomKey = getRandomKey();
+
+    clientSocket.emit("randomKey", randomKey)
+  });
+
   clientSocket.on('startRace', (data) =>{
     races[data][0] = true;
     io.in(data).emit("startRace");
@@ -272,4 +278,16 @@ function userLeft(socketId){
       console.log("ended race " + key)
     }
   }
+}
+
+function getRandomKey(){
+  let randomKey = Math.floor(1000 + Math.random() * 9000);
+
+  for (var key in races){
+    if(races[key].includes(randomKey)){
+      randomKey = findRandomRace();
+    }
+  }
+
+  return randomKey;
 }

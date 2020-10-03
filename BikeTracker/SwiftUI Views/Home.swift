@@ -165,10 +165,10 @@ struct Home: View {
             
         }.onAppear(){
             print("appeared")
+            SocketIOManager.getInstance.joinRaceShow = self.joinRaceShow
             SocketIOManager.getInstance.showHostVC = self.showHostView
             SocketIOManager.getInstance.showMemberVC = self.showMemberView
             SocketIOManager.getInstance.raceAlreadyStarted = self.raceAlreadyStartedF
-
         }
         
     }
@@ -193,6 +193,11 @@ struct Home: View {
         }else{
             inputsEmpty = true
         }
+    }
+    
+    func joinRaceShow(id:Int){
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        SocketIOManager.getInstance.joinRace(id: id)
     }
     
 }

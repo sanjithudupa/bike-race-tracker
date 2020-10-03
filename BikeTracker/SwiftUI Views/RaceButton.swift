@@ -134,9 +134,7 @@ struct RaceButton: View {
                 .foregroundColor(Color.black)
                 .animation(.spring(dampingFraction: 0.75))
                 .onTapGesture{
-                    if(self.expanded){
-                        print("Create new race")
-                    }
+                    SocketIOManager.getInstance.joinRandomRace()
                 }
             
         }
