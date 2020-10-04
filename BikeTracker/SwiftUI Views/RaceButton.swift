@@ -153,7 +153,7 @@ struct CodeView: View {
             TextField("", text: $codeString, onCommit: doneEditing)
                 .foregroundColor(.clear)
                 .accentColor(.clear)
-                .textContentType(.telephoneNumber)
+                .keyboardType(.namePhonePad)
         }
 //        MapView()
     }
