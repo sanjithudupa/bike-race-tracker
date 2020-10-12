@@ -95,3 +95,63 @@ struct LeaveRaceButton: View{
         }
     }
 }
+
+struct StopRaceButton: View{
+    @Binding var expanded : Bool
+    @State var expandedWidth:CGFloat = 130.0
+    @State var expandedHeight:CGFloat = 0
+    @Binding var stopRecordingPressed:Bool
+    
+    var body: some View{
+        ZStack{
+            Rectangle()
+                .fill(expanded ? Color.green : Color.green)
+                .cornerRadius(expanded ? 25 : 125)
+                .frame(width: expanded ? expandedWidth : 50, height: expanded ? expandedHeight : 50)
+                .offset(x: expanded ? 25 - expandedWidth/2 : 0, y: expanded ? expandedHeight/2 - 25: 0)
+                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 10, y: 10)
+                .shadow(color: Color.white.opacity(0.7), radius: 10, x: -5, y: -5)
+                .animation(.spring(dampingFraction: 0.75))
+                .onTapGesture{
+                    self.expanded.toggle()
+                }
+            VStack(spacing: 5){
+                Button(action: {
+                    SocketIOManager.getInstance.stopRecording()
+                    self.stopRecordingPressed = true
+                }){
+                    Text("Stop Recording")
+                        .foregroundColor(Color.white)
+                        .fontWeight(.semibold)
+                }.disabled(self.stopRecordingPressed)
+                
+                Divider()
+                    .background(Color.white)
+                    .frame(width: expandedWidth * 0.8)
+                if(SocketIOManager.getInstance.amHost){
+                    Button(action: {
+                         SocketIOManager.getInstance.stopRace()
+                    }){
+                        Text("End Race")
+                            .foregroundColor(Color.red)
+                            .fontWeight(.bold)
+                    }
+                }
+                
+            }.offset(x: expanded ? 25 - expandedWidth/2 : 0, y: expanded ? expandedHeight/2 - 25: 0)
+            .opacity(expanded ? 1 : 0)
+            
+            Button(action: {
+                self.expanded.toggle()
+            }){
+                Image(systemName: "stop.circle")
+                    .resizable()
+                    .opacity(expanded ? 0 : 1)
+                    .foregroundColor(Color.white)
+                    .frame(width: 37.5, height: 37.5)
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 10, y: 10)
+                    .shadow(color: Color.white.opacity(0.7), radius: 10, x: -5, y: -5)
+            }
+        }
+    }
+}

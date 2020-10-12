@@ -20,6 +20,7 @@
 		D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033424A3E716005A3B20 /* RaceHostViewController.swift */; };
 		D86115DB24D7B421004187F9 /* EndpointSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86115DA24D7B421004187F9 /* EndpointSelector.swift */; };
 		D86115DE24D8B508004187F9 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86115DD24D8B508004187F9 /* MapMarker.swift */; };
+		D86AE53D252CE28400119773 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86AE53C252CE28400119773 /* SummaryView.swift */; };
 		D870526324E6E7A000C488A3 /* HostMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D870526224E6E7A000C488A3 /* HostMemberView.swift */; };
 		D870526624EAFC7400C488A3 /* RaceButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D870526524EAFC7400C488A3 /* RaceButtons.swift */; };
 		D883E9C32526CBE800CB4520 /* RaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883E9C22526CBE800CB4520 /* RaceButton.swift */; };
@@ -51,6 +52,7 @@
 		D85C033424A3E716005A3B20 /* RaceHostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceHostViewController.swift; sourceTree = "<group>"; };
 		D86115DA24D7B421004187F9 /* EndpointSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointSelector.swift; sourceTree = "<group>"; };
 		D86115DD24D8B508004187F9 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
+		D86AE53C252CE28400119773 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		D870526224E6E7A000C488A3 /* HostMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostMemberView.swift; sourceTree = "<group>"; };
 		D870526524EAFC7400C488A3 /* RaceButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceButtons.swift; sourceTree = "<group>"; };
 		D883E9C22526CBE800CB4520 /* RaceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceButton.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				D833E32424E30D570056AD31 /* RaceStats.swift */,
 				D883E9C22526CBE800CB4520 /* RaceButton.swift */,
 				D883E9C425291D6E00CB4520 /* CodeInput.swift */,
+				D86AE53C252CE28400119773 /* SummaryView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */,
 				D85C031C24A1B281005A3B20 /* SceneDelegate.swift in Sources */,
 				D870526624EAFC7400C488A3 /* RaceButtons.swift in Sources */,
+				D86AE53D252CE28400119773 /* SummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

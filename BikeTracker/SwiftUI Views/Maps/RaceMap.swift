@@ -167,13 +167,13 @@ struct RaceMapView: UIViewRepresentable{
 }
 
 struct RaceMap: View {
-    
     @Binding var currentView : CurrentView
     @Binding var comingBack : Bool
     
     @State var allPoints = [[CLLocationCoordinate2D]]()
     @State var map = MKMapView(frame: .zero)
     
+    @State var stopRaceExpanded = false
     @State var addCount = 0
     
     @State var youNewHost = false
@@ -182,6 +182,7 @@ struct RaceMap: View {
     @State var raceStatsShown = false
     
     @State var leaveRacePressed = false
+    @State var stopRecordingPressed = false
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -219,6 +220,16 @@ struct RaceMap: View {
                 .frame(width: 50, height: 50)
                 .offset(x: (UIScreen.main.bounds.width/2 - 50), y: (UIScreen.main.bounds.height/2 - 50))
             
+            StopRaceButton(expanded: $stopRaceExpanded, expandedHeight: SocketIOManager.getInstance.amHost ? 80 : 40, stopRecordingPressed: $stopRecordingPressed)
+                .offset(x: (UIScreen.main.bounds.width/2 - 50), y: -(UIScreen.main.bounds.height/2 - 50))
+            
+            if($stopRecordingPressed.wrappedValue){
+                Text("Stopped Recording")
+                    .font(.title)
+                    .foregroundColor(Color.green)
+                    .offset(y: (UIScreen.main.bounds.height/2 - 50))
+            }
+
             RaceStats(shown: $raceStatsShown)
             
             RaceStatsButton(raceStatsShown: $raceStatsShown)
@@ -239,8 +250,8 @@ struct RaceMap: View {
             SocketIOManager.getInstance.resetToHome = self.resetToHome
             SocketIOManager.getInstance.newHost = self.newHost
             SocketIOManager.getInstance.updatePositionsLabel = self.addToMap
-            
-            self.showHostText()
+            SocketIOManager.getInstance.showSummaryVC = self.showRaceSummary
+            SocketIOManager.getInstance.showStoppedRecording = self.showStoppedRecording
         }
     }
     
@@ -276,6 +287,15 @@ struct RaceMap: View {
                 map.setRegion(region, animated: true)
             }
         }
+    }
+    
+    func showStoppedRecording(){
+        print("Stopped Recording")
+    }
+    
+    func showRaceSummary(){
+        SocketIOManager.getInstance.showRaceStats?()
+//        resetToHome()
     }
 }
 

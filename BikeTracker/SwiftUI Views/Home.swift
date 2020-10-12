@@ -83,6 +83,8 @@ struct Home: View {
     @State private var raceAlreadyStarted = false
     @State private var raceIdString: String = ""
     
+    @State private var raceStatsShown: Bool = false
+    
     var body: some View {
         return GeometryReader{geometry in
             ZStack{
@@ -134,8 +136,12 @@ struct Home: View {
                         MemberView(currentView: self.$currentView, youNewHost: self.$youNewHost, justDisconnected: self.$disconnectedNow)
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .background(Color.white)
-
                     }
+                    
+                    NavigationLink(destination: RaceStats(shown: self.$raceStatsShown),
+                                   isActive: self.$raceStatsShown) {
+                                    EmptyView()
+                                }
                     
                     //host left alert
                     
@@ -169,6 +175,7 @@ struct Home: View {
             SocketIOManager.getInstance.showHostVC = self.showHostView
             SocketIOManager.getInstance.showMemberVC = self.showMemberView
             SocketIOManager.getInstance.raceAlreadyStarted = self.raceAlreadyStartedF
+            SocketIOManager.getInstance.showRaceStats = self.showRaceStats
         }
         
     }
@@ -179,6 +186,11 @@ struct Home: View {
     
     func showMemberView(){
         currentView = .member
+    }
+    
+    func showRaceStats(){
+        print("\n\n\n\n\n\n\n\n\n\n showing \n\n\n\n\n\n")
+        self.raceStatsShown = true
     }
     
     func raceAlreadyStartedF(){

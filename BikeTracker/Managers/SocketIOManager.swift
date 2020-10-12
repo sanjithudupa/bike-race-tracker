@@ -57,6 +57,7 @@ class SocketIOManager: NSObject {
     var showSummaryVC: (() -> Void)?
     var showConnectingVC: (() -> Void)?
     var resetToHome: (() -> Void)?
+    var showRaceStats: (() -> Void)?
     var joinRaceShow: ((_ id:Int) -> Void)?
     
     //race vc ui functions
@@ -234,6 +235,7 @@ class SocketIOManager: NSObject {
         socket.on("stopRace"){ dataArray, ack in
             print("Stop RACe")
             SocketIOManager.getInstance.stopTimer()
+            SocketIOManager.getInstance.stopRecording()
 //            SocketIOManager.getInstance.leaveRace()
             SocketIOManager.getInstance.showSummaryVC?()
             SocketIOManager.getInstance.fillRaceSummary?()
