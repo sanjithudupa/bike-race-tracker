@@ -20,13 +20,14 @@
 		D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85C033424A3E716005A3B20 /* RaceHostViewController.swift */; };
 		D86115DB24D7B421004187F9 /* EndpointSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86115DA24D7B421004187F9 /* EndpointSelector.swift */; };
 		D86115DE24D8B508004187F9 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86115DD24D8B508004187F9 /* MapMarker.swift */; };
-		D86AE53D252CE28400119773 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86AE53C252CE28400119773 /* SummaryView.swift */; };
 		D870526324E6E7A000C488A3 /* HostMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D870526224E6E7A000C488A3 /* HostMemberView.swift */; };
 		D870526624EAFC7400C488A3 /* RaceButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D870526524EAFC7400C488A3 /* RaceButtons.swift */; };
 		D883E9C32526CBE800CB4520 /* RaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883E9C22526CBE800CB4520 /* RaceButton.swift */; };
 		D883E9C525291D6E00CB4520 /* CodeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883E9C425291D6E00CB4520 /* CodeInput.swift */; };
 		D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */; };
 		D8B8B4D024A7899200AC7072 /* RaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */; };
+		D8C029E72538AE30009949BE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C029E62538AE30009949BE /* ProfileView.swift */; };
+		D8C029E92538AEB1009949BE /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C029E82538AEB1009949BE /* TabView.swift */; };
 		D8C9EC9824AAE19300C7FA6D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8C9EC9724AAE19300C7FA6D /* MapKit.framework */; };
 		D8C9EC9E24ABF74F00C7FA6D /* ConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */; };
 		D8F2D8E824CE4C1100C7207A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2D8E724CE4C1100C7207A /* Home.swift */; };
@@ -52,13 +53,14 @@
 		D85C033424A3E716005A3B20 /* RaceHostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceHostViewController.swift; sourceTree = "<group>"; };
 		D86115DA24D7B421004187F9 /* EndpointSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointSelector.swift; sourceTree = "<group>"; };
 		D86115DD24D8B508004187F9 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
-		D86AE53C252CE28400119773 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		D870526224E6E7A000C488A3 /* HostMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostMemberView.swift; sourceTree = "<group>"; };
 		D870526524EAFC7400C488A3 /* RaceButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceButtons.swift; sourceTree = "<group>"; };
 		D883E9C22526CBE800CB4520 /* RaceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceButton.swift; sourceTree = "<group>"; };
 		D883E9C425291D6E00CB4520 /* CodeInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeInput.swift; sourceTree = "<group>"; };
 		D8B8B4B424A50F0700AC7072 /* RaceMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceMemberViewController.swift; sourceTree = "<group>"; };
 		D8B8B4CF24A7899200AC7072 /* RaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceViewController.swift; sourceTree = "<group>"; };
+		D8C029E62538AE30009949BE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		D8C029E82538AEB1009949BE /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		D8C9EC9724AAE19300C7FA6D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D8C9EC9D24ABF74F00C7FA6D /* ConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingViewController.swift; sourceTree = "<group>"; };
 		D8F2D8E724CE4C1100C7207A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -135,6 +137,27 @@
 			path = "Overlay Views";
 			sourceTree = "<group>";
 		};
+		D8C029EA2538AF27009949BE /* Race Views */ = {
+			isa = PBXGroup;
+			children = (
+				D870526224E6E7A000C488A3 /* HostMemberView.swift */,
+				D833E32424E30D570056AD31 /* RaceStats.swift */,
+			);
+			path = "Race Views";
+			sourceTree = "<group>";
+		};
+		D8C029EB2538AF76009949BE /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				D8F2D8E724CE4C1100C7207A /* Home.swift */,
+				D883E9C22526CBE800CB4520 /* RaceButton.swift */,
+				D883E9C425291D6E00CB4520 /* CodeInput.swift */,
+				D8C029E62538AE30009949BE /* ProfileView.swift */,
+				D8C029E82538AEB1009949BE /* TabView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		D8C9EC9624AAE19300C7FA6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,14 +193,10 @@
 		D8F2D8FA24D78E4E00C7207A /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
+				D8C029EB2538AF76009949BE /* Home */,
+				D8C029EA2538AF27009949BE /* Race Views */,
 				D870526424E7415800C488A3 /* Overlay Views */,
 				D86115DC24D8B4F1004187F9 /* Maps */,
-				D8F2D8E724CE4C1100C7207A /* Home.swift */,
-				D870526224E6E7A000C488A3 /* HostMemberView.swift */,
-				D833E32424E30D570056AD31 /* RaceStats.swift */,
-				D883E9C22526CBE800CB4520 /* RaceButton.swift */,
-				D883E9C425291D6E00CB4520 /* CodeInput.swift */,
-				D86AE53C252CE28400119773 /* SummaryView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -276,11 +295,12 @@
 				D8F2D8F724D726C700C7207A /* AlertView.swift in Sources */,
 				D8F2D8EF24D26A9C00C7207A /* LocationManager.swift in Sources */,
 				D870526324E6E7A000C488A3 /* HostMemberView.swift in Sources */,
+				D8C029E72538AE30009949BE /* ProfileView.swift in Sources */,
 				D8B8B4B524A50F0700AC7072 /* RaceMemberViewController.swift in Sources */,
 				D85C033524A3E716005A3B20 /* RaceHostViewController.swift in Sources */,
+				D8C029E92538AEB1009949BE /* TabView.swift in Sources */,
 				D85C031C24A1B281005A3B20 /* SceneDelegate.swift in Sources */,
 				D870526624EAFC7400C488A3 /* RaceButtons.swift in Sources */,
-				D86AE53D252CE28400119773 /* SummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

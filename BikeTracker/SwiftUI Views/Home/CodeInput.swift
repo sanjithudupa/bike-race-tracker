@@ -101,3 +101,26 @@ struct CodeInput: View{
         }.animation(.spring())
     }
 }
+
+struct CodeView: View {
+    @Binding var codeString:String
+    @Binding var ready:Bool
+    @Binding var joinRace:() -> Void
+    
+    var body: some View {
+        ZStack{
+            CodeInputs(codeString: $codeString)
+            
+            TextField("", text: $codeString, onCommit: doneEditing)
+                .foregroundColor(.clear)
+                .accentColor(.clear)
+                .keyboardType(.namePhonePad)
+        }
+//        MapView()
+    }
+    
+    func doneEditing(){
+        self.joinRace()
+    }
+}
+
