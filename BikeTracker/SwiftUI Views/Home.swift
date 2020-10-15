@@ -90,7 +90,7 @@ struct Home: View {
             ZStack{
                 TabBar(viewHandler: TabHandler())
                 RaceButton(expanded: self.$expanded, showing: self.$currentView, raceIdString: self.$raceIdString, joinRace: self.joinRace)
-                    .offset(y: 50)
+                    .offset(y: 75)
                 ZStack{
 //                    VStack {
 //                        TextField("Race ID", text: self.$raceID).textFieldStyle(RoundedBorderTextFieldStyle())
