@@ -29,8 +29,9 @@ struct ProfileView: View {
             ZStack{
                 VStack{
                     HStack{
-                        Image(systemName: "person.crop.square.fill")
+                        Image("SanjithProfilePicture")
                             .resizable()
+                            .cornerRadius(25)
                             .frame(width: geometry.size.width/3.5, height: geometry.size.width/3.5)
                             .offset(x: -geometry.size.width/4, y: 10)
                     }.offset(y:-geometry.size.height/3)
