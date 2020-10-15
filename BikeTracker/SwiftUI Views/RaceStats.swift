@@ -131,6 +131,7 @@ struct UserRanking: View {
                     Text(self.name)
                         .foregroundColor(self.disconnected ? Color.gray : self.userColor)
                         .offset(/*x:self.disconnected ? -9 : 0,*/ y:self.disconnected ? -5: 0)
+                        .shadow(color: self.$userColor.wrappedValue, radius: 40, x: 15, y: 15)
                     if(self.disconnected){
                         Text("disconnected")
                             .foregroundColor(.gray)
