@@ -11,9 +11,8 @@ import Combine
 
 struct HomeView: View {
     var body: some View {
-        Text("Home")
+        TrailsFeed()
     }
-    
 }
 
 struct TabBar: View {

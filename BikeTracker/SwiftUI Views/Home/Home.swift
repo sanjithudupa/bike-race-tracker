@@ -126,14 +126,17 @@ struct Home: View {
     //)
                     
                     if(self.$currentView.wrappedValue == .host){
-                            
-                        HostView(currentView: self.$currentView, justDisconnected: self.$disconnectedNow)
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                            .background(Color.white)
+                        RaceLobby(host: true, users: SocketIOManager.getInstance.users, currentView: self.$currentView, youNewHost: false, justDisconnected: self.$disconnectedNow)
+                                .frame(width: geometry.size.width, height: geometry.size.height)
+                                .background(Color.white)
+//                        HostView(currentView: self.$currentView, justDisconnected: self.$disconnectedNow)
+//                            .frame(width: geometry.size.width, height: geometry.size.height)
+//                            .background(Color.white)
                         
 
                     }else if(self.$currentView.wrappedValue == .member){
-                        MemberView(currentView: self.$currentView, youNewHost: self.$youNewHost, justDisconnected: self.$disconnectedNow)
+                        RaceLobby(host: false, users: SocketIOManager.getInstance.users, currentView: self.$currentView, youNewHost: false, justDisconnected: self.$disconnectedNow)
+//                        MemberView(currentView: self.$currentView, youNewHost: self.$youNewHost, justDisconnected: self.$disconnectedNow)
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .background(Color.white)
                     }

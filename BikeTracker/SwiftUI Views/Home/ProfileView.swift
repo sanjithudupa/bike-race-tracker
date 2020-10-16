@@ -11,6 +11,9 @@ import SwiftUI
 
 struct ProfileView: View {
     @State private var statsView = 0
+    @State private var name: String = "Sanjith"
+    
+    @State private var changingName = false
     
     init() {
         UISegmentedControl.appearance().selectedSegmentTintColor = .green
@@ -33,6 +36,10 @@ struct ProfileView: View {
                     Text("Sanjith Udupa")
                         .font(.system(.title))
                         .offset(x: geometry.size.width/30 + 48,y: -geometry.size.height/2.025)
+                        .onTapGesture{
+                            self.changingName = true
+                        }
+                    
                     Text("Primary Sport: Biking").offset(x: geometry.size.width/6.5,y: -geometry.size.height/2.025)
                     Text("Joined: June 2020")
                         .italic().offset(x: geometry.size.width/6.5,y: -geometry.size.height/2.025 + 4)
@@ -67,11 +74,32 @@ struct ProfileView: View {
                     }.offset(x: self.$statsView.wrappedValue == 1 ? 0 : geometry.size.width, y: 90)
                 }.offset(y:-20)
                 
+                if(self.changingName){
+                    HStack{
+                        TextField("Enter your name", text: self.$name, onCommit: self.nameSet)
+                        Button(action: {
+                            UserDefaults.standard.removeObject(forKey: "racerName")
+                            self.changingName = false
+                            exit(-1)
+                        }) {
+                            Text("Reset")
+                        }
+                    }
+                }
+                
             }.animation(.spring())
                 .offset(y:-20)
         }
+        
     }
     
+    func nameSet(){
+        UserDefaults.standard.set(self.name, forKey: "racerName")
+        
+        self.changingName = false
+        
+        exit(-1)
+    }
 }
 
 struct StatisticView: View{
