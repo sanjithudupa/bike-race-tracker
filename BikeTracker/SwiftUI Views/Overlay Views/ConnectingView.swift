@@ -11,18 +11,46 @@ import SwiftUI
 
 struct ConnectingView: View{
     @Binding var status: String
-
+    
+    @State var changingIp = false
+    @State var ip = "http:// .ngrok.io"
     var body: some View{
         VStack{
             Text(status)
+                .onTapGesture {
+                    self.changingIp = true
+                }
             ZStack{
                 Image(systemName: "checkmark")
                     .opacity($status.wrappedValue == "Trying to Connect" ? 1.0 : 0.0)
                 ActivityIndicator(style: .medium)
                     .opacity($status.wrappedValue == "Trying to Connect" ? 0.0 : 1.0)
+                
+                if(self.changingIp){
+                    HStack{
+                        TextField("Enter ip", text: self.$ip, onCommit: self.ipSet)
+                        Button(action: {
+                            UserDefaults.standard.removeObject(forKey: "ip")
+                            self.changingIp = false
+                            exit(-1)
+                        }) {
+                            Text("Reset")
+                        }
+                    }
+                }
             }
         }
     }
+    
+    func ipSet(){
+        UserDefaults.standard.set(self.ip, forKey: "ip")
+        
+        self.changingIp = false
+        
+        exit(-1)
+    }
+    
+    
 }
 
 

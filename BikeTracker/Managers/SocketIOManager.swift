@@ -14,7 +14,7 @@ import CoreLocation
 class SocketIOManager: NSObject {
     @objc static let getInstance = SocketIOManager()
 
-    let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
+    let manager = SocketManager(socketURL: URL(string: UserDefaults.standard.object(forKey:"ip") as? String ?? "http://localhost:3000")!, config: [.log(true), .compress])
     var socket:SocketIOClient!
     
     var isConnected = false
@@ -84,6 +84,8 @@ class SocketIOManager: NSObject {
     
     override init() {
         socket = manager.defaultSocket
+        
+        print(UserDefaults.standard.object(forKey:"ip") as? String ?? "not found" + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                 
         
         socket.on("error"){ dataArray, ack in
