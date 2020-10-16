@@ -43,7 +43,7 @@
 		D8037A3E24A92534005F24EE /* RaceSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceSummaryViewController.swift; sourceTree = "<group>"; };
 		D81E060925394615005D86B5 /* TrailFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailFeed.swift; sourceTree = "<group>"; };
 		D833E32424E30D570056AD31 /* RaceStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceStats.swift; sourceTree = "<group>"; };
-		D85C031624A1B281005A3B20 /* Race Me!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Race Me!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D85C031624A1B281005A3B20 /* Race Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Race Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85C031924A1B281005A3B20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D85C031B24A1B281005A3B20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D85C031D24A1B281005A3B20 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		D85C031724A1B281005A3B20 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D85C031624A1B281005A3B20 /* Race Me!.app */,
+				D85C031624A1B281005A3B20 /* Race Me.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -224,7 +224,7 @@
 				D85C032E24A1B3A6005A3B20 /* SocketIO */,
 			);
 			productName = BikeTracker;
-			productReference = D85C031624A1B281005A3B20 /* Race Me!.app */;
+			productReference = D85C031624A1B281005A3B20 /* Race Me.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -457,7 +457,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hiriudupa.BikeTracker;
-				PRODUCT_NAME = "Race Me!";
+				PRODUCT_NAME = "Race Me";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -476,7 +476,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hiriudupa.BikeTracker;
-				PRODUCT_NAME = "Race Me!";
+				PRODUCT_NAME = "Race Me";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

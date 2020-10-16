@@ -14,10 +14,11 @@ struct Trail: View{
     var type: String
     var name: String
     var city: String
+    var locationURL: String
     
     var body: some View {
         VStack{
-            Image(systemName: self.image)
+            Image(self.image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             
@@ -31,6 +32,9 @@ struct Trail: View{
                         .fontWeight(.black)
                         .foregroundColor(.primary)
                         .lineLimit(3)
+                        .onTapGesture {
+                            UIApplication.shared.openURL(NSURL(string:"http://maps.apple.com/?q=" + self.locationURL)! as URL)
+                        }
                     Text(self.city.uppercased())
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -38,6 +42,18 @@ struct Trail: View{
                 .layoutPriority(100)
                 
                 Spacer()
+//                VStack{
+//                    Spacer()
+//                    Button(action: {
+//                        UIApplication.shared.openURL(NSURL(string:"http://maps.apple.com/?q=" + self.locationURL)! as URL)
+//                    }){
+//                        Image(systemName: "mappin.and.ellipse")
+//                            .resizable()
+//                            .frame(width:25, height: 30)
+//                            .foregroundColor(.green)
+//                    }
+//
+//                }
             }.padding()
         }
         .cornerRadius(10)
@@ -54,13 +70,19 @@ struct TrailsFeed: View{
     var body: some View{
         ScrollView(.vertical) {
             VStack(spacing: 10) {
-                Trail(image: "flag", type: "Park", name: "Kensington Metropark", city: "Milford Charter Township")
+                Text("Find Nearby Trails:")
+                    .font(.system(size: 30, weight:
+                        .black, design: .rounded))
+                Trail(image: "Kensington", type: "Park", name: "Kensington Metropark", city: "Milford Charter Township", locationURL: "Kensington+Metropark")
                 
-                Trail(image: "flag", type: "Trail", name: "ITC Trail", city: "Novi")
+                Trail(image: "ITC", type: "Trail", name: "ITC Corridor Trail", city: "Novi", locationURL: "ITC+Community+Sports+Park")
                 
-                Trail(image: "flag", type: "Trail", name: "Mike Levine Lakelands Trail", city: "Livingston County")
+                Trail(image: "MikeLevine", type: "Trail", name: "Mike Levine Lakelands Trail", city: "Livingston County", locationURL: "Pinckney+MI")
                 
-                Trail(image: "flag", type: "Trail", name: "Macomb Orchard Trail", city: "Washington Township")
+                Trail(image: "MacombOrchardTrail", type: "Trail", name: "Macomb Orchard Trail", city: "Washington Township",locationURL: "65665+Powell+Rd+Washington+MI+48095")
+                
+                Spacer()
+                Spacer()
             }
         }
     }
