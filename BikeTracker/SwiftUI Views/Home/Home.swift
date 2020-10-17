@@ -124,22 +124,30 @@ struct Home: View {
     //    get: { !yourBindingBool },
     //    set: { yourBindingBool = !$0 }
     //)
-                    
+//                    NavigationView{
                     if(self.$currentView.wrappedValue == .host){
-                        RaceLobby(host: true, users: SocketIOManager.getInstance.users, currentView: self.$currentView, youNewHost: false, justDisconnected: self.$disconnectedNow)
-                                .frame(width: geometry.size.width, height: geometry.size.height)
-                                .background(Color.white)
+//                        RaceLobby(host: true, currentView: self.$currentView, youNewHost: self.$youNewHost, justDisconnected: self.$disconnectedNow)
+//                                .frame(width: geometry.size.width, height: geometry.size.height)
+//                                .background(Color.white)
+                        
+                        RaceLobby(host: true, currentView: self.$currentView, youNewHost: self.$youNewHost, justDisconnected: self.$disconnectedNow)
+                        
 //                        HostView(currentView: self.$currentView, justDisconnected: self.$disconnectedNow)
 //                            .frame(width: geometry.size.width, height: geometry.size.height)
 //                            .background(Color.white)
                         
 
                     }else if(self.$currentView.wrappedValue == .member){
-                        RaceLobby(host: false, users: SocketIOManager.getInstance.users, currentView: self.$currentView, youNewHost: false, justDisconnected: self.$disconnectedNow)
+//                        RaceLobby(host: false, users: SocketIOManager.getInstance.users, currentView: self.$currentView, youNewHost: false, justDisconnected: self.$disconnectedNow)
 //                        MemberView(currentView: self.$currentView, youNewHost: self.$youNewHost, justDisconnected: self.$disconnectedNow)
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                            .background(Color.white)
+//                            .frame(width: geometry.size.width, height: geometry.size.height)
+//                            .background(Color.white)
+//                            .navigationBarTitle("")
+//                                    .navigationBarHidden(true)
+                        
+                        RaceLobby(host: false, currentView: self.$currentView, youNewHost: self.$youNewHost, justDisconnected: self.$disconnectedNow)
                     }
+//                    }
                     
                     NavigationLink(destination: RaceStats(shown: self.$raceStatsShown),
                                    isActive: self.$raceStatsShown) {
@@ -201,7 +209,6 @@ struct Home: View {
     }
     
     func joinRace(){
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         let id = (String(raceIdString.prefix(4))).filter("0123456789.".contains)
         if(id != ""){
             SocketIOManager.getInstance.joinRace(id: Int(id) ?? 0)

@@ -245,13 +245,13 @@ struct RaceLobby: View{
     @State var host = false
     @State var leaveRacePressed = false
     
-    @State var users: [String]
+    @State var users = [String]()
     @Binding var currentView: CurrentView
     
     
     @State var raceID = "0"
     @State var raceStarted = false
-    @State var youNewHost: Bool = false
+    @Binding var youNewHost: Bool
     @State var comingBack = false
     @Binding var justDisconnected: Bool
     
@@ -309,6 +309,7 @@ struct RaceLobby: View{
                 
             }
         }.onAppear(){
+            self.users = SocketIOManager.getInstance.users
                 SocketIOManager.getInstance.updateIdLabel = self.updateIdLabel
                 SocketIOManager.getInstance.updateUsersLabel = self.updateUserLabel
                 self.justDisconnected = false

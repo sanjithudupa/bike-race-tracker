@@ -88,7 +88,7 @@ struct ProfileView: View {
                 }
                 
             }.animation(.spring())
-                .offset(y:-20)
+            .offset(x: 60, y:70)
         }
         
     }
@@ -209,5 +209,11 @@ struct BarProgress: View {
 //            .shadow(color: .green, radius: 30)
 //            .frame(width: 50, height: 50)
 //        }
+    }
+}
+
+struct ProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProfileView()
     }
 }

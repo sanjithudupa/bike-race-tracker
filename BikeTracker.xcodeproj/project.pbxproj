@@ -110,8 +110,8 @@
 				D85C032724A1B281005A3B20 /* Info.plist */,
 				D85C032224A1B281005A3B20 /* Assets.xcassets */,
 				D85C032424A1B281005A3B20 /* LaunchScreen.storyboard */,
-				D8F2D8F824D78DBC00C7207A /* Old ViewControllers */,
 				D8F2D8F924D78E0C00C7207A /* Managers */,
+				D8F2D8F824D78DBC00C7207A /* Old ViewControllers */,
 				D8F2D8FA24D78E4E00C7207A /* SwiftUI Views */,
 				D85C031924A1B281005A3B20 /* AppDelegate.swift */,
 				D85C031B24A1B281005A3B20 /* SceneDelegate.swift */,
@@ -451,7 +451,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7WX55WJZC8;
 				INFOPLIST_FILE = BikeTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,7 +459,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hiriudupa.BikeTracker;
 				PRODUCT_NAME = "Race Me";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -470,7 +470,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7WX55WJZC8;
 				INFOPLIST_FILE = BikeTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,7 +478,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hiriudupa.BikeTracker;
 				PRODUCT_NAME = "Race Me";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
